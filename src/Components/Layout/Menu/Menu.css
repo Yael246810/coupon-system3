@@ -1,0 +1,39 @@
+/* .Menu {
+    background-color: #F4BBBB;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}*/
+
+.Menu{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding-top: 50px ;
+}
+.Menu > *{
+    margin: 10px;
+}
+
+.Menu button{
+    padding: 10px 20px;
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.Menu button:hover{
+    background-color: #2980b9;
+}
+
+.Menu button{
+    outline: none;
+}
+
+
+

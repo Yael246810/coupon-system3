@@ -1,0 +1,32 @@
+.CustomersList {
+  padding: 20px;
+}
+
+.TopSection {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.TopSection h1 {
+  font-size: 24px;
+  margin: 0;
+}
+
+.CustomerListContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.CustomerCard {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin: 10px 0;
+  background-color: #f9f9f9;
+}
+
+.TotalCustomers {
+  margin-bottom: 20px;
+}

@@ -1,0 +1,25 @@
+.CustomerCard {
+
+}
+
+/* Add these styles to your existing CSS */
+.CustomerCard .row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.CustomerCard .row button {
+    padding: 5px 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.CustomerCard .row button:hover {
+    background-color: #0056b3;
+}
