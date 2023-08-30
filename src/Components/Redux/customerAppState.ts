@@ -4,6 +4,8 @@ import { CustomerModel } from '../../Models/Admin';
 
 //This is the Contract
 interface CustomersState {
+            length: number;
+            map(arg0: (c: any, idx: any) => import("react/jsx-runtime").JSX.Element): import("react").ReactNode;
 			customers: CustomerModel[];
 }
 

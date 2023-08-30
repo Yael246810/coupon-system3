@@ -6,7 +6,7 @@ import { RootState } from "../../Redux/store";
 function AuthMenu(): JSX.Element {
     const token = "12345";
     const email = "yael624@walla.com";
-    const user = useSelector((state:RootState)=>state.userReducer.user) // why doesn't it identify user?
+    const user = useSelector((state:RootState)=>state.user) 
     return (
         <div className="AuthMenu">
 			{

@@ -1,12 +1,11 @@
-// This is store.ts file
 import { configureStore } from '@reduxjs/toolkit';
 import { customersReducer } from './customerAppState';
-import { useReducer } from 'react';
+import { userReducer } from './UserAppState';
 
 // This is rootReducer
 const rootReducer = {
-    customersReducer: customersReducer,
-    userReducer: useReducer,
+    customers: customersReducer, // Use actual customersReducer function
+    user: userReducer, // Use actual userReducer function
     // add more reducers here if needed (couponReducer and more...)
 };
 

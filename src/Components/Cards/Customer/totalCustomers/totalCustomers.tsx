@@ -4,7 +4,7 @@ import { RootState } from "../../../Redux/store";
 
 function TotalCustomers(): JSX.Element {
    
-    const total = useSelector((state:RootState)=>state.customersReducer.customers.length);
+    const total = useSelector((state:RootState)=>state.customers.length);
     
     return (
         <div className="totalCustomers2">

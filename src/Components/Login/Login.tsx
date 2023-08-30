@@ -36,11 +36,7 @@ function Login() {
         <div className="login-container">
             <h2>Login</h2>
             <form className="login-form" onSubmit={handleSubmit(onSubmit)}>
-            {/* <div>
-                 <label htmlFor="id">Id:</label>
-                 <input {...register("id")} type="number" placeholder="Id" id="id" />
-                 {errors.id && <span>{errors.id.message}</span>}
-                </div> */}
+        
                 <div>
                     <label>Email:</label>
                     {errors?.email ? <span>{errors.email.message}</span> : <label htmlFor="email"></label>}
@@ -51,7 +47,7 @@ function Login() {
                     {errors?.password ? <span>{errors.password.message}</span> : <label htmlFor="password"></label>}
                 <input {...register("password")} type="text" placeholder="Password" />
                 </div>
-                {/* Type selection */}
+            
                 <div className="type-select">
                     <label>Type:</label>
                     <select {...register('type')}>

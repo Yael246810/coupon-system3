@@ -1,14 +1,19 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { LoginResModel } from "../../Models/Login";
+import { ReactNode } from "react";
 
 // This is the Contract
 interface UserState {
+  token: any;
+  email: ReactNode;
   user: LoginResModel;
 }
 
 // This is the initialized User State - initialized with an empty token and email
 const initialState: UserState = {
   user: { token: "", email: "" },
+  token: undefined,
+  email: undefined
 };
 
 // These are all possible actions
