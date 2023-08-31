@@ -3,5 +3,8 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    /* background-color:blue; */
-}
+} 
+  h1 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+  }

@@ -3,11 +3,11 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import * as zod from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate } from "react-router-dom";
-import { CustomerModel } from "../../../../Models/Admin";
 import notifyService from "../../../../Services/NotificationService";
-import { addedCustomerAction } from "../../../Redux/customerAppState";
+import { addedCustomerAction } from "../../../Redux/CustomerAppState";
 import { useDispatch } from "react-redux";
-import webApiService from "../../../../Services/WebApiService";
+import webApiService from "../../../../Services/CustomerWebApiService";
+import { CustomerReq } from "../../../../Models/CustomerReq";
 
 function AddCustomer() {
 
@@ -15,41 +15,25 @@ function AddCustomer() {
 
     const dispatch = useDispatch();
 
-const couponSchema = zod.object({
-    // id: zod.number(),
-    category: zod.string(),
-    title: zod.string(),
-    description: zod.string(),
-    startDate: zod.date(),
-    endDate: zod.date(),
-    amount: zod.number(),
-    price: zod.number(),
-    image: zod.string(),
-});
 
 const customersModelSchema = zod.object({
-    // id: zod.number(),
     firstName: zod.string().nonempty("Please enter a valid first name"),
     lastName: zod.string().nonempty("Please enter a valid last name"),
     email: zod.string().email().nonempty("Please enter a correct email address"),
     password: zod.string().min(4,"Password must contain at least 4 characters"),
-    coupons: zod.array(couponSchema).refine((coupons) => {
-        return coupons.every(coupon => coupon.amount >= 0);
-    }, { message: "Coupon amount must be non-negative for all coupons" }),
 });
 
 
 const { register, handleSubmit, formState: { errors, isValid, isSubmitting } }
-= useForm<CustomerModel>({ mode: "all", resolver: zodResolver(customersModelSchema) });
+= useForm<CustomerReq>({ mode: "all", resolver: zodResolver(customersModelSchema) });
 
 
-const onSubmit: SubmitHandler<CustomerModel> = (data: CustomerModel) => {
-
-    return webApiService.addCustomer(data)
+const onSubmit: SubmitHandler<CustomerReq> = (data: CustomerReq) => {
+     webApiService.addCustomer(data)
         .then(res => {
             notifyService.success('the customer is added');
             dispatch(addedCustomerAction(res.data));
-            navigate("/customers");
+            navigate("/admin/customers");
         })
         .catch(err => notifyService.error(err))
 
@@ -57,7 +41,7 @@ const onSubmit: SubmitHandler<CustomerModel> = (data: CustomerModel) => {
 
     return (
         <div className="AddCustomer">
-            <h1>Add a new customer</h1>
+            <h1>Add a new coupon</h1>
 
             <form onSubmit={(...args) => void handleSubmit(onSubmit)(...args)}>
 
@@ -73,20 +57,6 @@ const onSubmit: SubmitHandler<CustomerModel> = (data: CustomerModel) => {
                 {errors?.password ? <span>{errors.password.message}</span> : <label htmlFor="password">Password</label>}
                 <input {...register("password")} type="password" placeholder="Password" />
                 
-                <input
-                    {...register("coupons", {
-                        validate: {
-                            positive: validatePositive,
-                            zod: (value) => zod.number().positive().safeParse(parseInt(value)).success,
-                        },
-                    })}
-                    type="number"
-                    placeholder="coupons"
-                />
-                {errors.coupons?.type === "positive" && <p>{errors.coupons.message}</p>}
-                {errors.coupons?.type === "zod" && <p>Value must be positive</p>}
-                /*I should find a way to use it */
-                {/* <button disabled={isSubmitting || !isValid}>ADD</button> */} 
                 <button>ADD</button>
             </form>
         </div>
@@ -94,11 +64,3 @@ const onSubmit: SubmitHandler<CustomerModel> = (data: CustomerModel) => {
 }
 
 export default AddCustomer;
-
-function validatePositive(value: any, formValues: FieldValues): ValidateResult | Promise<ValidateResult> {
-    const parsedValue = parseInt(value);
-    if (parsedValue < 0) {
-        return "Value must be non-negative";
-    }
-    return true;
-}

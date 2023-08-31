@@ -1,3 +1,54 @@
-.DeleteCompany {
-	
+/* DeleteCompany.css */
+
+.delete-container {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.delete-container h2 {
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.delete-message {
+    margin-bottom: 20px;
+}
+
+.delete-button-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.delete-button,
+.cancel-button {
+    padding: 10px 20px;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    width: 45%;
+    text-align: center;
+}
+
+.delete-button {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+}
+
+.cancel-button {
+    background-color: #6c757d;
+    color: white;
+    border: none;
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
 }

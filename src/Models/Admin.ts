@@ -1,9 +1,9 @@
+
 export interface CompanyModel {
     id:number;
     name:string;
     email:string;
     password:string;
-    coupons:CouponModel[];
 }
 
 export interface CouponModel {
@@ -27,4 +27,17 @@ export interface CustomerModel {
     email:string;
     password:string;
 }
+
+export enum Category {
+    FOOD,
+    HEALTH,
+    SPORT,
+    ELECTRONICS,
+    CLOTHING,
+    HOME,
+    MOVIES,
+    TRAVEL,
+    GAMES,
+    VACATION
+  }
 

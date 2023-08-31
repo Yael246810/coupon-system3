@@ -17,7 +17,7 @@ function AuthMenu(): JSX.Element {
                 </> 
                 : 
                 <>
-                <p>Hello guest&nbsp ;&nbsp &nbsp <Link to="sign in">Sign in</Link></p>
+                <p>Hello guest <Link to="login">Login</Link></p>
                 </>
             }
         </div>

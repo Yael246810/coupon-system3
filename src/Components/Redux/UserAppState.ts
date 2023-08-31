@@ -1,3 +1,4 @@
+import { Type } from './../../Models/User';
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { LoginResModel } from "../../Models/Login";
 import { ReactNode } from "react";
@@ -7,13 +8,15 @@ interface UserState {
   token: any;
   email: ReactNode;
   user: LoginResModel;
+  // Type: Type;
 }
 
 // This is the initialized User State - initialized with an empty token and email
 const initialState: UserState = {
   user: { token: "", email: "" },
   token: undefined,
-  email: undefined
+  email: undefined,
+  // type: "",
 };
 
 // These are all possible actions
@@ -29,10 +32,12 @@ const UserSlice = createSlice({
   reducers: {
     userLoggedInAction(state, action: PayloadAction<LoginResModel>) {
       state.user = action.payload;
+      // state.type = action.payload.type; // Set the 'type' property from the payload
     },
 
     userLoggedOutAction(state) {
       state.user = initialState.user;
+      // state.type = ""; // Reset the 'type' property
     },
 
   },

@@ -5,6 +5,7 @@ import Footer from './Components/Layout/Footer/Footer'
 import Main from './Components/Layout/Main/Main'
 import Menu from './Components/Layout/Menu/Menu'
 import { ToastContainer } from 'react-toastify'
+import ContactUs from './Components/Pages/ContactUs/ContactUs'
 
 type Theme = 'light'|'dark';
 

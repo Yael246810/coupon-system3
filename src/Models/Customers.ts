@@ -1,15 +1,16 @@
 export type Root = CustomersModel[]
 
 export interface CustomersModel {
-  id: number;
+  id?: number;
   firstName: string;
   lastName: string;
   email: string;
   password: string;
-  coupons: Coupon[];
+  coupons?: Coupon[];
 }
 
 export interface Coupon {
+  customer: CustomersModel[]; //?
   id: number;
   category: string;
   title: string;

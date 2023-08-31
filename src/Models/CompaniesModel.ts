@@ -1,12 +1,11 @@
-// export type Root = CompaniesModel[]
-
+import { CouponModel } from "./Admin";
 
 export interface CompaniesModel {
-  id: number;
+  id?: number;
   name: string;
   email: string;
   password: string;
-  coupons: Coupon[];
+  coupons: CouponModel[]
 }
 
 export interface Coupon {

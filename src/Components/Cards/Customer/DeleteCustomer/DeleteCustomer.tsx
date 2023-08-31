@@ -1,9 +1,9 @@
 import { useNavigate, useParams } from "react-router-dom";
 import "./DeleteCustomer.css";
 import notifyService from "../../../../Services/NotificationService";
-import { deletedCustomerAction } from "../../../Redux/customerAppState";
+import { deletedCustomerAction } from "../../../Redux/CustomerAppState";
 import { useDispatch } from "react-redux";
-import webApiService from "../../../../Services/WebApiService";
+import webApiService from "../../../../Services/CustomerWebApiService";
 
 function DeleteCustomer(): JSX.Element {
     const dispatch = useDispatch();

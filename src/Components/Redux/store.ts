@@ -1,12 +1,17 @@
+import { guardReducer } from './GuardAppState';
 import { configureStore } from '@reduxjs/toolkit';
-import { customersReducer } from './customerAppState';
 import { userReducer } from './UserAppState';
+import { companiesReducer } from './CompanyAppState';
+import { couponsReducer } from './CouponAppState';
+import { customersReducer } from './CustomerAppState';
 
 // This is rootReducer
 const rootReducer = {
     customers: customersReducer, // Use actual customersReducer function
-    user: userReducer, // Use actual userReducer function
-    // add more reducers here if needed (couponReducer and more...)
+    user: userReducer,
+    companies: companiesReducer,
+    guardReducer: guardReducer,
+    couponsReducer: couponsReducer,
 };
 
 // This is store object

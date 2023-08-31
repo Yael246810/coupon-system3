@@ -1,24 +1,26 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import "./CustomersList.css";
 import CustomerCard from "../../Cards/Customer/CustomerCard/CustomerCard";
 import notifyService from "../../../Services/NotificationService";
 import EmptyView from "../../Pages/EmptyView/EmptyView";
 import TotalCustomers2 from "../../Cards/Customer/totalCustomers/totalCustomers";
-import { RootState } from "../../Redux/store";
-import { gotAllCustomersAction } from "../../Redux/customerAppState";
+import store, { RootState } from "../../Redux/store";
+import { gotAllCustomersAction } from "../../Redux/CustomerAppState";
 import { useDispatch, useSelector } from "react-redux";
-import webApiService from "../../../Services/WebApiService";
+import webApiService from "../../../Services/CustomerWebApiService";
+import { customerModel } from "../../../Models/Admin";
 
 function CustomersList(): JSX.Element {
-    const customers = useSelector((state: RootState) => state.customers.customers); 
+    const[customers,setCustomers]= useState<customerModel[]>(store.getState().customers.customers);
+    // const customers = useSelector((state: RootState) => state.customers.customers); 
     const dispatch = useDispatch();
 
     useEffect(() => {
-        // Fetch customers only if the array is empty
         if (customers.length === 0) {
-            webApiService.getAllCustomersAuth()
+            webApiService.getAllCustomers()
                 .then(res => {
                     dispatch(gotAllCustomersAction(res.data));
+                    setCustomers(res.data)
                     notifyService.success('Succeeded to upload the customers list');
                 })
                 .catch(err => {

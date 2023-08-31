@@ -1,27 +1,26 @@
 //This is CustomerAppState.ts file
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { CustomerModel } from '../../Models/Admin';
+import { CustomersModel } from '../../Models/Customers';
 
 //This is the Contract
 interface CustomersState {
-            length: number;
-            map(arg0: (c: any, idx: any) => import("react/jsx-runtime").JSX.Element): import("react").ReactNode;
 			customers: CustomerModel[];
 }
 
-//This is the initialized Task Applicaiton State - initialize within empty array
+//This is the initialized Task Application State - initialize within empty array
 const initialState: CustomersState = {
 			customers: [],
 };
 
 //These are all possible actions
 export enum ActionType {
-			GOT_ALL_TASKS = "GOT_ALL_CUSTOMERS",
-			GOT_SINGLE_TASK = "GOT_SINGLE_CUSTOMER",
-            ADDED_TASK = "ADDED_CUSTOMER",
-            UPDATED_TASK = "UPDATED_CUSTOMER",
-            DELETED_TASK = "DELETED_CUSTOMER",
-            REMOVED_TASKS = "REMOVED_CUSTOMERS",
+			GOT_ALL_CUSTOMERS = "GOT_ALL_CUSTOMERS",
+			GOT_SINGLE_CUSTOMER = "GOT_SINGLE_CUSTOMER",
+            ADDED_CUSTOMER = "ADDED_CUSTOMER",
+            UPDATED_CUSTOMER = "UPDATED_CUSTOMER",
+            DELETED_CUSTOMER = "DELETED_CUSTOMER",
+            REMOVED_CUSTOMERS = "REMOVED_CUSTOMERS",
 }
 
 //This is tasksSlice
@@ -32,21 +31,29 @@ const customersSlice = createSlice({
     gotAllCustomersAction(state, action: PayloadAction<CustomerModel[]>) {
       state.customers = action.payload;
     },
-    // gotSingleCustomerAction(state, action: PayloadAction<CustomerModel[]>) {
-    //   state.customers.push(action.payload);
-    // },
-    addedCustomerAction(state, action: PayloadAction<CustomerModel[]>) {
+    gotSingleCustomerAction(state, action: PayloadAction<CustomersModel>) {
+       state.customers.push(action.payload);
+     },
+     
+    addedCustomerAction(state, action: PayloadAction<CustomerModel>) {
       state.customers.push(action.payload);
     },
-    // updatedCustomerACtion(state, action: PayloadAction<CustomerModel[]>) {
-    //   const idx = state.customers.findIndex(
-    //     (customer) => customer.id === action.payload.id
-    //   );
-    //   state.customers[idx] = action.payload;
-    // },
+    
+    updatedCustomerAction(state, action: PayloadAction<CustomerModel>) {
+      const updatedCustomer = action.payload;
+      const idx = state.customers.findIndex(
+        (customer) => customer.id === updatedCustomer.id
+      );
+
+      if (idx !== -1) {
+        state.customers[idx] = updatedCustomer;
+      }
+    },
+
     deletedCustomerAction(state, action: PayloadAction<number>) {
       state.customers = state.customers.filter((customer) => customer.id !== action.payload);
     },
+    
     removeCustomers(state) {
       state.customers = [];
     },
@@ -57,9 +64,9 @@ const customersSlice = createSlice({
 //This is the exported tasks
 export const {
   gotAllCustomersAction,
-//   gotSingleCustomerAction,
+  gotSingleCustomerAction,
   addedCustomerAction,
-//   updatedCustomerAction,
+  updatedCustomerAction,
   deletedCustomerAction,
   removeCustomers,
 } = customersSlice.actions;

@@ -1,6 +1,6 @@
-/* DeleteCustomer.css */
+/* DeleteCompany.css */
 
-.delete-container {
+.company-delete-container {
     max-width: 400px;
     margin: 0 auto;
     padding: 20px;
@@ -9,23 +9,23 @@
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 }
 
-.delete-container h2 {
+.company-delete-container h2 {
     margin-bottom: 15px;
     text-align: center;
 }
 
-.delete-message {
+.company-delete-message {
     margin-bottom: 20px;
 }
 
-.delete-button-container {
+.company-delete-button-container {
     display: flex;
     justify-content: space-between; /* Adjust spacing between buttons */
     align-items: center;
 }
 
-.delete-button,
-.cancel-button {
+.company-delete-button,
+.company-cancel-button {
     padding: 10px 20px;
     border-radius: 3px;
     cursor: pointer;
@@ -34,19 +34,19 @@
     text-align: center;
 }
 
-.delete-button {
+.company-delete-button {
     background-color: #dc3545;
     color: white;
     border: none;
 }
 
-.cancel-button {
+.company-cancel-button {
     background-color: #6c757d;
     color: white;
     border: none;
 }
 
-.button-container {
+.company-button-container {
     display: flex;
     justify-content: space-between;
     align-items: center;

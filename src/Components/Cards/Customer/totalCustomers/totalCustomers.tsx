@@ -4,11 +4,11 @@ import { RootState } from "../../../Redux/store";
 
 function TotalCustomers(): JSX.Element {
    
-    const total = useSelector((state:RootState)=>state.customers.length);
+    const total = useSelector((state:RootState)=>state.customers.customers.length);
     
     return (
         <div className="totalCustomers2">
-			(total) ?<p>Total Customers: {total}</p> :<p> No Customers</p>
+			<p>Total Customers: {total}</p> :<p> No Customers</p>
         </div>
     );
 }
