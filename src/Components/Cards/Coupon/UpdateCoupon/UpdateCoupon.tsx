@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux";
 import "./UpdateCoupon.css";
 import { useNavigate, useParams } from "react-router-dom";
-import { CouponModel, customerModel } from "../../../../Models/Admin";
+import { CouponModel } from "../../../../Models/Admin";
 import { useState } from "react";
 import store from "../../../Redux/store";
 import Zod from "zod";
@@ -10,6 +10,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import couponWebApiService from "../../../../Services/CouponsWebApiService";
 import notifyService from "../../../../Services/NotificationService";
 import { updatedCouponAction } from "../../../Redux/CouponAppState";
+import { Category } from "../../../../Models/Admin";
 
 function UpdateCoupon(): JSX.Element {
 
@@ -24,14 +25,39 @@ function UpdateCoupon(): JSX.Element {
   //  const defaultValuesObj = { ...obj, when: moment(obj.when).format("DD/MM/YY hh:mm") }; //Spread Operator
     const defaultValuesObj = { ...obj }; //Spread Operator
     const couponModelSchema = Zod.object({
-    category: Zod.string().nonempty("Please enter a valid category"),
-        title: Zod.string().nonempty("Please enter a valid title"),
-        description: Zod.string().nonempty("Please enter a valid description"),
-        startDate: Zod.date(),
-        endDate: Zod.date(),
-        amount: Zod.number().min(0, "Amount must be non-negative"),
-        price: Zod.number().min(0, "Price must be non-negative"),
-        image: Zod.string().nonempty("Please enter a valid image URL"),
+      category: Zod.enum(Object.values(Category)),
+      title: Zod.string().nonempty("Please enter a valid title"),
+      description: Zod.string().nonempty("Please enter a valid description"),
+      startDate: Zod.string().transform((dateString, ctx) => {
+        const date = new Date(dateString);
+        if (!Zod.date().safeParse(date).success) {
+            ctx.addIssue({
+                code: Zod.ZodIssueCode.invalid_date,
+            })
+        }
+        return date;
+    }),
+    endDate: Zod.string().transform((dateString, ctx) => {
+      const date = new Date(dateString);
+      if (!Zod.date().safeParse(date).success) {
+          ctx.addIssue({
+              code: Zod.ZodIssueCode.invalid_date,
+          })
+      }
+      return date;
+  }),
+  amount: Zod.string().transform((amountString, ctx) => {
+    const numericAmount = parseFloat(amountString);
+    if (isNaN(numericAmount)) {
+        ctx.addIssue({
+            code: Zod.ZodIssueCode.invalid_arguments,
+            argumentsError: "Amount is not a valid number",
+        });
+    }
+    console.log("I am adding a coupon");
+    return numericAmount;
+}),
+
         company: Zod.object({
           id: Zod.number(),
           name: Zod.string().nonempty("Please enter a valid company name"),
@@ -54,22 +80,33 @@ function UpdateCoupon(): JSX.Element {
 
             return couponWebApiService.updateCoupon(id, data)
                 .then(res => {
-                    notifyService.success("customer is updated!")
+                    notifyService.success("coupon is updated!")
                     dispatch(updatedCouponAction(res.data));
-                    navigate("/coupons");
+                    navigate("/companies/:id/coupons");
                 })
                 .catch(err => notifyService.error(err))
     
         };
 
-
+// Is it a problem that I cannot see the coupon's id when I update it??
     return (
         <div className="UpdateCoupon">
 			<h1>Updated Coupon</h1>
 
             <form onSubmit={handleSubmit(onSubmit)}>
-      {errors?.category ? <span>{errors.category.message}</span> : <label htmlFor="category">Category</label>}
-      <input {...register("category")} type="text" placeholder="Category" />
+            <label htmlFor="category">Category</label>
+                <select {...register("category")}>
+                    <option value={Category.FOOD}>Food</option>
+                    <option value={Category.ELECTRONICS}>Electronics</option>
+                    <option value={Category.CLOTHING}>Clothing</option>
+                    <option value={Category.GAMES}>Games</option>
+                    <option value={Category.HEALTH}>Health</option>
+                    <option value={Category.HOME}>Home</option>
+                    <option value={Category.MOVIES}>Movies</option>
+                    <option value={Category.SPORT}>Sport</option>
+                    <option value={Category.TRAVEL}>Travel</option>
+                    <option value={Category.VACATION}>Vacation</option>
+                </select>
 
       {errors?.title ? <span>{errors.title.message}</span> : <label htmlFor="title">Title</label>}
       <input {...register("title")} type="text" placeholder="Title" />
@@ -78,10 +115,10 @@ function UpdateCoupon(): JSX.Element {
       <input {...register("description")} type="text" placeholder="Description" />
 
       {errors?.startDate ? <span>{errors.startDate.message}</span> : <label htmlFor="startDate">Start Date</label>}
-      <input {...register("startDate")} type="date" />
+      <input {...register("startDate")} type="datetime-local" />
 
       {errors?.endDate ? <span>{errors.endDate.message}</span> : <label htmlFor="endDate">End Date</label>}
-      <input {...register("endDate")} type="date" />
+      <input {...register("endDate")} type="datetime-local" />
 
       {errors?.amount ? <span>{errors.amount.message}</span> : <label htmlFor="amount">Amount</label>}
       <input {...register("amount")} type="number" placeholder="Amount" />
@@ -94,7 +131,7 @@ function UpdateCoupon(): JSX.Element {
 
       {/* Add fields for company and customers here - to understand what I do with them */}
 
-      <button>ADD</button>
+      <button>Update</button>
     </form>
             
         </div>

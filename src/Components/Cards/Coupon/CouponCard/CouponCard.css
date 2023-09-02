@@ -1,3 +1,46 @@
+/* Existing styles for CouponCard */
 .CouponCard {
-	
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    background-color: #f9f9f9;
+}
+
+.CouponCard .coupon-image {
+    width: 100px;
+    height: auto;
+    margin-right: 10px;
+}
+
+.CouponCard .coupon-details h3 {
+    margin: 0;
+}
+
+.CouponCard .coupon-details p {
+    margin-top: 5px;
+}
+
+/* Add the new styles */
+.CouponCard .row2 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.CouponCard .row2 button {
+    padding: 5px 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.CouponCard .row2 button:hover {
+    background-color: #0056b3;
 }

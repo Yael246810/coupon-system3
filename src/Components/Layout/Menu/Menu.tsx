@@ -18,19 +18,21 @@ function Menu(): JSX.Element {
       {isAdmin &&<Link to="/admin/companies"> <button>Companies</button></Link>}
       {isAdmin &&<Link to="/admin/customers"><button>Customers</button></Link>}
       {isAdmin&&<Link to="/admin/customers/add"><button>Add a new customer</button></Link>}
-      {/* {isAdmin&&<Link to="/admin/customers/update"><button>Update customer</button></Link>} */}
       {isAdmin&&<Link to="/admin/customers/:id"><button>Get a single Customer</button></Link>}
       {isAdmin&&<Link to="/admin/companies/add"><button>Add Company</button></Link>}
       {isAdmin&&<Link to="/admin/companies/:id"><button>Get a single Company</button></Link>}
 
       {isCompany&&<Link to="/companies/coupons/add"><button>Add Coupon</button></Link>}
-      {/* {isCompany&&<Link to="/companies/coupons/update"><button>Update Coupon</button></Link>}
-      {isCompany&&<Link to="/companies/coupons/delete"><button>Delete Coupon</button></Link>} */}
       {isCompany&&<Link to="/companies/:id/coupons"><button>Company Coupons</button></Link>}
       {isCompany&&<Link to="/companies/:id/coupons/price"><button>Company Coupons by price</button></Link>}
       {isCompany&&<Link to="/companies/:id/coupons/category"><button>Company Coupons by category</button></Link>}
+      {isCompany&&<Link to="/companies/:id/details"><button>Company Details</button></Link>}
 
       {isCustomer&&<Link to="/customers/:id/coupons/:id/purchase"><button>Purchase Coupon</button></Link>}
+      {isCustomer&&<Link to="customers/:id/coupons"><button>Customer Coupons</button></Link>}
+      {isCustomer&&<Link to="customers/:id/coupons/price"><button>Customer Coupons by Price</button></Link>}
+      {isCustomer&&<Link to="customers/:id/coupons/category"><button>Customer Coupons by Category</button></Link>}
+      {isCustomer&&<Link to="customers/:id/details"><button>Customer Details</button></Link>}
       
 
         </div>

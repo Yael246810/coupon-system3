@@ -29,6 +29,12 @@ import GetSingleCompany from "../../Cards/Company/GetSingleCompany/GetSingleComp
 import GetCompanyCouponsByCategory from "../../Cards/Company/GetCompanyCouponsByCategory/GetCompanyCouponsByCategory";
 import GetCustomerCouponsByMaxPrice from "../../Cards/Coupon/GetCustomerCouponsUntilMaxPrice/GetCustomerCouponsByMaxPrice";
 import GetCompanyCouponsByMaxPrice from "../../Cards/Company/GetCompanyCouponsByMaxPrice/GetCompanyCouponsByMaxPrice";
+import PurchaseCoupon from "../../Cards/Coupon/PurchaseCoupon/PurchaseCoupon";
+import DeleteCouponPurchased from "../../Cards/Coupon/DeleteCouponPurchased/DeleteCouponPurchased";
+import GetCustomerCoupons from "../../Cards/Coupon/GetCustomerCoupons/GetCustomerCoupons";
+import GetCustomerCouponsByCategory from "../../Cards/Coupon/GetCustomerCouponsByCategory/GetCustomerCouponsByCategory";
+import GetCustomerDetails from "../../Cards/Coupon/GetCustomerDetails/GetCustomerDetails";
+import GetCompanyDetails from "../../Cards/Company/GetCompanyDetails/GetCompanyDetails";
 
 function Routing(): JSX.Element {
     const AdminFlag = useSelector((state:RootState)=>state.guardReducer.isAdmin);
@@ -58,11 +64,23 @@ function Routing(): JSX.Element {
                 {AdminFlag&&<Route path="/admin/companies/:id" element={<GetSingleCompany/>}/>}
 
                 {CompanyFlag&&<Route path="/companies/coupons/add" element={<AddCoupon/>}/>} 
-                {CompanyFlag&&<Route path="/companies/coupon/:id" element={<UpdateCoupon/>}/>}
-                {CompanyFlag&&<Route path="/companies/:id" element={<DeleteCoupon/>}/>}
+                {CompanyFlag&&<Route path="/companies/update/:id" element={<UpdateCoupon/>}/>}
+                {CompanyFlag&&<Route path="/companies/delete/:id" element={<DeleteCoupon/>}/>}
                 {CompanyFlag&&<Route path="/companies/:id/coupons" element={<GetCompanyCoupons/>}/>}
                 {CompanyFlag&&<Route path="/companies/:id/coupons/price" element={<GetCompanyCouponsByMaxPrice/>}/>}
                 {CompanyFlag&&<Route path="/companies/:id/coupons/category" element={<GetCompanyCouponsByCategory/>}/>}
+                {CompanyFlag&&<Route path="/companies/:id/details" element={<GetCompanyDetails/>}/>}
+                
+                
+                {CustomerFlag&&<Route path="customers/:id/coupons/:id/purchase" element={<PurchaseCoupon/>}/>}
+                {CustomerFlag&&<Route path="customers/:id/coupons/:id/delete" element={<DeleteCouponPurchased/>}/>}
+                {CustomerFlag&&<Route path="customers/:id/coupons" element={<GetCustomerCoupons/>}/>}
+                {CustomerFlag&&<Route path="customers/:id/coupons/price" element={<GetCustomerCouponsByMaxPrice/>}/>}
+                {CustomerFlag&&<Route path="customers/:id/coupons/category" element={<GetCustomerCouponsByCategory/>}/>}
+                {CustomerFlag&&<Route path="customers/:id/details" element={<GetCustomerDetails/>}/>}
+
+
+
                 <Route path="logout" element={<Logout/>}/>
                 <Route path="*" element={<Page404/>}/> //this needs to be the last
             </Routes>
