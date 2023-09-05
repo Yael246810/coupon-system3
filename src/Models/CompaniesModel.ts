@@ -5,7 +5,7 @@ export interface CompaniesModel {
   name: string;
   email: string;
   password: string;
-  coupons: CouponModel[]
+  coupons?: CouponModel[]
 }
 
 export interface Coupon {

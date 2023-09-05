@@ -28,21 +28,30 @@ function Login() {
 
         return webApiService.login(data)
             .then(res => {
-                console.log('Hello, I did login');
-                dispatch(userLoggedInAction(res.data));
+                console.log('Hello, I did login: ' + res.data + " type: " + data.type + " email: " + data.email);
+
+                const newState = {
+                    id: res.data.id,
+                    token : res.data.token,
+                    type: data.type,
+                    email: data.email
+                  };
+
+                dispatch(userLoggedInAction(newState));
                 navigate("/home");
 
                 if (data.email === 'admin@admin.com') {
                     dispatch(loggedInAsAdmin());
                 }
 
-                // Update the following if conditions accordingly
-                // based on your backend's response structure
                 if (data.type === "ADMIN") {
+                    console.log("$ADMIN");
                     dispatch(loggedInAsAdmin());
                 } else if (data.type === "COMPANY") {
+                    console.log("$COMPANY");
                     dispatch(loggedInAsCompany());
                 } else if (data.type === "CUSTOMER") {
+                    console.log("$CUSTOMER");
                     dispatch(loggedInAsCustomer());
                 }
             })

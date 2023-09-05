@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux";
 import "./UpdateCoupon.css";
 import { useNavigate, useParams } from "react-router-dom";
-import { CouponModel } from "../../../../Models/Admin";
+import { CouponModel, CouponNoCompanyOrCustomerModel } from "../../../../Models/Admin";
 import { useState } from "react";
 import store from "../../../Redux/store";
 import Zod from "zod";
@@ -18,14 +18,25 @@ function UpdateCoupon(): JSX.Element {
     const navigate = useNavigate();
     const params = useParams();
     const id = +(params.id || 0);
-    const [obj] = useState<CouponModel>(store.getState().couponsReducer.coupons.filter(c=>c.id===id)[0])
-    console.log(obj);
+    const [obj, setObj] = useState<CouponModel>(store.getState().couponsReducer.coupons.filter(c=>c.id===id)[0])
+    console.log("obj: "+obj);
    
 
   //  const defaultValuesObj = { ...obj, when: moment(obj.when).format("DD/MM/YY hh:mm") }; //Spread Operator
     const defaultValuesObj = { ...obj }; //Spread Operator
     const couponModelSchema = Zod.object({
-      category: Zod.enum(Object.values(Category)),
+      category: Zod.enum([
+        "FOOD",
+        "HEALTH",
+        "SPORT",
+        "ELECTRONICS",
+        "CLOTHING",
+        "HOME",
+        "MOVIES",
+        "TRAVEL",
+        "GAMES",
+        "VACATION",
+      ]),
       title: Zod.string().nonempty("Please enter a valid title"),
       description: Zod.string().nonempty("Please enter a valid description"),
       startDate: Zod.string().transform((dateString, ctx) => {
@@ -46,45 +57,50 @@ function UpdateCoupon(): JSX.Element {
       }
       return date;
   }),
-  amount: Zod.string().transform((amountString, ctx) => {
-    const numericAmount = parseFloat(amountString);
-    if (isNaN(numericAmount)) {
-        ctx.addIssue({
-            code: Zod.ZodIssueCode.invalid_arguments,
-            argumentsError: "Amount is not a valid number",
-        });
-    }
-    console.log("I am adding a coupon");
-    return numericAmount;
-}),
+  amount: Zod.string()
+  .nonempty("must enter an amount")
+  .transform((amount) => parseInt(amount))
+  .refine((value) => Number.isInteger(value) && value > 0, {
+    message: "amount must be positive",
+  }),
+  
+price: Zod
+    .string()
+    .nonempty("this field is required")
+    .transform((price) => parseFloat(price))
+    .refine((value) => value > 0, {
+      message: "price must be positive",
+    }),
+image: Zod.string().nonempty("this field is required"),
+});
 
-        company: Zod.object({
-          id: Zod.number(),
-          name: Zod.string().nonempty("Please enter a valid company name"),
-          email: Zod.string().email().nonempty("Please enter a correct email address for the company"),
-        }),
-        customers: Zod.array(
-          Zod.object({
-            id: Zod.number(),
-            firstName: Zod.string().nonempty("Please enter a valid first name for the customer"),
-            lastName: Zod.string().nonempty("Please enter a valid last name for the customer"),
-            email: Zod.string().email().nonempty("Please enter a correct email address for the customer"),
-          })
-        ),
-      });
+
+    
       console.log("11");
 
-      const { register, handleSubmit, control, formState: { errors, isValid, isSubmitting } } =
-        useForm<CouponModel>({ defaultValues: defaultValuesObj, mode: "all", resolver: zodResolver(couponModelSchema) });
+      const { register, handleSubmit, formState: { errors, isValid, isSubmitting } } =
+        useForm<CouponNoCompanyOrCustomerModel>({ defaultValues: defaultValuesObj, mode: "all", resolver: zodResolver(couponModelSchema) });
         console.log("22");
+        console.log("id: "+id);
 
-        const onSubmit: SubmitHandler<CouponModel> = (data: CouponModel) => {
+        const onSubmit: SubmitHandler<CouponNoCompanyOrCustomerModel> = (data: CouponNoCompanyOrCustomerModel) => {
+          console.log("id: "+id);
+          data.id = id;
+          console.log("id: "+id);
+
+          if (data.id === 0) {
+            console.log(`Invalid ID ${data.id}`);
+            
+            return; // Don't proceed with the update
+        }
           console.log("33");
 
             return couponWebApiService.updateCoupon(id, data)
                 .then(res => {
                     notifyService.success("coupon is updated!")
                     dispatch(updatedCouponAction(res.data));
+                    setObj(res.data)
+                    console.log("new obj: "+obj);
                     navigate("/companies/:id/coupons");
                 })
                 .catch(err => notifyService.error(err))
@@ -131,8 +147,6 @@ function UpdateCoupon(): JSX.Element {
 
       {errors?.image ? <span>{errors.image.message}</span> : <label htmlFor="image">Image</label>}
       <input {...register("image")} type="text" placeholder="Image URL" />
-
-      {/* Add fields for company and customers here - to understand what I do with them */}
 
       <button>Update</button>
     </form>

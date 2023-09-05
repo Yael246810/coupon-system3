@@ -7,7 +7,7 @@ export interface CompanyModel {
 }
 
 export interface CouponModel {
-    id:number;
+    id?:number;
     category:Category;
     title:string;
     description:string;
@@ -16,8 +16,8 @@ export interface CouponModel {
     amount:number;
     price:number;
     image:string;
-    company:CompanyModel;
-    customers:CustomerModel[];
+    company?:CompanyModel;
+    customers?:CustomerModel[];
 }
 
 export interface CustomerModel {
@@ -40,4 +40,16 @@ export enum Category {
     GAMES,
     VACATION
   }
+
+  export interface CouponNoCompanyOrCustomerModel {
+    id?:number;
+    category:Category;
+    title:string;
+    description:string;
+    startDate:Date;
+    endDate:Date;
+    amount:number;
+    price:number;
+    image:string;
+}
 

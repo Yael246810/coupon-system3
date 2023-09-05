@@ -66,9 +66,7 @@ function UpdateCompany(company:CompanyReq): JSX.Element {
     return (
         <div className="UpdateCompany">
 			<h1>Updated Company</h1>
-
             <form onSubmit={(...args) => void handleSubmit(onSubmit)(...args)}>
-                
             {obj && (
   <div>
     <label htmlFor="id">Id</label>

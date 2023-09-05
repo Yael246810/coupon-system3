@@ -27,15 +27,16 @@ function GetCustomerCouponsByMaxPrice(): JSX.Element {
             customerWebApiService
                 .getCustomerCouponsByMaxPrice(numericId, numericMaxPrice)
                 .then((res) => {
-                    console.log("API Response:", res.data);
+                    console.log("API Response:", res.data); // Log the response data
                     notifyService.success(`Fetched coupons for customer #${numericId} with max price ${numericMaxPrice}`);
                     
                     // Dispatch the appropriate action for fetching coupons
-                    dispatch(getCustomerCouponsByMaxPriceAction(res.data));
+                    dispatch(getCustomerCouponsByMaxPriceAction(numericMaxPrice));
                     console.log("I got the customer coupons by price")
                     // Set the fetched coupons in the state
                     setFetchedCoupons(res.data);
                     console.log("I got them yeyyy")
+                    console.log("fetched coupons: "+fetchedCoupons)
                 })
                 .catch((err: any) => notifyService.error(err));
         } else {

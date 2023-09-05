@@ -12,10 +12,10 @@ import { CustomersModel } from "../../../../Models/Customers";
 import { purchaseCouponAction } from "../../../Redux/CustomerWithCouponsAppState";
 
 interface PurchaseCouponProps {
-  coupon: CouponModel;
-  couponId: number;
-  customer: CustomersModel;
-  customerId: number;
+  // coupon: CouponModel;
+  couponId: string;
+  // customer: CustomersModel;
+  customerId: string;
 }
 
 function PurchaseCoupon(props: PurchaseCouponProps): JSX.Element {
@@ -23,7 +23,8 @@ function PurchaseCoupon(props: PurchaseCouponProps): JSX.Element {
   const dispatch = useDispatch();
 
   const purchaseCouponModelSchema = Zod.object({
-    couponId: Zod.number(),
+    couponId: Zod.string(),
+    customerId: Zod.string()
   });
 
   const {
@@ -38,23 +39,23 @@ function PurchaseCoupon(props: PurchaseCouponProps): JSX.Element {
   const onSubmit: SubmitHandler<PurchaseCouponReq> = (data: PurchaseCouponReq) => {
     // Convert couponId and customerId to numbers
     const couponId = Number(data.couponId);
-    const customerId = props.customerId;
-console.log("data.couponId:", data.couponId);
-console.log("couponId:", couponId);
+    const customerId = Number(data.customerId);
 
-    // Check if the conversion to numbers is successful
-    if (!isNaN(couponId)) {
+    if(isNaN(couponId)){
+      notifyService.error("Invalid coupon ID. Please enter a valid number.");
+    }
+    else if(isNaN(customerId))
+      notifyService.error("Invalid customer ID. Please enter a valid number.");
+    else {
       customerWebApiService
         .PurchaseCoupon(couponId, customerId)
         .then((res) => {
           notifyService.success("The coupon is added for the customer");
           dispatch(purchaseCouponAction(res.data));
-          navigate("/:id/coupons");
+          navigate("/customers/:id/coupons",{state:{wasCustomersDataUpdated: true }});
         })
         .catch((err) => notifyService.error(err));
-    } else {
-      notifyService.error("Invalid coupon ID. Please enter a valid number.");
-    }
+    } 
   };
 
   return (
@@ -62,21 +63,11 @@ console.log("couponId:", couponId);
       <h1>Purchase Coupon</h1>
 
       <form onSubmit={handleSubmit(onSubmit)}>
-        <label htmlFor="customerId">Id</label>
-        <input name="customerId" type="text" value={props.customerId} disabled={true} />
-
-        {errors?.couponId ? (
-          <span>{errors.couponId.message}</span>
-        ) : (
-          <label htmlFor="couponId">CouponId</label>
-        )}
-        <input {...register("couponId")} type="number" placeholder="CouponId" />
-        
-
+        <input {...register("couponId")} type="text" placeholder="couponId" />
+        <input {...register("customerId")} type="text" placeholder="customerId" />
         <button>Purchase</button>
       </form>
     </div>
   );
 }
-
 export default PurchaseCoupon;

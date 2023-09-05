@@ -10,54 +10,56 @@ import CouponCard from "../../Coupon/CouponCard/CouponCard";
 import EmptyView from "../../../Pages/EmptyView/EmptyView";
 
 function GetCompanyCoupons(): JSX.Element {
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-    const {
-        handleSubmit,
-        register,
-        formState: { errors },
-    } = useForm();
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useForm();
 
-    const [fetchedCoupons, setFetchedCoupons] = useState<CouponModel[] | null>(null);
+  const [fetchedCoupons, setFetchedCoupons] = useState<CouponModel[] | null>(null);
+  const [numericId, setNumericId] = useState<number | null>(null); // Declare numericId here
 
-    const onSubmit = (data: { id: string }) => {
-        const numericId = parseInt(data.id);
+  const onSubmit = (data: { id: string }) => {
+    const parsedId = parseInt(data.id);
 
-        if (!isNaN(numericId)) {
-            companyWebApiService
-                .getCompanyCoupons(numericId)
-                .then((res) => {
-                    notifyService.success(`Fetched company #${numericId}`);
-                    dispatch(getCompanyCouponsAction(res.data));
-                    setFetchedCoupons(res.data);
-                })
-                .catch((err) => notifyService.error(err));
-        } else {
-            notifyService.error("Please enter a valid company ID");
-        }
-    };
+    if (!isNaN(parsedId)) {
+      setNumericId(parsedId); // Store numericId in the component's state
+      companyWebApiService
+        .getCompanyCoupons(parsedId)
+        .then((res) => {
+          notifyService.success(`Fetched company #${parsedId}`);
+          dispatch(getCompanyCouponsAction(res.data));
+          setFetchedCoupons(res.data);
+        })
+        .catch((err) => notifyService.error(err));
+    } else {
+      notifyService.error("Please enter a valid company ID");
+    }
+  };
 
-    return (
-        <div className="GetCompanyCoupons">
-            <h2>Get Company Coupons</h2>
-            <form className="CompanyForm" onSubmit={handleSubmit(onSubmit)}>
-                {errors?.id ? (
-                    <span>{errors.id.message}</span>
-                ) : (
-                    <>
-                        <label htmlFor="id">Id</label>
-                        <input {...register("id")} type="number" placeholder="Id" />
-                    </>
-                )}
-                <button>Get</button>
-            </form>
+  return (
+    <div className="GetCompanyCoupons">
+      <h2>Get Company Coupons</h2>
+      <form className="CompanyForm" onSubmit={handleSubmit(onSubmit)}>
+        {errors?.id ? (
+          <span>{errors.id.message}</span>
+        ) : (
+          <>
+            <label htmlFor="id">Id</label>
+            <input {...register("id")} type="number" placeholder="Id" />
+          </>
+        )}
+        <button>Get</button>
+      </form>
 
-            {fetchedCoupons && (
+      {fetchedCoupons && (
         <div className="CouponList">
           <h2>Coupons</h2>
           {fetchedCoupons.length !== 0 ? (
             fetchedCoupons.map((coupon) => (
-              <CouponCard key={coupon.id} coupon={coupon} />
+              <CouponCard key={coupon.id} coupon={coupon} customerId={numericId} isCompanyConnected={true} />
             ))
           ) : (
             <EmptyView msg="There are no coupons available at the moment" />

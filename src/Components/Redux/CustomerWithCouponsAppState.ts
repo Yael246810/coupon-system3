@@ -1,7 +1,6 @@
 //This is CustomerAppState.ts file
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { CustomersModel } from '../../Models/Customers';
-import { PurchaseCouponReq } from '../../Models/PurchaseCouponReq';
 import { CouponModel } from '../../Models/Admin';
 
 // This is the Contract
@@ -31,20 +30,36 @@ const customersSlice = createSlice({
   name: "customers",
   initialState,
   reducers: {
-    purchaseCouponAction(
-      state,
-      action: PayloadAction<{ customerId: number; coupon: PurchaseCouponReq }>
-    ) {
-      const { customerId, coupon } = action.payload;
-      const customerIndex = state.customers.findIndex(
-        (customer) => customer.id === customerId
-      );
+    // Update the action creator in CustomerAppState.ts
+// Inside your reducer
+purchaseCouponAction(
+  state,
+  action: PayloadAction<{ customerId: number; couponId: number }>
+) {
+  const { customerId, couponId } = action.payload;
+  // Find the customer in the state based on customerId (assuming you have the structure for CustomersModel)
+  const customer = state.customers.find((c) => c.id === customerId);
 
-      if (customerIndex !== -1) {
-        // Make sure 'coupons' is defined as an array in CustomersModel
-        state.customers[customerIndex].coupons.push(coupon);
-      }
-    },
+  if (customer) {
+    // Create a valid Date object representing the current date and time
+    const currentDate = new Date();
+
+    // Add the purchased coupon to the customer's coupons list
+    customer.coupons.push({
+      id: couponId,
+      customer: [],
+      category: '',
+      title: '',
+      description: '',
+      startDate: currentDate, // Use the created Date object
+      endDate: currentDate,   // Use the created Date object
+      amount: 0,
+      price: 0,
+      image: ''
+    });
+  }
+},
+
     gotSingleCustomerAction(state, action: PayloadAction<CustomersModel>) {
       state.customers.push(action.payload);
     },
@@ -52,14 +67,17 @@ const customersSlice = createSlice({
     getCustomerCouponsAction(state,action:PayloadAction<CouponModel[]>) {
       state.customers = state.customers.filter(customer => customer.coupons && customer.coupons.length > 0);
     },
-    getCustomerCouponsByMaxPriceAction(state, action: PayloadAction<number>) {
+    getCustomerCouponsByMaxPriceAction( state, action: PayloadAction<number> ) {
       const numericMaxPrice = action.payload; // Assuming action.payload contains the maximum price
       state.customers.forEach((customer) => {
         if (customer.coupons) {
-          customer.coupons = customer.coupons.filter((coupon) => coupon.price <= numericMaxPrice);
+          customer.coupons = customer.coupons.filter(
+            (coupon) => coupon.price <= numericMaxPrice
+          );
         }
       });
     },
+
     
     getCustomerCouponsByCategoryAction(state, action: PayloadAction<string>) {
       const selectedCategory = action.payload; // Assuming action.payload contains the selected category

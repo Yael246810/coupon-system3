@@ -44,14 +44,11 @@ const guardSlice = createSlice({
             state.isCompany = false;
             state.isCustomer = true;
         },
-        removeAdminAccess(state) {
-            state.isAdmin = initialState.isAdmin;
-        },
-        removeCompanyAccess(state) {
-            state.isCompany = initialState.isCompany;
-        },
-        removeCustomerAccess(state) {
+        removeAll(state) {
             state.isCustomer = initialState.isCustomer;
+            state.isCompany = initialState.isCompany;
+            state.isAdmin = initialState.isAdmin;
+            console.log("removeAll: " + state.isCustomer);
         },
     },
 });
@@ -62,9 +59,7 @@ export const {
     loggedInAsAdmin,
     loggedInAsCompany,
     loggedInAsCustomer,
-    removeAdminAccess,
-    removeCompanyAccess,
-    removeCustomerAccess,
+    removeAll,
 } = guardSlice.actions;
 
 //Export the reducer

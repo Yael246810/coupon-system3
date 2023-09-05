@@ -25,16 +25,15 @@ import DeleteCoupon from "../../Cards/Coupon/DeleteCoupon/DeleteCoupon";
 import GetCompanyCoupons from "../../Cards/Company/GetCompanyCoupons/GetCompanyCoupons";
 import GetSingleCustomer2 from "../../Cards/Customer/GetSingleCustomer2/GetSingleCustomer2";
 import GetSingleCompany from "../../Cards/Company/GetSingleCompany/GetSingleCompany";
-
 import GetCompanyCouponsByCategory from "../../Cards/Company/GetCompanyCouponsByCategory/GetCompanyCouponsByCategory";
 import GetCustomerCouponsByMaxPrice from "../../Cards/Coupon/GetCustomerCouponsUntilMaxPrice/GetCustomerCouponsByMaxPrice";
 import GetCompanyCouponsByMaxPrice from "../../Cards/Company/GetCompanyCouponsByMaxPrice/GetCompanyCouponsByMaxPrice";
 import PurchaseCoupon from "../../Cards/Coupon/PurchaseCoupon/PurchaseCoupon";
 import DeleteCouponPurchased from "../../Cards/Coupon/DeleteCouponPurchased/DeleteCouponPurchased";
-import GetCustomerCoupons from "../../Cards/Coupon/GetCustomerCoupons/GetCustomerCoupons";
 import GetCustomerCouponsByCategory from "../../Cards/Coupon/GetCustomerCouponsByCategory/GetCustomerCouponsByCategory";
 import GetCustomerDetails from "../../Cards/Coupon/GetCustomerDetails/GetCustomerDetails";
 import GetCompanyDetails from "../../Cards/Company/GetCompanyDetails/GetCompanyDetails";
+import GetCustomerCoupons from "../../Cards/Coupon/GetCustomerCoupons/GetCustomerCoupons";
 
 function Routing(): JSX.Element {
     const AdminFlag = useSelector((state:RootState)=>state.guardReducer.isAdmin);

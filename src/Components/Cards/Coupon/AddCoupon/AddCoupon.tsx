@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import "./AddCoupon.css";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Zod, { number, string } from "zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Category, CouponModel } from "../../../../Models/Admin";
@@ -8,8 +8,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import couponWebApiService from "../../../../Services/CouponsWebApiService";
 import notifyService from "../../../../Services/NotificationService";
 import { addedCouponAction } from "../../../Redux/CouponAppState";
-import { CompaniesModel } from "../../../../Models/CompaniesModel";
 import { CouponCompany } from "../../../../Models/CouponCompany";
+import { RootState } from "../../../Redux/store";
 
 interface AddCouponProps{
     couponCompany: CouponCompany;
@@ -18,56 +18,63 @@ interface AddCouponProps{
 function AddCoupon(props:CouponCompany): JSX.Element {
 
     const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-    const dispatch = useDispatch();
+//   // Access the logged-in company details from Redux store
+//   const loggedInCompany = useSelector(
+//     (state: RootState) => state.user.user.company
+//   );
 
-// the data needs to be coupon and a company
-
-    const couponCompanyModelSchema = Zod.object({
-        category: Zod.enum(Object.values(Category)),
-        title: Zod.string().nonempty("Please enter a valid title"),
-        description: Zod.string().nonempty("Please enter a valid description"),
-        startDate: Zod.string().transform((dateString, ctx) => {
-          const date = new Date(dateString);
-          if (!Zod.date().safeParse(date).success) {
-              ctx.addIssue({
-                  code: Zod.ZodIssueCode.invalid_date,
-              })
-          }
-          return date;
-      }),
-      endDate: Zod.string().transform((dateString, ctx) => {
-        const date = new Date(dateString);
-        if (!Zod.date().safeParse(date).success) {
-            ctx.addIssue({
-                code: Zod.ZodIssueCode.invalid_date,
-            })
-        }
-        return date;
-    }),
-    amount: Zod.string().transform((amountString, ctx) => {
-      const numericAmount = parseFloat(amountString);
-      if (isNaN(numericAmount)) {
-          ctx.addIssue({
-              code: Zod.ZodIssueCode.invalid_arguments,
-              argumentsError: "Amount is not a valid number",
-          });
-      }
-      console.log("I am adding a coupon");
-      return numericAmount;
-  }),
-  
-  price: Zod.string().transform((priceString, ctx) => {
-    const numericPrice = parseFloat(priceString);
-    if (isNaN(numericPrice)) {
+  // Define the schema for coupon data
+  const couponCompanyModelSchema = Zod.object({
+    category: Zod.enum([
+      "FOOD",
+      "HEALTH",
+      "SPORT",
+      "ELECTRONICS",
+      "CLOTHING",
+      "HOME",
+      "MOVIES",
+      "TRAVEL",
+      "GAMES",
+      "VACATION",
+    ]),
+    title: Zod.string().nonempty("Please enter a valid title").max(40),
+    description: Zod.string().nonempty("Please enter a valid description"),
+    startDate: Zod.string().transform((dateString, ctx) => {
+      const date = new Date(dateString);
+      if (!Zod.date().safeParse(date).success) {
         ctx.addIssue({
-            code: Zod.ZodIssueCode.invalid_arguments,
-            argumentsError: "Amount is not a valid number",
+          code: Zod.ZodIssueCode.invalid_date,
         });
-    }
-    console.log("I am adding a coupon 1");
-    return numericPrice;
-}),
+      }
+      return date;
+    }),
+    endDate: Zod.string().transform((dateString, ctx) => {
+      const date = new Date(dateString);
+      if (!Zod.date().safeParse(date).success) {
+        ctx.addIssue({
+          code: Zod.ZodIssueCode.invalid_date,
+        });
+      }
+      return date;
+    }),
+    amount: Zod.string()
+  .nonempty("must enter an amount")
+  .transform((amount) => parseInt(amount))
+  .refine((value) => Number.isInteger(value) && value > 0, {
+    message: "amount must be positive",
+  }),
+
+  price: Zod
+    .string()
+    .nonempty("this field is required")
+    .transform((price) => parseFloat(price))
+    .refine((value) => value > 0, {
+      message: "price must be positive",
+    }),
+
+image: Zod.string().nonempty("this field is required"),
 
 name: Zod.string().nonempty("Please enter a valid name"),
     email: Zod.string().email().nonempty("Please enter a correct email address"),
@@ -82,25 +89,27 @@ name: Zod.string().nonempty("Please enter a valid name"),
 console.log("I am adding a coupon 2");
 
 const onSubmit: SubmitHandler<CouponCompany> = (data: CouponCompany) => {
-console.log('button click');
-console.log(data);
-     couponWebApiService.addCoupon(data)
-        .then(res => {
-            notifyService.success('the coupon is added');
-            console.log("I am adding a coupon 3");
-            dispatch(addedCouponAction(res.data));
-            navigate("/companies/:id/coupons");
-            console.log("I am adding a coupon 4");
-        })
-        .catch(err => notifyService.error(err))
+  console.log('button click');
+  console.log('Submitted Data:', data); // Check the entire data object
+  console.log('Category:', data.coupon.category.valueOf); // Corrected access to category
 
+  couponWebApiService.addCoupon(data)
+      .then(res => {
+          notifyService.success('the coupon is added');
+          console.log("I am adding a coupon 3");
+          dispatch(addedCouponAction(res.data));
+          navigate("/companies/:id/coupons");
+          console.log("I am adding a coupon 4");
+      })
+      .catch(err => notifyService.error(err));
 };
-console.log(`category: ${Category}`)
+
+console.log(`category: ${Category}`) // it reaches until here
     return (
         <div className="AddCoupon">
 			<form onSubmit={handleSubmit(onSubmit)}>
       <label htmlFor="category">Category</label>
-                <select {...register("category")}>
+                <select {...register("coupon.category")}>
                     <option value={Category.FOOD}>Food</option>
                     <option value={Category.ELECTRONICS}>Electronics</option>
                     <option value={Category.CLOTHING}>Clothing</option>
@@ -113,30 +122,40 @@ console.log(`category: ${Category}`)
                     <option value={Category.VACATION}>Vacation</option>
                 </select>
 
-      {errors?.title ? <span>{errors.title.message}</span> : <label htmlFor="title">Title</label>}
-      <input {...register("title")} type="text" placeholder="Title" />
+     {errors?.coupon?.title ? <span>{errors.coupon.title.message}</span> : <label htmlFor="title">Title</label>}
+      <input {...register("coupon.title")} type="text" placeholder="Title" />
 
-      {errors?.description ? <span>{errors.description.message}</span> : <label htmlFor="description">Description</label>}
-      <input {...register("description")} type="text" placeholder="Description" />
+      {errors?.coupon?.description ? <span>{errors.coupon.description.message}</span> : <label htmlFor="description">Description</label>}
+      <input {...register("coupon.description")} type="text" placeholder="Description" />
 
-      {errors?.startDate ? <span>{errors.startDate.message}</span> : <label htmlFor="startDate">Start Date</label>}
-      <input {...register("startDate")} type="datetime-local" />
+      {errors?.coupon?.startDate ? <span>{errors.coupon.startDate.message}</span> : <label htmlFor="startDate">Start Date</label>}
+      <input {...register("coupon.startDate")} type="datetime-local" />
 
-      {errors?.endDate ? <span>{errors.endDate.message}</span> : <label htmlFor="endDate">End Date</label>}
-      <input {...register("endDate")} type="datetime-local" />
+      {errors?.coupon?.endDate ? <span>{errors.coupon.endDate.message}</span> : <label htmlFor="endDate">End Date</label>}
+      <input {...register("coupon.endDate")} type="datetime-local" />
 
-      {errors?.amount ? <span>{errors.amount.message}</span> : <label htmlFor="amount">Amount</label>}
-      <input {...register("amount")} type="number" placeholder="Amount" />
+      {errors?.coupon?.amount ? <span>{errors.coupon.amount.message}</span> : <label htmlFor="amount">Amount</label>}
+      <input {...register("coupon.amount")} type="number" placeholder="Amount" />
 
-      {errors?.price ? <span>{errors.price.message}</span> : <label htmlFor="price">Price</label>}
-      <input {...register("price")} type="number" placeholder="Price" />
+      {errors?.coupon?.price ? <span>{errors.coupon.price.message}</span> : <label htmlFor="price">Price</label>}
+      <input {...register("coupon.price")} type="number" placeholder="Price" />
 
-      {errors?.image ? <span>{errors.image.message}</span> : <label htmlFor="image">Image</label>}
-      <input {...register("image")} type="text" placeholder="Image URL" />
+      {errors?.coupon?.image ? <span>{errors.coupon?.image.message}</span> : <label htmlFor="image">Image</label>}
+      <input {...register("coupon.image")} type="text" placeholder="Image URL" />
 
-      
+      {errors?.company?.id ? <span>{errors.company?.id.message}</span> : <label htmlFor="id">Id</label>}
+      <input {...register("company.id")} type="number" placeholder="Id" />
 
-      <button>ADD</button>
+      {errors?.company?.name ? <span>{errors.company?.name.message}</span> : <label htmlFor="name">Name</label>}
+      <input {...register("company.name")} type="text" placeholder="Name" />
+
+      {errors?.company?.email ? <span>{errors.company?.email.message}</span> : <label htmlFor="email">Email</label>}
+      <input {...register("company.email")} type="text" placeholder="Email" />
+
+      {errors?.company?.password ? <span>{errors.company?.password.message}</span> : <label htmlFor="password">Password</label>}
+      <input {...register("company.password")} type="text" placeholder="Password" />      
+
+      <button type="submit">ADD</button>
     </form>
         </div>
     );

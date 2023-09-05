@@ -13,7 +13,7 @@ function AddCompany(): JSX.Element {
 
     const navigate = useNavigate();
 
-    const dispatch = useDispatch(); //TODO: dispatch doesn't work
+    const dispatch = useDispatch(); 
 
 const companiesModelSchema = Zod.object({
     name: Zod.string().nonempty("Please enter a valid name"),

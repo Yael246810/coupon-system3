@@ -10,13 +10,16 @@ function Menu(): JSX.Element {
   const isCompany = useSelector((state:RootState)=> state.guardReducer.isCompany);
   const isCustomer = useSelector((state:RootState)=> state.guardReducer.isCustomer);
 
+  console.log("Menuu: admin: " + isAdmin + " company: " + isCompany + " customer: " + isCustomer);
+
+
     return (
         <div className="Menu">
       <Link to="/home"><button>Home</button></Link>
       <Link to="/about"><button>About</button></Link>
       <Link to="/coupons"><button>Our Coupons</button></Link>
-      {isAdmin &&<Link to="/admin/companies"> <button>Companies</button></Link>}
-      {isAdmin &&<Link to="/admin/customers"><button>Customers</button></Link>}
+      {isAdmin&&<Link to="/admin/companies"> <button>Companies</button></Link>}
+      {isAdmin&&<Link to="/admin/customers"><button>Customers</button></Link>}
       {isAdmin&&<Link to="/admin/customers/add"><button>Add a new customer</button></Link>}
       {isAdmin&&<Link to="/admin/customers/:id"><button>Get a single Customer</button></Link>}
       {isAdmin&&<Link to="/admin/companies/add"><button>Add Company</button></Link>}
@@ -33,8 +36,6 @@ function Menu(): JSX.Element {
       {isCustomer&&<Link to="customers/:id/coupons/price"><button>Customer Coupons by Price</button></Link>}
       {isCustomer&&<Link to="customers/:id/coupons/category"><button>Customer Coupons by Category</button></Link>}
       {isCustomer&&<Link to="customers/:id/details"><button>Customer Details</button></Link>}
-      
-
         </div>
         
     );

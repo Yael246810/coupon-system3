@@ -5,53 +5,41 @@ import store from "../Components/Redux/store";
 import { CompaniesModel } from "../Models/CompaniesModel";
 import { CompanyReq } from "../Models/CompanyReq";
 import { Category, CompanyModel, CouponModel } from "../Models/Admin";
+import AuthorizationService from './AuthorizationService';
+
+const authService = new AuthorizationService();
 
 class WebApiService{
 
     public getAllCompanies():Promise<AxiosResponse<CompaniesModel[],any>>{
-        return axios.get<CompaniesModel[]>(UrlService.allCompanies);
+        return axios.get<CompaniesModel[]>(UrlService.allCompanies,authService.getHeaders());
     }
-
-    public getAllCompaniesAuth():Promise<AxiosResponse<CompaniesModel[],any>>{
-        const headers = {'Authorization':store.getState().user.token}; // maybe I will do it another way
-        return axios.get<CompaniesModel[]>(UrlService.user,{headers});
-    }
-
-
     public addCompany(company:CompanyReq):Promise<AxiosResponse<CompanyModel>>{
-        const url = UrlService.admin+"/company"; // to define it in UrlService
-        return axios.post<CompanyModel>(url,company);
+        return axios.post<CompanyModel>(`${UrlService.admin}/company`,company,authService.getPostHeaders());
     }
 
     public deleteCompany(id:number):Promise<AxiosResponse<any>>{
-        return axios.delete<any>(`${UrlService.allCompanies}/${id}`)
+        return axios.delete<any>(`${UrlService.allCompanies}/${id}`,authService.getHeaders());
     }
 
     public updateCompany(company: CompanyReq): Promise<AxiosResponse<CompanyModel>> {
-        //const headers = { 'Authorization': store.getState().userReducer.user.token }
-        console.log("Update company: id:" + company.id + " email: "+ company.email + " name: " + company.name)
-        return axios.put(`${UrlService.admin}/companies/company`, company);
+        return axios.put(`${UrlService.admin}/companies/company`, company,authService.getHeaders());
     }
 
     public getSingleCompany(id:number): Promise<AxiosResponse<CompaniesModel>>{
-        //const headers = { 'Authorization': store.getState().userReducer.user.token }
-        return axios.get(`${UrlService.admin}/companies/${id}`);
+        return axios.get(`${UrlService.admin}/companies/${id}`,authService.getHeaders());
     }
     public getCompanyCoupons(id:number): Promise<AxiosResponse<CouponModel[]>>{
-        console.log(`I want to get the coupons of company #${id}` )
-        return axios.get(`${UrlService.company}/${id}/coupons`);
+        return axios.get(`${UrlService.company}/${id}/coupons`,authService.getHeaders());
     }
     public getCompanyCouponsByMaxPrice(id:number, price:number): Promise<AxiosResponse<CouponModel[]>>{
-        console.log(`I want to get coupons by max price of company ${id} and max price ${price}`)
-        return axios.get(`${UrlService.company}/${id}/coupons/price?max=${price}`)
+        return axios.get(`${UrlService.company}/${id}/coupons/price?max=${price}`,authService.getHeaders())
     }
     public getCompanyCouponsByCategory(id: number, category: Category): Promise<AxiosResponse<CouponModel[]>> {
-        return axios.get(`${UrlService.company}/${id}/coupons/category?val=${Category[category]}`);
+        return axios.get(`${UrlService.company}/${id}/coupons/category?val=${Category[category]}`,authService.getHeaders());
       }
       public getCompanyDetails(companyId:number): Promise<AxiosResponse<CompaniesModel>>{
-        //  const headers = { 'Authorization': store.getState().userReducer.user.token }
-        console.log('IM HERE')
-        return axios.get(`${UrlService.company}/${companyId}/details`);
+        return axios.get(`${UrlService.company}/${companyId}/details`,authService.getHeaders());
 
     }
 }
