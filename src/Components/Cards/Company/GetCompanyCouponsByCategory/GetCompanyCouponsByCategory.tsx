@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { CouponModel } from "../../../../Models/Admin";
 import companyWebApiService from "../../../../Services/CompanyWebApiService";
-import { getCompanyCouponsAction } from "../../../Redux/CompanyAppState";
+import { getCompanyCouponsByCategoryAction } from "../../../Redux/CompanyAppState";
 import notifyService from "../../../../Services/NotificationService";
 import { Category } from "../../../../Models/Admin"; 
 
@@ -27,7 +27,7 @@ function GetCompanyCouponsByCategory(): JSX.Element {
                 .getCompanyCouponsByCategory(numericId, data.category) // Pass the selected category
                 .then((res) => {
                     notifyService.success(`Fetched company #${numericId} coupons by category`);
-                    dispatch(getCompanyCouponsAction(res.data));
+                    dispatch(getCompanyCouponsByCategoryAction(res.data));
                     setFetchedCoupons(res.data);
                 })
                 .catch((err) => notifyService.error(err));

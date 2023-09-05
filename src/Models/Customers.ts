@@ -1,3 +1,4 @@
+
 export type Root = CustomersModel[]
 
 export interface CustomersModel {
@@ -6,7 +7,7 @@ export interface CustomersModel {
   lastName: string;
   email: string;
   password: string;
-  coupons?: Coupon[];
+  coupons: Coupon[];
 }
 
 export interface Coupon {

@@ -1,7 +1,6 @@
 //This is CustomerAppState.ts file
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { CustomerModel } from '../../Models/Admin';
-import { CustomersModel } from '../../Models/Customers';
 
 //This is the Contract
 interface CustomersState {
@@ -16,7 +15,6 @@ const initialState: CustomersState = {
 //These are all possible actions
 export enum ActionType {
 			GOT_ALL_CUSTOMERS = "GOT_ALL_CUSTOMERS",
-			GOT_SINGLE_CUSTOMER = "GOT_SINGLE_CUSTOMER",
             ADDED_CUSTOMER = "ADDED_CUSTOMER",
             UPDATED_CUSTOMER = "UPDATED_CUSTOMER",
             DELETED_CUSTOMER = "DELETED_CUSTOMER",
@@ -31,10 +29,7 @@ const customersSlice = createSlice({
     gotAllCustomersAction(state, action: PayloadAction<CustomerModel[]>) {
       state.customers = action.payload;
     },
-    gotSingleCustomerAction(state, action: PayloadAction<CustomersModel>) {
-       state.customers.push(action.payload);
-     },
-     
+    
     addedCustomerAction(state, action: PayloadAction<CustomerModel>) {
       state.customers.push(action.payload);
     },
@@ -64,7 +59,6 @@ const customersSlice = createSlice({
 //This is the exported tasks
 export const {
   gotAllCustomersAction,
-  gotSingleCustomerAction,
   addedCustomerAction,
   updatedCustomerAction,
   deletedCustomerAction,

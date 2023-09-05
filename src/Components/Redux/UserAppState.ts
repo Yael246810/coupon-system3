@@ -5,10 +5,11 @@ import { ReactNode } from "react";
 
 // This is the Contract
 interface UserState {
+  id: number;
   token: any;
   email: ReactNode;
   user: LoginResModel;
-  // Type: Type;
+  Type: Type;
 }
 
 // This is the initialized User State - initialized with an empty token and email

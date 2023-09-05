@@ -52,4 +52,4 @@ export const {
 
 
 //Export the reducer
-export const companiesReducer = companiesSlice.reducer;
+export const companiesNoCouponsReducer = companiesSlice.reducer;

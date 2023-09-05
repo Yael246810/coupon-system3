@@ -3,10 +3,10 @@ import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import customerWebApiService from "../../../../Services/CustomerWebApiService";
 import notifyService from "../../../../Services/NotificationService";
-import { gotSingleCustomerAction } from "../../../Redux/CustomerAppState";
 import { CustomersModel } from "../../../../Models/Customers";
 import "./GetSingleCustomer2.css"; // Import your CSS file here
 import { CouponModel } from "../../../../Models/Admin";
+import { gotSingleCustomerAction } from "../../../Redux/CustomerWithCouponsAppState";
 
 function GetSingleCustomer2(): JSX.Element {
   const dispatch = useDispatch();

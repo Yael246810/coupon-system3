@@ -72,11 +72,14 @@ function UpdateCoupon(): JSX.Element {
           })
         ),
       });
+      console.log("11");
 
       const { register, handleSubmit, control, formState: { errors, isValid, isSubmitting } } =
         useForm<CouponModel>({ defaultValues: defaultValuesObj, mode: "all", resolver: zodResolver(couponModelSchema) });
+        console.log("22");
 
         const onSubmit: SubmitHandler<CouponModel> = (data: CouponModel) => {
+          console.log("33");
 
             return couponWebApiService.updateCoupon(id, data)
                 .then(res => {

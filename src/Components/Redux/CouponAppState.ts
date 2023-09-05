@@ -1,6 +1,7 @@
 //This is CustomerAppState.ts file
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { CouponModel } from '../../Models/Admin';
+import { CouponCompany } from '../../Models/CouponCompany';
 
 //This is the Contract
 interface CouponsState {
@@ -34,8 +35,8 @@ const couponsSlice = createSlice({
        state.coupons.push(action.payload);
      },
      
-    addedCouponAction(state, action: PayloadAction<CouponModel>) {
-      state.coupons.push(action.payload);
+    addedCouponAction(state, action: PayloadAction<CouponCompany>) {
+      state.coupons.push(action.payload.coupon);
     },
     
     updatedCouponAction(state, action: PayloadAction<CouponModel>) {

@@ -4,12 +4,15 @@ import { userReducer } from './UserAppState';
 import { companiesReducer } from './CompanyAppState';
 import { couponsReducer } from './CouponAppState';
 import { customersReducer } from './CustomerAppState';
+import { companiesNoCouponsReducer } from './CompanyNoCouponsAppState';
+
 
 // This is rootReducer
 const rootReducer = {
     customers: customersReducer, // Use actual customersReducer function
     user: userReducer,
     companies: companiesReducer,
+    companiesNoCoupons: companiesNoCouponsReducer,
     guardReducer: guardReducer,
     couponsReducer: couponsReducer,
 };

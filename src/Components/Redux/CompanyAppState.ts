@@ -21,7 +21,8 @@ export enum ActionType {
             REMOVED_COMPANIES = "REMOVED_COMPANIES",
             GET_COMPANY_COUPONS = "GET_COMPANY_COUPONS",
             GET_COMPANY_COUPONS_BY_MAX_PRICE = "GET_COMPANY_COUPONS_BY_MAX_PRICE",
-            GET_COMPANY_COUPONS_BY_CATEGORY = "GET_COMPANY_COUPONS_BY_CATEGORY"
+            GET_COMPANY_COUPONS_BY_CATEGORY = "GET_COMPANY_COUPONS_BY_CATEGORY",
+            GET_COMPANY_DETAILS_ACTION = "GET_COMPANY_DETAILS_ACTION"
 }
 
 //This is tasksSlice
@@ -47,6 +48,9 @@ const companiesSlice = createSlice({
     getCompanyCouponsByCategoryAction(state,action:PayloadAction<CouponModel[]>){
       state.companies = state.companies.filter(company=>company.coupons.category && company.coupons.length>0)
     },
+    getCompanyDetailsAction(state,action:PayloadAction<CompaniesModel>){
+      state.companies.push(action.payload);
+    },
     removeCompanies(state) {
       state.companies = [];
     },
@@ -63,6 +67,7 @@ export const {
   getCompanyCouponsAction,
   getCompanyCouponsByMaxPriceAction,
   getCompanyCouponsByCategoryAction,
+  getCompanyDetailsAction,
 } = companiesSlice.actions;
 
 

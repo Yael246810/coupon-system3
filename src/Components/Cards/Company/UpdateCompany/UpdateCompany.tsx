@@ -12,15 +12,13 @@ import { updatedCompanyAction } from "../../../Redux/CompanyNoCouponsAppState";
 import { CompanyReq } from "../../../../Models/CompanyReq";
 import { CompanyModel } from "../../../../Models/Admin";
 
-function UpdateCompany(_company:CompanyReq): JSX.Element {
+function UpdateCompany(company:CompanyReq): JSX.Element {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const params = useParams();
     const id = +(params.id || 0);
-    const [obj] = useState<CompanyReq>(store.getState().companies.companies.filter(c=>c.id===id)[0])
-    console.log(obj);   
-
+    const [obj] = useState<CompanyReq>(store.getState().companiesNoCoupons.companies.filter(c=>c.id===id)[0])
   
     const defaultValuesObj = { ...obj }; 
 
@@ -47,16 +45,21 @@ function UpdateCompany(_company:CompanyReq): JSX.Element {
         useForm<CompanyReq>({ defaultValues: defaultValuesObj, mode: "all", resolver: zodResolver(companiesModelUpdateSchema) });
 
         const onSubmit: SubmitHandler<CompanyModel> = (data: CompanyModel) => {
+            data.id = id;
+            
             if (data.id === 0) {
                 console.log(`Invalid ID ${data.id}`);
+                
                 return; // Don't proceed with the update
             }
         
             return companyWebApiService.updateCompany(data)
                 .then(res => {
+                    // obj.id===updateAndValidateId;
+                    console.log("I'm updating the company")
                     notifyService.success("company is updated!")
                     dispatch(updatedCompanyAction(res.data));
-                    navigate("/admin/companies");
+                    navigate("/admin/companies", { state: { wasCompaniesDataUpdated: true } });
                 })
                 .catch(err => notifyService.error(err))
         };
@@ -66,8 +69,12 @@ function UpdateCompany(_company:CompanyReq): JSX.Element {
 
             <form onSubmit={(...args) => void handleSubmit(onSubmit)(...args)}>
                 
-            <label htmlFor="id">Id</label>
-                <input name="id" type="text" value={obj.id} disabled={true} />
+            {obj && (
+  <div>
+    <label htmlFor="id">Id</label>
+    <input name="id" type="number" value={obj.id} disabled={true} />
+  </div>
+)}
 
                 {errors?.name ? <span>{errors.name.message}</span> : <label htmlFor="name">Name</label>}
                 <input {...register("name")} type="text" placeholder="name" />

@@ -73,7 +73,7 @@ function Routing(): JSX.Element {
                 
                 
                 {CustomerFlag&&<Route path="customers/:id/coupons/:id/purchase" element={<PurchaseCoupon/>}/>}
-                {CustomerFlag&&<Route path="customers/:id/coupons/:id/delete" element={<DeleteCouponPurchased/>}/>}
+                {CustomerFlag&&<Route path="customers/:customerId/coupons/:couponId/delete" element={<DeleteCouponPurchased />} />}
                 {CustomerFlag&&<Route path="customers/:id/coupons" element={<GetCustomerCoupons/>}/>}
                 {CustomerFlag&&<Route path="customers/:id/coupons/price" element={<GetCustomerCouponsByMaxPrice/>}/>}
                 {CustomerFlag&&<Route path="customers/:id/coupons/category" element={<GetCustomerCouponsByCategory/>}/>}

@@ -8,7 +8,7 @@ export interface CompanyModel {
 
 export interface CouponModel {
     id:number;
-    category:string;
+    category:Category;
     title:string;
     description:string;
     startDate:Date;

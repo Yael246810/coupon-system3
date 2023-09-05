@@ -36,7 +36,7 @@ console.log(data);
             console.log("response name: " + res.data.name + " response email: " + res.data.email )
             //TODO: dispatch doesn't work
             dispatch(addedCompanyAction(res.data));
-            navigate("/admin/companies");
+            navigate("/admin/companies", { state: { wasCompaniesDataUpdated: true } });
         })
         .catch(err => notifyService.error(err))
 

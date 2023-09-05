@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./CompaniesList.css";
 import { CompanyModel } from "../../../Models/Admin";
 import CompanyCard from "../../Cards/Company/CompanyCard/CompanyCard";
@@ -9,13 +9,18 @@ import EmptyView from "../../Pages/EmptyView/EmptyView";
 import companyWebApiService from "../../../Services/CompanyWebApiService";
 import { gotAllCompaniesAction } from "../../Redux/CompanyAppState";
 import { useDispatch } from "react-redux";
+import { useLocation } from 'react-router-dom';
 
 function CompaniesList(): JSX.Element {
     const[companies,setCompanies]= useState<CompanyModel[]>(store.getState().companies.companies);
     const dispatch = useDispatch();
 
+    const location = useLocation();
+    const wasCompaniesDataUpdated = useRef(location.state?.wasCompaniesDataUpdated);
+
     useEffect(()=>{
-        if (companies.length === 0) {
+        if (companies.length === 0 || wasCompaniesDataUpdated.current) {
+            wasCompaniesDataUpdated.current = false;
         companyWebApiService.getAllCompanies()
         .then(res => {
             dispatch(gotAllCompaniesAction(res.data));

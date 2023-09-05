@@ -9,12 +9,13 @@ import couponWebApiService from "../../../../Services/CouponsWebApiService";
 import notifyService from "../../../../Services/NotificationService";
 import { addedCouponAction } from "../../../Redux/CouponAppState";
 import { CompaniesModel } from "../../../../Models/CompaniesModel";
+import { CouponCompany } from "../../../../Models/CouponCompany";
 
 interface AddCouponProps{
-    company:CompaniesModel;
+    couponCompany: CouponCompany;
   }
 
-function AddCoupon(props:CompaniesModel): JSX.Element {
+function AddCoupon(props:CouponCompany): JSX.Element {
 
     const navigate = useNavigate();
 
@@ -56,7 +57,6 @@ function AddCoupon(props:CompaniesModel): JSX.Element {
       return numericAmount;
   }),
   
-  
   price: Zod.string().transform((priceString, ctx) => {
     const numericPrice = parseFloat(priceString);
     if (isNaN(numericPrice)) {
@@ -68,14 +68,20 @@ function AddCoupon(props:CompaniesModel): JSX.Element {
     console.log("I am adding a coupon 1");
     return numericPrice;
 }),
+
+name: Zod.string().nonempty("Please enter a valid name"),
+    email: Zod.string().email().nonempty("Please enter a correct email address"),
+    password: Zod.string().min(4,"Password must contain at least 4 characters"),
       
       });
+
+
       const { register, handleSubmit, formState: { errors, isValid, isSubmitting } }
-= useForm<CouponModel>({ mode: "all", resolver: zodResolver(couponCompanyModelSchema) });
+= useForm<CouponCompany>({ mode: "all", resolver: zodResolver(couponCompanyModelSchema) });
 
 console.log("I am adding a coupon 2");
 
-const onSubmit: SubmitHandler<CouponModel> = (data: CouponModel) => {
+const onSubmit: SubmitHandler<CouponCompany> = (data: CouponCompany) => {
 console.log('button click');
 console.log(data);
      couponWebApiService.addCoupon(data)
@@ -127,6 +133,8 @@ console.log(`category: ${Category}`)
 
       {errors?.image ? <span>{errors.image.message}</span> : <label htmlFor="image">Image</label>}
       <input {...register("image")} type="text" placeholder="Image URL" />
+
+      
 
       <button>ADD</button>
     </form>

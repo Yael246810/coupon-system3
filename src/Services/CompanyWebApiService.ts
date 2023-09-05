@@ -1,9 +1,10 @@
+import { Category } from './../Models/Admin';
 import axios, { AxiosResponse } from "axios";
 import UrlService from "./UrlService";
 import store from "../Components/Redux/store";
 import { CompaniesModel } from "../Models/CompaniesModel";
 import { CompanyReq } from "../Models/CompanyReq";
-import { CompanyModel, CouponModel } from "../Models/Admin";
+import { Category, CompanyModel, CouponModel } from "../Models/Admin";
 
 class WebApiService{
 
@@ -28,7 +29,7 @@ class WebApiService{
 
     public updateCompany(company: CompanyReq): Promise<AxiosResponse<CompanyModel>> {
         //const headers = { 'Authorization': store.getState().userReducer.user.token }
-        console.log("Hello updated company!!!")
+        console.log("Update company: id:" + company.id + " email: "+ company.email + " name: " + company.name)
         return axios.put(`${UrlService.admin}/companies/company`, company);
     }
 
@@ -44,8 +45,14 @@ class WebApiService{
         console.log(`I want to get coupons by max price of company ${id} and max price ${price}`)
         return axios.get(`${UrlService.company}/${id}/coupons/price?max=${price}`)
     }
-    public getCompanyCouponsByCategory(id:number): Promise<AxiosResponse<CouponModel[]>>{
-        return axios.get(`${UrlService.company}/${id}/coupons/category`)
+    public getCompanyCouponsByCategory(id: number, category: Category): Promise<AxiosResponse<CouponModel[]>> {
+        return axios.get(`${UrlService.company}/${id}/coupons/category?val=${Category[category]}`);
+      }
+      public getCompanyDetails(companyId:number): Promise<AxiosResponse<CompaniesModel>>{
+        //  const headers = { 'Authorization': store.getState().userReducer.user.token }
+        console.log('IM HERE')
+        return axios.get(`${UrlService.company}/${companyId}/details`);
+
     }
 }
 

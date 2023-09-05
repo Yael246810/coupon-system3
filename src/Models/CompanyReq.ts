@@ -1,5 +1,5 @@
 export interface CompanyReq{
-  id: string | number | readonly string[] | undefined;
+  id: number;
   name: string;
   email: string;
   password: string;

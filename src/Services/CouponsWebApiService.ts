@@ -1,12 +1,13 @@
 import axios, { AxiosResponse } from "axios";
 import { CouponModel } from "../Models/Admin";
 import UrlService from "./UrlService";
+import { CouponCompany } from "../Models/CouponCompany";
 
 class WebApiService{
 
-    public addCoupon(coupon:CouponModel):Promise<AxiosResponse<CouponModel>>{
+    public addCoupon(coupon:CouponCompany):Promise<AxiosResponse<CouponCompany>>{
         console.log("I want to add this coupon")
-        return axios.post<CouponModel>(`${UrlService.company}/coupon`,coupon);
+        return axios.post<CouponCompany>(`${UrlService.company}/coupon`,coupon);
     }
 
     public deleteCoupon(id:number):Promise<AxiosResponse<any>>{

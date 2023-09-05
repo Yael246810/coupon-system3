@@ -30,7 +30,7 @@ function UpdateCustomer(customer: CustomerModel): JSX.Element {
         password: Zod.string().min(4,"Password must contain at least 4 characters"),
     });
 
-    const updateAndValidateId = (newId) => {
+    const updateAndValidateId = (newId:number) => {
         if (newId === id) {
             return newId;
         } else {
@@ -51,7 +51,7 @@ function UpdateCustomer(customer: CustomerModel): JSX.Element {
             .then(res => {
                 notifyService.success("customer is updated!")
                 dispatch(updatedCustomerAction(res.data));
-                navigate("/admin/customers");
+                navigate("/admin/customers",{state:{wasCustomersDataUpdated: true }});
             })
             .catch(err => notifyService.error(err))
 

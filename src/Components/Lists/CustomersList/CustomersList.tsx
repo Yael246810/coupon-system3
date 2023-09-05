@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./CustomersList.css";
 import CustomerCard from "../../Cards/Customer/CustomerCard/CustomerCard";
 import notifyService from "../../../Services/NotificationService";
@@ -8,15 +8,20 @@ import store, { RootState } from "../../Redux/store";
 import { gotAllCustomersAction } from "../../Redux/CustomerAppState";
 import { useDispatch, useSelector } from "react-redux";
 import webApiService from "../../../Services/CustomerWebApiService";
-import { customerModel } from "../../../Models/Admin";
+import { CustomerModel } from "../../../Models/Admin";
+import { useLocation } from "react-router-dom";
 
 function CustomersList(): JSX.Element {
-    const[customers,setCustomers]= useState<customerModel[]>(store.getState().customers.customers);
-    // const customers = useSelector((state: RootState) => state.customers.customers); 
+    const[customers,setCustomers]= useState<CustomerModel[]>(store.getState().customers.customers);
     const dispatch = useDispatch();
 
+    const location = useLocation();
+    const wasCustomersDataUpdated = useRef(location.state?.wasCustomersDataUpdated);
+
     useEffect(() => {
-        if (customers.length === 0) {
+        if (customers.length === 0 || wasCustomersDataUpdated.current) {
+            wasCustomersDataUpdated.current = false;
+
             webApiService.getAllCustomers()
                 .then(res => {
                     dispatch(gotAllCustomersAction(res.data));

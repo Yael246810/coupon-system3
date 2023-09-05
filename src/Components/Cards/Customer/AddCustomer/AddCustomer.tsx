@@ -33,7 +33,7 @@ const onSubmit: SubmitHandler<CustomerReq> = (data: CustomerReq) => {
         .then(res => {
             notifyService.success('the customer is added');
             dispatch(addedCustomerAction(res.data));
-            navigate("/admin/customers");
+            navigate("/admin/customers",{state:{wasCustomersDataUpdated: true }});
         })
         .catch(err => notifyService.error(err))
 
