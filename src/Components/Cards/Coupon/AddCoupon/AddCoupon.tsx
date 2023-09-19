@@ -7,15 +7,14 @@ import { Category, CouponModel } from "../../../../Models/Admin";
 import { zodResolver } from "@hookform/resolvers/zod";
 import couponWebApiService from "../../../../Services/CouponsWebApiService";
 import notifyService from "../../../../Services/NotificationService";
-import { addedCouponAction } from "../../../Redux/CouponAppState";
+import { addedCouponAction, couponsReducer } from "../../../Redux/CouponAppState";
 import { CouponCompany } from "../../../../Models/CouponCompany";
-import { RootState } from "../../../Redux/store";
 
 interface AddCouponProps{
     couponCompany: CouponCompany;
   }
 
-function AddCoupon(props:CouponCompany): JSX.Element {
+function AddCoupon(): JSX.Element {
 
     const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -25,21 +24,15 @@ function AddCoupon(props:CouponCompany): JSX.Element {
 //     (state: RootState) => state.user.user.company
 //   );
 
+
+
   // Define the schema for coupon data
   const couponCompanyModelSchema = Zod.object({
-    category: Zod.enum([
-      "FOOD",
-      "HEALTH",
-      "SPORT",
-      "ELECTRONICS",
-      "CLOTHING",
-      "HOME",
-      "MOVIES",
-      "TRAVEL",
-      "GAMES",
-      "VACATION",
-    ]),
-    title: Zod.string().nonempty("Please enter a valid title").max(40),
+
+
+    coupon: Zod.object({
+
+      title: Zod.string().nonempty("Please enter a valid title").max(40),
     description: Zod.string().nonempty("Please enter a valid description"),
     startDate: Zod.string().transform((dateString, ctx) => {
       const date = new Date(dateString);
@@ -74,41 +67,64 @@ function AddCoupon(props:CouponCompany): JSX.Element {
       message: "price must be positive",
     }),
 
-image: Zod.string().nonempty("this field is required"),
+image: Zod.string().nonempty("this field is required")
+}),
 
-name: Zod.string().nonempty("Please enter a valid name"),
+    company: Zod.object({
+      name: Zod.string().nonempty("Please enter a valid name"),
     email: Zod.string().email().nonempty("Please enter a correct email address"),
     password: Zod.string().min(4,"Password must contain at least 4 characters"),
-      
+    id: Zod.string()
+  .nonempty("must enter an id")
+  .transform((id) => parseInt(id))
+  .refine((value) => Number.isInteger(value) && value > 0, {
+    message: "id must be positive",
+  }),
+      })
+
+
+    // category: Zod.enum([
+    //   "FOOD",
+    //   "HEALTH",
+    //   "SPORT",
+    //   "ELECTRONICS",
+    //   "CLOTHING",
+    //   "HOME",
+    //   "MOVIES",
+    //   "TRAVEL",
+    //   "GAMES",
+    //   "VACATION",
+    // ]),
+    
+
+
       });
 
 
       const { register, handleSubmit, formState: { errors, isValid, isSubmitting } }
 = useForm<CouponCompany>({ mode: "all", resolver: zodResolver(couponCompanyModelSchema) });
 
-console.log("I am adding a coupon 2");
-
 const onSubmit: SubmitHandler<CouponCompany> = (data: CouponCompany) => {
-  console.log('button click');
   console.log('Submitted Data:', data); // Check the entire data object
-  console.log('Category:', data.coupon.category.valueOf); // Corrected access to category
+  data.coupon.category = Category.ELECTRONICS;
 
   couponWebApiService.addCoupon(data)
       .then(res => {
           notifyService.success('the coupon is added');
           console.log("I am adding a coupon 3");
           dispatch(addedCouponAction(res.data));
-          navigate("/companies/:id/coupons");
+          
+          // navigate("/companies/:id/coupons");
+          navigate(`/companies/${props.couponCompany.company.id}/coupons`);
           console.log("I am adding a coupon 4");
       })
       .catch(err => notifyService.error(err));
 };
 
-console.log(`category: ${Category}`) // it reaches until here
     return (
         <div className="AddCoupon">
 			<form onSubmit={handleSubmit(onSubmit)}>
-      <label htmlFor="category">Category</label>
+      {/* <label htmlFor="category">Category</label>
                 <select {...register("coupon.category")}>
                     <option value={Category.FOOD}>Food</option>
                     <option value={Category.ELECTRONICS}>Electronics</option>
@@ -120,7 +136,7 @@ console.log(`category: ${Category}`) // it reaches until here
                     <option value={Category.SPORT}>Sport</option>
                     <option value={Category.TRAVEL}>Travel</option>
                     <option value={Category.VACATION}>Vacation</option>
-                </select>
+                </select> */}
 
      {errors?.coupon?.title ? <span>{errors.coupon.title.message}</span> : <label htmlFor="title">Title</label>}
       <input {...register("coupon.title")} type="text" placeholder="Title" />

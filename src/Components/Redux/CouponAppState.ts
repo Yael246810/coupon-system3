@@ -39,17 +39,18 @@ const couponsSlice = createSlice({
       state.coupons.push(action.payload.coupon);
     },
     
-    updatedCouponAction(state, action: PayloadAction<CouponModel>) {
+    updatedCouponAction(state, action: PayloadAction<CouponCompany>) {
       const updatedCoupon = action.payload;
-      const idx = state.coupons.findIndex(
-        (coupon) => coupon.id === updatedCoupon.id
-      );
-
+      const idx = state.coupons.findIndex((coupon) => coupon.id === updatedCoupon.id);
+    
       if (idx !== -1) {
-        state.coupons[idx] = updatedCoupon;
+        // Use Object.assign or spread (...) operator to create a new object
+        // with the updated values instead of modifying the existing object.
+        // This ensures that Redux detects the state change correctly.
+        state.coupons[idx] = { ...state.coupons[idx], ...updatedCoupon };
       }
     },
-
+    
     deletedCouponAction(state, action: PayloadAction<number>) {
       state.coupons = state.coupons.filter((coupon) => coupon.id !== action.payload);
     },

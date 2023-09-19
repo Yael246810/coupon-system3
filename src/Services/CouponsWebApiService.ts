@@ -9,7 +9,7 @@ const authService = new AuthorizationService();
 class WebApiService{
 
     public addCoupon(coupon:CouponCompany):Promise<AxiosResponse<CouponCompany>>{
-        console.log("I want to add this coupon")
+        console.log("I want to add this coupon" +coupon)
         return axios.post<CouponCompany>(`${UrlService.company}/coupon`,coupon);
     }
 
@@ -17,9 +17,9 @@ class WebApiService{
         return axios.delete<any>(`${UrlService.company}/${id}`,authService.getHeaders())
     }
 
-    public updateCoupon(id: number, coupon: CouponNoCompanyOrCustomerModel): Promise<AxiosResponse<CouponModel>> {
+    public updateCoupon(coupon: CouponCompany): Promise<AxiosResponse<CouponCompany>> {
         //const headers = { 'Authorization': store.getState().userReducer.user.token }
-        return axios.put(`${UrlService.company}/coupon/${id}`, coupon);
+        return axios.put(`${UrlService.company}/coupon`, coupon);
     }
 }
 
