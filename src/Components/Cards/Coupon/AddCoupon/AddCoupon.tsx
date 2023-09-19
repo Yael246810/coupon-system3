@@ -83,7 +83,6 @@ image: Zod.string().nonempty("this field is required")
 
 const onSubmit: SubmitHandler<CouponCompany> = (data: CouponCompany) => {
   console.log('Submitted Data:', data); // Check the entire data object
-  data.coupon.category = Category.ELECTRONICS;
 
   couponWebApiService.addCoupon(data)
       .then(res => {

@@ -26,7 +26,7 @@ function Menu(): JSX.Element {
       {isAdmin&&<Link to="/admin/companies/:id"><button>Get a single Company</button></Link>}
 
       {isCompany&&<Link to="/companies/coupons/add"><button>Add Coupon</button></Link>}
-      {isCompany&&<Link to="/companies/:id/coupons"><button>Company Coupons</button></Link>}
+      {isCompany&&<Link to="/companies/coupons"><button>Company Coupons</button></Link>}
       {isCompany&&<Link to="/companies/:id/coupons/price"><button>Company Coupons by price</button></Link>}
       {isCompany&&<Link to="/companies/:id/coupons/category"><button>Company Coupons by category</button></Link>}
       {isCompany&&<Link to="/companies/:id/details"><button>Company Details</button></Link>}

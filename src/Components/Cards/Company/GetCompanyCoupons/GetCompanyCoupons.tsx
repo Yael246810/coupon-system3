@@ -25,14 +25,10 @@ function GetCompanyCoupons(): JSX.Element {
     const parsedId = parseInt(data.id);
 
     if (!isNaN(parsedId)) {
-
       setNumericId(parsedId); // Store numericId in the component's state
-      console.log("$3company id: " + parsedId);
-
       companyWebApiService
         .getCompanyCoupons(parsedId)
         .then((res) => {
-          console.log("getCOmp resp: " + res.data.length);
           notifyService.success(`Fetched company #${parsedId}`);
           dispatch(getCompanyCouponsAction(res.data));
           setFetchedCoupons(res.data);
@@ -42,6 +38,8 @@ function GetCompanyCoupons(): JSX.Element {
       notifyService.error("Please enter a valid company ID");
     }
   };
+
+  console.log("$numberId: " + numericId);
 
   return (
     <div className="GetCompanyCoupons">
@@ -63,7 +61,7 @@ function GetCompanyCoupons(): JSX.Element {
           <h2>Coupons</h2>
           {fetchedCoupons.length !== 0 ? (
             fetchedCoupons.map((coupon) => (
-              <CouponCard key={coupon.id} coupon={coupon} customerId={numericId} isCompanyConnected={true} />
+              <CouponCard key={coupon.id} coupon={coupon} customerId={numericId} isCompanyConnected={true} companyId={numericId}/>
             ))
           ) : (
             <EmptyView msg="There are no coupons available at the moment" />

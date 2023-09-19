@@ -63,9 +63,9 @@ function Routing(): JSX.Element {
                 {AdminFlag&&<Route path="/admin/companies/:id" element={<GetSingleCompany/>}/>}
 
                 {CompanyFlag&&<Route path="/companies/coupons/add" element={<AddCoupon/>}/>} 
-                {CompanyFlag&&<Route path="/companies/update/:id" element={<UpdateCoupon/>}/>}
+                {CompanyFlag&&<Route path="/companies/:companyId/update/:id" element={<UpdateCoupon/>}/>}
                 {CompanyFlag&&<Route path="/companies/delete/:id" element={<DeleteCoupon/>}/>}
-                {CompanyFlag&&<Route path="/companies/:id/coupons" element={<GetCompanyCoupons/>}/>}
+                {CompanyFlag&&<Route path="/companies/coupons" element={<GetCompanyCoupons/>}/>}
                 {CompanyFlag&&<Route path="/companies/:id/coupons/price" element={<GetCompanyCouponsByMaxPrice/>}/>}
                 {CompanyFlag&&<Route path="/companies/:id/coupons/category" element={<GetCompanyCouponsByCategory/>}/>}
                 {CompanyFlag&&<Route path="/companies/:id/details" element={<GetCompanyDetails/>}/>}

@@ -7,7 +7,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import couponWebApiService from "../../../../Services/CouponsWebApiService";
 import notifyService from "../../../../Services/NotificationService";
 import { updatedCouponAction } from "../../../Redux/CouponAppState";
-import { Category,} from "../../../../Models/Admin";
 import { CouponCompany } from "../../../../Models/CouponCompany";
 
 function UpdateCoupon(): JSX.Element {
@@ -16,7 +15,8 @@ function UpdateCoupon(): JSX.Element {
     const navigate = useNavigate();
     const params = useParams();
     const id = +(params.id || 0);
-    console.log("params.id: " + params.id);
+    const companyId = +(params.companyId || 0);
+    console.log("params.companyId: " + params.companyId);
    
     const couponCompanyModelSchema = Zod.object({
 
@@ -68,22 +68,19 @@ function UpdateCoupon(): JSX.Element {
 
         const onSubmit: SubmitHandler<CouponCompany> = (data: CouponCompany) => {
          
-          // data.company = {
-          //   id: 4,
-          // };
+          data.company = {
+            id: companyId,
+          };
 
           console.log('Submitted Data:', data); 
           data.coupon.id = id;
-          data.coupon.category = Category.ELECTRONICS;
           console.log("id: "+id);
 
             return couponWebApiService.updateCoupon(data)
                 .then(res => {
-                    notifyService.success("coupon is updated!")
-                    dispatch(updatedCouponAction(res.data));
-                    setObj(res.data)
-                    console.log("new obj: "+obj);
-                    navigate("/companies/:id/coupons");
+                    notifyService.success("coupon is updated!");
+                    // dispatch(updatedCouponAction(res.data)); TODO do we need it?
+                    navigate("/companies/coupons");
                 })
                 .catch(err => notifyService.error(err))
     

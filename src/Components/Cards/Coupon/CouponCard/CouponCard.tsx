@@ -29,7 +29,7 @@ function CouponCard(props: CouponCardProps): JSX.Element {
         <div className="coupon-buttons">
           {props.isCompanyConnected ? (
             <>
-              <Link to={`/companies/update/${props.coupon.id}`}>
+              <Link to={`/companies/${props.companyId}/update/${props.coupon.id}`}>
                 <button className="coupon-button">Update Coupon</button>
               </Link>
               <Link to={`/companies/delete/${props.coupon.id}`}>
