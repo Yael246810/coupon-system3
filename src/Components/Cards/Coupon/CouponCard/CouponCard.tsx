@@ -8,6 +8,7 @@ interface CouponCardProps {
   coupon: CouponModel;
   isCompanyConnected: boolean;
   customerId: number;
+  companyId : number; // TODO do we need it?
 }
 
 function CouponCard(props: CouponCardProps): JSX.Element {

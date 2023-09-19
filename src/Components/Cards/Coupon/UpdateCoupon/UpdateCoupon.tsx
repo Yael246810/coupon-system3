@@ -1,18 +1,14 @@
 import { useDispatch } from "react-redux";
 import "./UpdateCoupon.css";
 import { useNavigate, useParams } from "react-router-dom";
-import { useState } from "react";
-import store from "../../../Redux/store";
 import Zod from "zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import couponWebApiService from "../../../../Services/CouponsWebApiService";
 import notifyService from "../../../../Services/NotificationService";
 import { updatedCouponAction } from "../../../Redux/CouponAppState";
-import { Category, CompanyModel, CouponModel } from "../../../../Models/Admin";
+import { Category,} from "../../../../Models/Admin";
 import { CouponCompany } from "../../../../Models/CouponCompany";
-import { Coupon } from "../../../../Models/CompaniesModel";
-import { companiesReducer } from "../../../Redux/CompanyAppState";
 
 function UpdateCoupon(): JSX.Element {
 
@@ -20,16 +16,9 @@ function UpdateCoupon(): JSX.Element {
     const navigate = useNavigate();
     const params = useParams();
     const id = +(params.id || 0);
-    console.log("params: " + params);
-    // const [obj, setObj] = useState<CouponModel>(store.getState().couponsReducer.coupons.filter(c=>c.id===id)[0])
-    // const [obj, setObj] = useState<CompanyModel>(store.getState().companies.companies.filter(c=>c.id===id)[0])
-    // console.log("obj: "+obj);
+    console.log("params.id: " + params.id);
    
-
-  //  const defaultValuesObj = { ...obj, when: moment(obj.when).format("DD/MM/YY hh:mm") }; //Spread Operator
-    // const defaultValuesObj = { ...obj }; //Spread Operator
     const couponCompanyModelSchema = Zod.object({
-
 
       coupon: Zod.object({
   
@@ -71,43 +60,17 @@ function UpdateCoupon(): JSX.Element {
   image: Zod.string().nonempty("this field is required")
   }),
   
-    //   company: Zod.object({
-    //     name: Zod.string().nonempty("Please enter a valid name"),
-    //   email: Zod.string().email().nonempty("Please enter a correct email address"),
-    //   password: Zod.string().min(4,"Password must contain at least 4 characters"),
-    //   id: Zod.string()
-    // .nonempty("must enter an id")
-    // .transform((id) => parseInt(id))
-    // .refine((value) => Number.isInteger(value) && value > 0, {
-    //   message: "id must be positive",
-    // }),
-    //     })
-  
-  
-      // category: Zod.enum([
-      //   "FOOD",
-      //   "HEALTH",
-      //   "SPORT",
-      //   "ELECTRONICS",
-      //   "CLOTHING",
-      //   "HOME",
-      //   "MOVIES",
-      //   "TRAVEL",
-      //   "GAMES",
-      //   "VACATION",
-      // ]),
-      
-  
-  
         });
 
-    
-      console.log("11");
 
       const { register, handleSubmit, formState: { errors, isValid, isSubmitting } } =
         useForm<CouponCompany>({ mode: "all", resolver: zodResolver(couponCompanyModelSchema) });
 
         const onSubmit: SubmitHandler<CouponCompany> = (data: CouponCompany) => {
+         
+          // data.company = {
+          //   id: 4,
+          // };
 
           console.log('Submitted Data:', data); 
           data.coupon.id = id;
@@ -126,25 +89,25 @@ function UpdateCoupon(): JSX.Element {
     
         };
 
-// Is it a problem that I cannot see the coupon's id when I update it??
     return (
         <div className="UpdateCoupon">
 			<h1>Updated Coupon</h1>
 
             <form onSubmit={handleSubmit(onSubmit)}>
-            {/* <label htmlFor="category">Category</label>
-                <select {...register("coupon.category")}>
-                    <option value={Category.FOOD}>Food</option>
-                    <option value={Category.ELECTRONICS}>Electronics</option>
-                    <option value={Category.CLOTHING}>Clothing</option>
-                    <option value={Category.GAMES}>Games</option>
-                    <option value={Category.HEALTH}>Health</option>
-                    <option value={Category.HOME}>Home</option>
-                    <option value={Category.MOVIES}>Movies</option>
-                    <option value={Category.SPORT}>Sport</option>
-                    <option value={Category.TRAVEL}>Travel</option>
-                    <option value={Category.VACATION}>Vacation</option>
-                </select> */}
+            <label htmlFor="category">Category</label>
+<select {...register("coupon.category")}>
+    <option value="FOOD">Food</option>
+    <option value="ELECTRONICS">Electronics</option>
+    <option value="CLOTHING">Clothing</option>
+    <option value="GAMES">Games</option>
+    <option value="HEALTH">Health</option>
+    <option value="HOME">Home</option>
+    <option value="MOVIES">Movies</option>
+    <option value="SPORT">Sport</option>
+    <option value="TRAVEL">Travel</option>
+    <option value="VACATION">Vacation</option>
+</select>
+
 
       {errors?.coupon?.title ? <span>{errors?.coupon.title.message}</span> : <label htmlFor="title">Title</label>}
       <input {...register("coupon.title")} type="text" placeholder="Title" />

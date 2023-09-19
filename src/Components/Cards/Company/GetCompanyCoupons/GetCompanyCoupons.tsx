@@ -25,10 +25,14 @@ function GetCompanyCoupons(): JSX.Element {
     const parsedId = parseInt(data.id);
 
     if (!isNaN(parsedId)) {
+
       setNumericId(parsedId); // Store numericId in the component's state
+      console.log("$3company id: " + parsedId);
+
       companyWebApiService
         .getCompanyCoupons(parsedId)
         .then((res) => {
+          console.log("getCOmp resp: " + res.data.length);
           notifyService.success(`Fetched company #${parsedId}`);
           dispatch(getCompanyCouponsAction(res.data));
           setFetchedCoupons(res.data);

@@ -19,14 +19,7 @@ function AddCoupon(): JSX.Element {
     const navigate = useNavigate();
   const dispatch = useDispatch();
 
-//   // Access the logged-in company details from Redux store
-//   const loggedInCompany = useSelector(
-//     (state: RootState) => state.user.user.company
-//   );
 
-
-
-  // Define the schema for coupon data
   const couponCompanyModelSchema = Zod.object({
 
 
@@ -82,22 +75,6 @@ image: Zod.string().nonempty("this field is required")
   }),
       })
 
-
-    // category: Zod.enum([
-    //   "FOOD",
-    //   "HEALTH",
-    //   "SPORT",
-    //   "ELECTRONICS",
-    //   "CLOTHING",
-    //   "HOME",
-    //   "MOVIES",
-    //   "TRAVEL",
-    //   "GAMES",
-    //   "VACATION",
-    // ]),
-    
-
-
       });
 
 
@@ -124,7 +101,7 @@ const onSubmit: SubmitHandler<CouponCompany> = (data: CouponCompany) => {
     return (
         <div className="AddCoupon">
 			<form onSubmit={handleSubmit(onSubmit)}>
-      {/* <label htmlFor="category">Category</label>
+      <label htmlFor="category">Category</label>
                 <select {...register("coupon.category")}>
                     <option value={Category.FOOD}>Food</option>
                     <option value={Category.ELECTRONICS}>Electronics</option>
@@ -136,7 +113,7 @@ const onSubmit: SubmitHandler<CouponCompany> = (data: CouponCompany) => {
                     <option value={Category.SPORT}>Sport</option>
                     <option value={Category.TRAVEL}>Travel</option>
                     <option value={Category.VACATION}>Vacation</option>
-                </select> */}
+                </select>
 
      {errors?.coupon?.title ? <span>{errors.coupon.title.message}</span> : <label htmlFor="title">Title</label>}
       <input {...register("coupon.title")} type="text" placeholder="Title" />
