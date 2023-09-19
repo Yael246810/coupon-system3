@@ -88,10 +88,8 @@ const onSubmit: SubmitHandler<CouponCompany> = (data: CouponCompany) => {
       .then(res => {
           notifyService.success('the coupon is added');
           console.log("I am adding a coupon 3");
-          dispatch(addedCouponAction(res.data));
-          
-          // navigate("/companies/:id/coupons");
-          navigate(`/companies/${props.couponCompany.company.id}/coupons`);
+          // dispatch(addedCouponAction(res.data));
+          navigate(`/companies/coupons`);
           console.log("I am adding a coupon 4");
       })
       .catch(err => notifyService.error(err));
