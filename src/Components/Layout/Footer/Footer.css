@@ -1,13 +1,14 @@
 .Footer {
   display: flex;
-  justify-content: flex-start; /* Align items to the left */
-  align-items: flex-end; /* Align items to the bottom */
-  width: 100%; /* Make sure the container spans the full width */
-  padding: 20px; /* Optional: Add some padding for spacing */
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 20px;
 }
 
 .Footer button {
-  margin-right: 10px; /* Optional: Add some space between the button and other content */
+  margin-right: 10px;
   padding: 10px 20px;
   background-color: #3498db;
   color: #fff;
@@ -25,3 +26,34 @@
   outline: none;
 }
 
+.CopyRights {
+  background-color: #f2f2f2;
+  padding: 10px;
+  text-align: center;
+  font-size: 14px;
+  color: #333;
+  margin-top: 20px;
+}
+
+.CopyRights p {
+  margin: 5px 0;
+}
+
+.CopyRights a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.CopyRights a:hover {
+  text-decoration: underline;
+}
+
+.CopyRights .CopyRights {
+  font-weight: bold;
+  color: #555;
+}
+
+p {
+  font-size: 16px;
+  font-weight: 700;
+}

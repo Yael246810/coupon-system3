@@ -1,12 +1,12 @@
 import React, { useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { CouponModel } from "../../../../Models/Admin";
 import customerWebApiService from "../../../../Services/CustomerWebApiService";
 import notifyService from "../../../../Services/NotificationService";
 import EmptyView from "../../../Pages/EmptyView/EmptyView";
 import { useLocation, useNavigate } from "react-router-dom";
-import store, { RootState } from "../../../Redux/store";
+import store from "../../../Redux/store";
 
 function GetCustomerCoupons(): JSX.Element {
   const dispatch = useDispatch();
@@ -22,41 +22,34 @@ function GetCustomerCoupons(): JSX.Element {
     formState: { errors },
   } = useForm();
 
-  const [fetchedCoupons, setFetchedCoupons] = useState<CouponModel[]>(store.getState().couponsReducer.coupons);
+  const [fetchedCoupons, setFetchedCoupons] = useState<CouponModel[]>(
+    store.getState().couponsReducer.coupons
+  );
 
   const location = useLocation();
   const wasCouponsDataUpdated = useRef(location.state?.wasCouponsDataUpdated);
 
-
   const onSubmit = (data: { id: string }) => {
     const numericId = parseInt(data.id);
 
-    
-      if (fetchedCoupons.length === 0 || wasCouponsDataUpdated.current) {
-        console.log("1");
-        if (!isNaN(numericId)){
-          console.log("2");
-
-          wasCouponsDataUpdated.current = false;
-          customerWebApiService
-            .getCustomerCoupons(numericId)
-            .then((res) => {
-              console.log("3");
-              notifyService.success(`Fetched customer #${numericId}`);
-              setFetchedCoupons(res.data); // Set the fetched coupons here
-            })
-            .catch((err) => {
-              console.log("4");
-              notifyService.error(err);
-              setFetchedCoupons([]); // Set an empty array in case of an error
-            });
-        }
-        else {
-          console.log("5");
-           notifyService.error("Please enter a valid customer ID");
-      setFetchedCoupons([]); // Set an empty array if the ID is invalid
+    if (fetchedCoupons.length === 0 || wasCouponsDataUpdated.current) {
+      if (!isNaN(numericId)) {
+        wasCouponsDataUpdated.current = false;
+        customerWebApiService
+          .getCustomerCoupons(numericId)
+          .then((res) => {
+            notifyService.success(`Fetched customer #${numericId}`);
+            setFetchedCoupons(res.data);
+          })
+          .catch((err) => {
+            notifyService.error(err);
+            setFetchedCoupons([]);
+          });
+      } else {
+        notifyService.error("Please enter a valid customer ID");
+        setFetchedCoupons([]);
       }
-      } 
+    }
   };
 
   return (
@@ -90,7 +83,7 @@ function GetCustomerCoupons(): JSX.Element {
                 <p>Coupon Price: {coupon.price}</p>
                 <p>Coupon Image: {coupon.image}</p>
                 <button
-                  onClick={() => deleteCoupon(2, coupon.id)} // Pass the correct customerId (e.g., 2)
+                  onClick={() => deleteCoupon(2, coupon.id)}
                   className="delete-button"
                 >
                   Delete

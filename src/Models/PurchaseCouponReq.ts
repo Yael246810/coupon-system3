@@ -1,4 +1,4 @@
-export interface PurchaseCouponReq{
-    couponId: number;
-    customerId:number;
-  }
+export interface PurchaseCouponReq {
+  couponId: number;
+  customerId: number;
+}

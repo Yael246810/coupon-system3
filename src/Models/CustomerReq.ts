@@ -1,4 +1,4 @@
-export interface CustomerReq{
+export interface CustomerReq {
   firstName: string;
   lastName: string;
   email: string;

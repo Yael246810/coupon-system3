@@ -1,29 +1,27 @@
-/* Existing styles for CouponCard */
 .CouponCard {
     border: 1px solid #ccc;
     border-radius: 5px;
-    padding: 20px; /* Increased padding for larger card */
+    padding: 20px;
     display: flex;
-    flex-direction: column; /* Display card content in a column */
+    flex-direction: column;
     align-items: center;
-    margin-bottom: 20px; /* Increased margin for more spacing between cards */
+    margin-bottom: 20px;
     background-color: #f9f9f9;
-    max-width: 300px; /* Adjust the maximum width as needed */
+    max-width: 300px;
 }
 
-/* Inside CouponCard.css */
 .coupon-image-container {
-    max-width: 150px; /* Adjust the maximum width as needed */
-    max-height: 150px; /* Adjust the maximum height as needed */
-    overflow: hidden; /* Hide any overflowing parts of the image */
-  }
-  
-  .coupon-image {
+    max-width: 150px;
+    max-height: 150px;
+    overflow: hidden;
+}
+
+.coupon-image {
     width: 100%;
     height: auto;
-    object-fit: cover; /* Preserve aspect ratio and cover the container */
-  }
-  
+    object-fit: cover;
+}
+
 
 .CouponCard .coupon-details h3 {
     margin: 0;
@@ -33,25 +31,24 @@
     margin-top: 5px;
 }
 
-/* Add the new styles */
 .CouponCard .row2 {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-top: 10px;
-    width: 100%; /* Ensure the button row spans the card width */
+    width: 100%;
 }
 
 .CouponCard .row2 button {
-    padding: 10px 20px; /* Increased padding for larger buttons */
+    padding: 10px 20px;
     background-color: #007bff;
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s;
-    width: 45%; /* Adjust button width as needed */
-    text-align: center; /* Center the button text */
+    width: 45%;
+    text-align: center;
 }
 
 .CouponCard .row2 button:hover {

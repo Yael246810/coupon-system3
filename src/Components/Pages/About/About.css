@@ -1,8 +1,6 @@
-.About {
-	
-}
+.About {}
 
-.About button{
+.About button {
     padding: 10px 20px;
     background-color: #3498db;
     color: #fff;
@@ -12,11 +10,10 @@
     font-size: 16px;
 }
 
-.About button:hover{
+.About button:hover {
     background-color: #2980b9;
 }
 
-.About button{
+.About button {
     outline: none;
 }
-

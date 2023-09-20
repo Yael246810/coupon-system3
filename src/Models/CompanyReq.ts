@@ -1,4 +1,4 @@
-export interface CompanyReq{
+export interface CompanyReq {
   id: number;
   name: string;
   email: string;

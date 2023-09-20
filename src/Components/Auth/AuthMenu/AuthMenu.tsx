@@ -10,11 +10,15 @@ function AuthMenu(): JSX.Element {
     <div className="AuthMenu">
       {user.token !== "" ? (
         <>
-          <p>Connected as {user.email} <Link to="logout">Logout</Link></p>
+          <p>
+            Connected as {user.email} <Link to="logout">Logout</Link>
+          </p>
         </>
       ) : (
         <>
-          <p>Hello guest <Link to="login">Login</Link></p>
+          <p>
+            Hello guest <Link to="login">Login</Link>
+          </p>
         </>
       )}
     </div>

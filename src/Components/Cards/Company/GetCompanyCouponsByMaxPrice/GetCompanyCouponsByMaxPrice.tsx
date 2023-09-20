@@ -1,9 +1,9 @@
 import { useDispatch } from "react-redux";
-import "./GetCompanyCouponsByMaxPrice.css"; // Update the CSS file
+import "./GetCompanyCouponsByMaxPrice.css"; 
 import companyWebApiService from "../../../../Services/CompanyWebApiService";
 import notifyService from "../../../../Services/NotificationService";
 import { useForm } from "react-hook-form";
-import { CouponModel } from "../../../../Models/Admin"; // Update the import
+import { CouponModel } from "../../../../Models/Admin"; 
 import { useState } from "react";
 import { getCompanyCouponsByMaxPriceAction } from "../../../Redux/CompanyAppState";
 
@@ -22,16 +22,12 @@ function GetCompanyCouponsByMaxPrice(): JSX.Element {
         const numericMaxPrice = parseFloat(data.maxPrice);
 
         if (!isNaN(numericId) && !isNaN(numericMaxPrice)) {
-            console.log("Im going to get the company coupons by price")
             companyWebApiService
                 .getCompanyCouponsByMaxPrice(numericId, numericMaxPrice)
                 .then((res) => {
                     notifyService.success(`Fetched coupons for company #${numericId} with max price ${numericMaxPrice}`);
                     
-                    // Dispatch the appropriate action for fetching coupons
                     dispatch(getCompanyCouponsByMaxPriceAction(res.data));
-                    console.log("I got the company coupons by price")
-                    // Set the fetched coupons in the state
                     setFetchedCoupons(res.data);
                 })
                 .catch((err: any) => notifyService.error(err));

@@ -1,8 +1,5 @@
-.CustomerCard {
+.CustomerCard {}
 
-}
-
-/* Add these styles to your existing CSS */
 .CustomerCard .row {
     display: flex;
     justify-content: space-between;

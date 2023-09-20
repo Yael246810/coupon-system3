@@ -1,132 +1,128 @@
-/* Inside GetCustomerCoupons.css */
-
 .GetCustomerCoupons {
-    max-width: 800px; /* Adjust the maximum width as needed */
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #f7f7f7;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-  h2 {
-    font-size: 24px;
-    margin-bottom: 20px;
-  }
-  
-  .CustomerForm {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  label {
-    font-weight: bold;
-    margin-bottom: 10px;
-  }
-  
-  input[type="number"] {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 20px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-  }
-  
-  button {
-    background-color: #007bff;
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  button:hover {
-    background-color: #0056b3;
-  }
-  
-  .CouponList {
-    margin-top: 20px;
-  }
-  
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f7f7f7;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.CustomerForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+label {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+input[type="number"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+button {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+.CouponList {
+  margin-top: 20px;
+}
+
+.CouponCard {
+  display: flex;
+  align-items: center;
+  background-color: #fff;
+  padding: 20px;
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.coupon-image {
+  max-width: 100px;
+  height: auto;
+  margin-right: 20px;
+}
+
+.coupon-details {
+  flex: 1;
+}
+
+.coupon-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.coupon-description {
+  margin-bottom: 10px;
+}
+
+.coupon-info {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.coupon-info-item {
+  flex: 0 0 50%;
+  margin-bottom: 5px;
+}
+
+.delete-button {
+  background-color: #e74c3c;
+  color: #fff;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.delete-button:hover {
+  background-color: #c13325;
+}
+
+.EmptyView {
+  text-align: center;
+  font-size: 18px;
+  color: #777;
+}
+
+@media (max-width: 768px) {
   .CouponCard {
-    display: flex;
-    align-items: center;
-    background-color: #fff;
-    padding: 20px;
-    margin-bottom: 20px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-  .coupon-image {
-    max-width: 100px;
-    height: auto;
-    margin-right: 20px;
-  }
-  
-  .coupon-details {
-    flex: 1;
-  }
-  
-  .coupon-title {
-    font-size: 18px;
-    font-weight: bold;
-    margin-bottom: 10px;
-  }
-  
-  .coupon-description {
-    margin-bottom: 10px;
-  }
-  
-  .coupon-info {
-    display: flex;
-    flex-wrap: wrap;
-  }
-  
-  .coupon-info-item {
-    flex: 0 0 50%; /* Display two items per row, adjust as needed */
-    margin-bottom: 5px;
-  }
-  
-  .delete-button {
-    background-color: #e74c3c;
-    color: #fff;
-    padding: 5px 10px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  .delete-button:hover {
-    background-color: #c13325;
-  }
-  
-  .EmptyView {
+    flex-direction: column;
     text-align: center;
-    font-size: 18px;
-    color: #777;
   }
-  
-  /* Media query for smaller screens */
-  @media (max-width: 768px) {
-    .CouponCard {
-      flex-direction: column;
-      text-align: center;
-    }
-  
-    .coupon-image {
-      margin: 0 auto 10px;
-    }
-  
-    .coupon-info-item {
-      flex: none;
-      width: 100%;
-    }
+
+  .coupon-image {
+    margin: 0 auto 10px;
   }
-  
+
+  .coupon-info-item {
+    flex: none;
+    width: 100%;
+  }
+}

@@ -4,7 +4,6 @@
   display: grid;
   grid-template-rows: repeat(12, 1fr);
   grid-template-columns: repeat(12, 1fr);
-  /* background-color: var(--background-color); */
   color: var(--color-first);
   background-color: var(--color-background);
 }
@@ -14,13 +13,11 @@
 .App>.Header {
   grid-column: 12 span;
   grid-row: 1 span;
-  /* background-color: pink; */
 }
 
 .App>.Menu {
   grid-column: 2 span;
   grid-row: 10 span;
-  /* background-color: aqua; */
 }
 
 .App>.Main {
@@ -31,90 +28,58 @@
 .App>.Footer {
   grid-column: 12 span;
   grid-row: 1 span;
-  /* background-color: yellow; */
 }
 
-.App h1,h2,h3,p,span{
+.App h1, h2, h3, p, span {
   color: var(--color-second);
 }
-
-
-/* .App button{
-  padding: 10px 20px;
-  background-color: #3498db;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
-}
-
-.App button:hover{
-  background-color: #2980b9;
-}
-
-.App button{
-  outline: none;
-} */
 
 .moonEmoji,
 .sunEmoji {
   font-size: 30px;
 }
 
-/* Styles for the moon emoji */
 .moonEmoji {
-  opacity: 1; /* Set opacity to 1 to make it visible */
-  transform: translateY(-50px); /* Slide up a bit */
+  opacity: 1;
+  transform: translateY(-50px);
 
-  /* Transition for a smooth animation */
   transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
-/* Styles for the sun emoji */
 .sunEmoji {
-  opacity: 1; /* Start visible */
+  opacity: 1;
 
-  /* Transition for a smooth animation */
   transition: opacity 0.3s ease;
 }
 
-/* Styles for the theme switch button */
 .themeSwitch {
   padding: 10px 20px;
-  background-color: transparent; /* Set the background color to transparent */
+  background-color: transparent;
   color: #fff;
-  border: 2px solid transparent; /* Set the border to transparent */
+  border: 2px solid transparent;
   border-radius: 5px;
   cursor: pointer;
   font-size: 16px;
   outline: none;
 }
 
-/* Styles for the theme switch button in light mode */
 .themeSwitch.light-mode {
-  /* Add your light mode styles here */
   background-color: #f5f5f5;
   color: #333;
 }
 
-/* Styles for the theme switch button in dark mode */
 .themeSwitch.dark-mode {
-  /* Add your dark mode styles here */
   background-color: #333;
   color: #f5f5f5;
 }
 
-/* Hover styles for the theme switch button */
 .themeSwitch:hover {
-  /* Add your hover styles here */
-  border-color: #fff; /* Set the border color on hover */
+  border-color: #fff;
 }
-/* this is what Kobi did, but it doesn't work*/
-App.toggle-button{
+
+App.toggle-button {
   height: 100px;
   width: 100px;
   background-color: transparent;
   border: 1px solid transparent;
 }
-

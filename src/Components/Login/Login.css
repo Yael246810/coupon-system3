@@ -15,7 +15,7 @@
 .login-form {
     display: flex;
     flex-direction: column;
-    gap: 15px; /* Add gap between form elements */
+    gap: 15px;
 }
 
 .login-form label {
@@ -35,7 +35,7 @@
 }
 
 .type-select {
-    margin-top: 15px; /* Add some space between email/password and type selection */
+    margin-top: 15px;
 }
 
 .login-form button {

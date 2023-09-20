@@ -36,55 +36,140 @@ import GetCompanyDetails from "../../Cards/Company/GetCompanyDetails/GetCompanyD
 import GetCustomerCoupons from "../../Cards/Coupon/GetCustomerCoupons/GetCustomerCoupons";
 
 function Routing(): JSX.Element {
-    const AdminFlag = useSelector((state:RootState)=>state.guardReducer.isAdmin);
-    const CompanyFlag = useSelector((state:RootState)=>state.guardReducer.isCompany);
-    const CustomerFlag = useSelector((state:RootState)=>state.guardReducer.isCustomer);
+  const AdminFlag = useSelector(
+    (state: RootState) => state.guardReducer.isAdmin
+  );
+  const CompanyFlag = useSelector(
+    (state: RootState) => state.guardReducer.isCompany
+  );
+  const CustomerFlag = useSelector(
+    (state: RootState) => state.guardReducer.isCustomer
+  );
 
-    return (
-        <div className="Routing">
-			<Routes>
-                <Route path="/" element={<App/>}/>
-                <Route path="/home" element={<Home/>}/>
-                <Route index element={<Home/>}/>
-                <Route path="/about" element={<About/>}/>
-                <Route path="/video" element={<Video/>}/>
-                <Route path="/login" element={<Login/>}/>
-                <Route path="/contactUs" element={<ContactUs/>}/>
-                <Route path="/coupons" element={<CouponsList/>}/>
-                {AdminFlag &&<Route path="/admin/customers" element={<CustomersList/>}/>}
-                {AdminFlag&&<Route path="/admin/delete/:id" element={<DeleteCustomer/>}/>}
-                {AdminFlag&&<Route path="/admin/update/:id" element={<UpdateCustomer/>}/>}
-                {AdminFlag&&<Route path="/admin/customers/add" element={<AddCustomer/>}/>}
-                {AdminFlag&&<Route path="/admin/customers/:id" element={<GetSingleCustomer2/>}/>}
-                {AdminFlag &&<Route path="/admin/companies" element={<CompaniesList/>}/>}
-                {AdminFlag&&<Route path="/admin/companies/add" element={<AddCompany/>}/>}
-                {AdminFlag&&<Route path="/admin/companies/delete/:id" element={<DeleteCompany/>}/>}
-                {AdminFlag&&<Route path="/admin/companies/update/:id" element={<UpdateCompany/>}/>}
-                {AdminFlag&&<Route path="/admin/companies/:id" element={<GetSingleCompany/>}/>}
+  return (
+    <div className="Routing">
+      <Routes>
+        <Route path="/" element={<App />} />
+        <Route path="/home" element={<Home />} />
+        <Route index element={<Home />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/video" element={<Video />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/contactUs" element={<ContactUs />} />
+        <Route path="/coupons" element={<CouponsList />} />
+        {AdminFlag && (
+          <Route path="/admin/customers" element={<CustomersList />} />
+        )}
+        {AdminFlag && (
+          <Route path="/admin/delete/:id" element={<DeleteCustomer />} />
+        )}
+        {AdminFlag && (
+          <Route path="/admin/update/:id" element={<UpdateCustomer />} />
+        )}
+        {AdminFlag && (
+          <Route path="/admin/customers/add" element={<AddCustomer />} />
+        )}
+        {AdminFlag && (
+          <Route path="/admin/customers/:id" element={<GetSingleCustomer2 />} />
+        )}
+        {AdminFlag && (
+          <Route path="/admin/companies" element={<CompaniesList />} />
+        )}
+        {AdminFlag && (
+          <Route path="/admin/companies/add" element={<AddCompany />} />
+        )}
+        {AdminFlag && (
+          <Route
+            path="/admin/companies/delete/:id"
+            element={<DeleteCompany />}
+          />
+        )}
+        {AdminFlag && (
+          <Route
+            path="/admin/companies/update/:id"
+            element={<UpdateCompany />}
+          />
+        )}
+        {AdminFlag && (
+          <Route path="/admin/companies/:id" element={<GetSingleCompany />} />
+        )}
 
-                {CompanyFlag&&<Route path="/companies/coupons/add" element={<AddCoupon/>}/>} 
-                {CompanyFlag&&<Route path="/companies/:companyId/update/:id" element={<UpdateCoupon/>}/>}
-                {CompanyFlag&&<Route path="/companies/delete/:id" element={<DeleteCoupon/>}/>}
-                {CompanyFlag&&<Route path="/companies/coupons" element={<GetCompanyCoupons/>}/>}
-                {CompanyFlag&&<Route path="/companies/:id/coupons/price" element={<GetCompanyCouponsByMaxPrice/>}/>}
-                {CompanyFlag&&<Route path="/companies/:id/coupons/category" element={<GetCompanyCouponsByCategory/>}/>}
-                {CompanyFlag&&<Route path="/companies/:id/details" element={<GetCompanyDetails/>}/>}
-                
-                
-                {CustomerFlag&&<Route path="customers/:id/coupons/:id/purchase" element={<PurchaseCoupon/>}/>}
-                {CustomerFlag&&<Route path="customers/:customerId/coupons/:couponId/delete" element={<DeleteCouponPurchased />} />}
-                {CustomerFlag&&<Route path="customers/:id/coupons" element={<GetCustomerCoupons/>}/>}
-                {CustomerFlag&&<Route path="customers/:id/coupons/price" element={<GetCustomerCouponsByMaxPrice/>}/>}
-                {CustomerFlag&&<Route path="customers/:id/coupons/category" element={<GetCustomerCouponsByCategory/>}/>}
-                {CustomerFlag&&<Route path="customers/:id/details" element={<GetCustomerDetails/>}/>}
+        {CompanyFlag && (
+          <Route path="/companies/coupons/add" element={<AddCoupon />} />
+        )}
+        {CompanyFlag && (
+          <Route
+            path="/companies/:companyId/update/:id"
+            element={<UpdateCoupon />}
+          />
+        )}
+        {CompanyFlag && (
+          <Route path="/companies/delete/:id" element={<DeleteCoupon />} />
+        )}
+        {CompanyFlag && (
+          <Route path="/companies/coupons" element={<GetCompanyCoupons />} />
+        )}
+        {CompanyFlag && (
+          <Route
+            path="/companies/:id/coupons/price"
+            element={<GetCompanyCouponsByMaxPrice />}
+          />
+        )}
+        {CompanyFlag && (
+          <Route
+            path="/companies/:id/coupons/category"
+            element={<GetCompanyCouponsByCategory />}
+          />
+        )}
+        {CompanyFlag && (
+          <Route
+            path="/companies/:id/details"
+            element={<GetCompanyDetails />}
+          />
+        )}
 
+        {CustomerFlag && (
+          <Route
+            path="customers/:id/coupons/:id/purchase"
+            element={<PurchaseCoupon />}
+          />
+        )}
+        {CustomerFlag && (
+          <Route
+            path="customers/:customerId/coupons/:couponId/delete"
+            element={<DeleteCouponPurchased />}
+          />
+        )}
+        {CustomerFlag && (
+          <Route
+            path="customers/:id/coupons"
+            element={<GetCustomerCoupons />}
+          />
+        )}
+        {CustomerFlag && (
+          <Route
+            path="customers/:id/coupons/price"
+            element={<GetCustomerCouponsByMaxPrice />}
+          />
+        )}
+        {CustomerFlag && (
+          <Route
+            path="customers/:id/coupons/category"
+            element={<GetCustomerCouponsByCategory />}
+          />
+        )}
+        {CustomerFlag && (
+          <Route
+            path="customers/:id/details"
+            element={<GetCustomerDetails />}
+          />
+        )}
 
-
-                <Route path="logout" element={<Logout/>}/>
-                <Route path="*" element={<Page404/>}/> //this needs to be the last
-            </Routes>
-        </div>
-    );
+        <Route path="logout" element={<Logout />} />
+        <Route path="*" element={<Page404 />} />
+      </Routes>
+    </div>
+  );
 }
 
 export default Routing;

@@ -18,14 +18,16 @@ function GetCompanyCoupons(): JSX.Element {
     formState: { errors },
   } = useForm();
 
-  const [fetchedCoupons, setFetchedCoupons] = useState<CouponModel[] | null>(null);
-  const [numericId, setNumericId] = useState<number | null>(null); // Declare numericId here
+  const [fetchedCoupons, setFetchedCoupons] = useState<CouponModel[] | null>(
+    null
+  );
+  const [numericId, setNumericId] = useState<number | null>(null);
 
   const onSubmit = (data: { id: string }) => {
     const parsedId = parseInt(data.id);
 
     if (!isNaN(parsedId)) {
-      setNumericId(parsedId); // Store numericId in the component's state
+      setNumericId(parsedId);
       companyWebApiService
         .getCompanyCoupons(parsedId)
         .then((res) => {
@@ -38,8 +40,6 @@ function GetCompanyCoupons(): JSX.Element {
       notifyService.error("Please enter a valid company ID");
     }
   };
-
-  console.log("$numberId: " + numericId);
 
   return (
     <div className="GetCompanyCoupons">
@@ -61,7 +61,13 @@ function GetCompanyCoupons(): JSX.Element {
           <h2>Coupons</h2>
           {fetchedCoupons.length !== 0 ? (
             fetchedCoupons.map((coupon) => (
-              <CouponCard key={coupon.id} coupon={coupon} customerId={numericId} isCompanyConnected={true} companyId={numericId}/>
+              <CouponCard
+                key={coupon.id}
+                coupon={coupon}
+                customerId={numericId}
+                isCompanyConnected={true}
+                companyId={numericId}
+              />
             ))
           ) : (
             <EmptyView msg="There are no coupons available at the moment" />

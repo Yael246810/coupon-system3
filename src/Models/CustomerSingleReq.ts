@@ -1,3 +1,3 @@
-export interface CustomerSingleReq{
-    id: number;
+export interface CustomerSingleReq {
+  id: number;
 }

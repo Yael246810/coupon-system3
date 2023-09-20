@@ -1,3 +1,3 @@
-export interface CompanyGetSingleReq{
-    id: number;
+export interface CompanyGetSingleReq {
+  id: number;
 }

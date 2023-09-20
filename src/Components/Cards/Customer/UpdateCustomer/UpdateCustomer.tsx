@@ -12,78 +12,105 @@ import webApiService from "../../../../Services/CustomerWebApiService";
 import { updatedCustomerAction } from "../../../Redux/CustomerAppState";
 
 function UpdateCustomer(customer: CustomerModel): JSX.Element {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const params = useParams();
+  const id = +(params.id || 0);
+  const [obj] = useState<CustomerModel>(
+    store.getState().customers.customers.filter((c) => c.id === id)[0]
+  );
 
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
-    const params = useParams();
-    const id = +(params.id || 0);
-    const [obj] = useState<CustomerModel>(store.getState().customers.customers.filter(c=>c.id===id)[0])
-   
-    const defaultValuesObj = { ...obj }; 
+  const defaultValuesObj = { ...obj };
 
+  const customersModelUpdateSchema = Zod.object({
+    firstName: Zod.string().nonempty("Please enter a valid first name"),
+    lastName: Zod.string().nonempty("Please enter a valid last name"),
+    email: Zod.string()
+      .email()
+      .nonempty("Please enter a correct email address"),
+    password: Zod.string().min(
+      4,
+      "Password must contain at least 4 characters"
+    ),
+  });
 
+  const updateAndValidateId = (newId: number) => {
+    if (newId === id) {
+      return newId;
+    } else {
+      console.log("error with the id");
+      return id;
+    }
+  };
 
-    const customersModelUpdateSchema = Zod.object({
-        firstName: Zod.string().nonempty("Please enter a valid first name"),
-        lastName: Zod.string().nonempty("Please enter a valid last name"),
-        email: Zod.string().email().nonempty("Please enter a correct email address"),
-        password: Zod.string().min(4,"Password must contain at least 4 characters"),
-    });
+  const {
+    register,
+    handleSubmit,
+    control,
+    formState: { errors, isValid, isSubmitting },
+  } = useForm<CustomerModel>({
+    defaultValues: defaultValuesObj,
+    mode: "all",
+    resolver: zodResolver(customersModelUpdateSchema),
+  });
 
-    const updateAndValidateId = (newId:number) => {
-        if (newId === id) {
-            return newId;
-        } else {
-            console.log("error with the id")
-            return id;
-        }
-    };
+  const onSubmit: SubmitHandler<CustomerModel> = (data: CustomerModel) => {
+    return webApiService
+      .updateCustomer(id, data)
+      .then((res) => {
+        notifyService.success("customer is updated!");
+        dispatch(updatedCustomerAction(res.data));
+        navigate("/admin/customers", {
+          state: { wasCustomersDataUpdated: true },
+        });
+      })
+      .catch((err) => notifyService.error(err));
+  };
 
+  return (
+    <div className="UpdateCustomer">
+      <h1>Updated Customer</h1>
 
+      <form onSubmit={(...args) => void handleSubmit(onSubmit)(...args)}>
+        <label htmlFor="id">Id</label>
+        <input name="id" type="text" value={obj.id} disabled={true} />
 
-    const { register, handleSubmit, control, formState: { errors, isValid, isSubmitting } } =
-        useForm<CustomerModel>({ defaultValues: defaultValuesObj, mode: "all", resolver: zodResolver(customersModelUpdateSchema) });
+        {errors?.firstName ? (
+          <span>{errors.firstName.message}</span>
+        ) : (
+          <label htmlFor="firstName">First Name</label>
+        )}
+        <input {...register("firstName")} type="text" placeholder="FirstName" />
 
-    const onSubmit: SubmitHandler<CustomerModel> = (data: CustomerModel) => {
-        console.log("Submitting data:", data,"id",data.id);
-    
-        return webApiService.updateCustomer(id, data)
-            .then(res => {
-                notifyService.success("customer is updated!")
-                dispatch(updatedCustomerAction(res.data));
-                navigate("/admin/customers",{state:{wasCustomersDataUpdated: true }});
-            })
-            .catch(err => notifyService.error(err))
+        {errors?.lastName ? (
+          <span>{errors.lastName.message}</span>
+        ) : (
+          <label htmlFor="lastName">Last Name</label>
+        )}
+        <input {...register("lastName")} type="text" placeholder="LastName" />
 
-    };
+        {errors?.email ? (
+          <span>{errors.email.message}</span>
+        ) : (
+          <label htmlFor="email">Email</label>
+        )}
+        <input {...register("email")} type="text" placeholder="Email" />
 
+        {errors?.password ? (
+          <span>{errors.password.message}</span>
+        ) : (
+          <label htmlFor="password">Password</label>
+        )}
+        <input
+          {...register("password")}
+          type="password"
+          placeholder="Password"
+        />
 
-    return (
-        <div className="UpdateCustomer">
-			<h1>Updated Customer</h1>
-
-            <form onSubmit={(...args) => void handleSubmit(onSubmit)(...args)}>
-
-                <label htmlFor="id">Id</label>
-                <input name="id" type="text" value={obj.id} disabled={true} />
-
-
-                {errors?.firstName ? <span>{errors.firstName.message}</span> : <label htmlFor="firstName">First Name</label>}
-                <input {...register("firstName")} type="text" placeholder="FirstName" />
-                
-                {errors?.lastName ? <span>{errors.lastName.message}</span> : <label htmlFor="lastName">Last Name</label>}
-                <input {...register("lastName")} type="text" placeholder="LastName" />
-                
-                {errors?.email ? <span>{errors.email.message}</span> : <label htmlFor="email">Email</label>}
-                <input {...register("email")} type="text" placeholder="Email" />
-                
-                {errors?.password ? <span>{errors.password.message}</span> : <label htmlFor="password">Password</label>}
-                <input {...register("password")} type="password" placeholder="Password" />
-                
-                <button disabled={!isValid || isSubmitting}>Update</button>
-            </form>
-        </div>
-    );
+        <button disabled={!isValid || isSubmitting}>Update</button>
+      </form>
+    </div>
+  );
 }
 
 export default UpdateCustomer;

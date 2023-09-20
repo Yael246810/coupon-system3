@@ -1,5 +1,4 @@
-
-export type Root = CustomersModel[]
+export type Root = CustomersModel[];
 
 export interface CustomersModel {
   id?: number;
@@ -11,7 +10,7 @@ export interface CustomersModel {
 }
 
 export interface Coupon {
-  customer: CustomersModel[]; //?
+  customer: CustomersModel[];
   id: number;
   category: string;
   title: string;

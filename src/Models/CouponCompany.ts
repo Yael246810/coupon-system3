@@ -1,6 +1,6 @@
-import { CouponModel } from './Admin';
-import { CompaniesModel } from './CompaniesModel';
+import { CouponModel } from "./Admin";
+import { CompaniesModel } from "./CompaniesModel";
 export interface CouponCompany {
-  coupon: CouponModel,
-  company: CompaniesModel
+  coupon: CouponModel;
+  company: CompaniesModel;
 }

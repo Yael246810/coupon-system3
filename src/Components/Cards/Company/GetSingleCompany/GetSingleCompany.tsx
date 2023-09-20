@@ -5,10 +5,10 @@ import companyWebApiService from "../../../../Services/CompanyWebApiService";
 import notifyService from "../../../../Services/NotificationService";
 import { gotSingleCompanyAction } from "../../../Redux/CompanyAppState";
 import { CompaniesModel, CouponModel } from "../../../../Models/Admin";
-import "./GetSingleCompany.css"; // Import your CSS file here
+import "./GetSingleCompany.css";
 
 function GetSingleCompany(): JSX.Element {
-  const dispatch = useDispatch(); // Get the dispatch function
+  const dispatch = useDispatch();
 
   const {
     handleSubmit,
@@ -16,7 +16,9 @@ function GetSingleCompany(): JSX.Element {
     formState: { errors },
   } = useForm();
 
-  const [fetchedCompany, setFetchedCompany] = useState<CompaniesModel | null>(null);
+  const [fetchedCompany, setFetchedCompany] = useState<CompaniesModel | null>(
+    null
+  );
 
   const onSubmit = (data: { id: string }) => {
     const numericId = parseInt(data.id);
@@ -27,7 +29,7 @@ function GetSingleCompany(): JSX.Element {
         .then((res) => {
           notifyService.success(`Fetched company #${numericId}`);
           dispatch(gotSingleCompanyAction(res.data));
-          setFetchedCompany(res.data); // Store the fetched company in state
+          setFetchedCompany(res.data);
         })
         .catch((err) => notifyService.error(err));
     } else {
@@ -56,7 +58,7 @@ function GetSingleCompany(): JSX.Element {
           <p>Name: {fetchedCompany.name}</p>
           <p>Email: {fetchedCompany.email}</p>
           <p>Password: {fetchedCompany.password}</p>
-        
+
           <h2>Coupons:</h2>
           <ul className="CouponList">
             {fetchedCompany.coupons.map((coupon: CouponModel) => (

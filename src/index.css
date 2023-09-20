@@ -8,12 +8,12 @@ html, body, #root {
     padding: 0;
 }
 
- 
-body{
+
+body {
     font-family: 'Oxygen';
 }
 
-.myButton{
+.myButton {
     font-size: 16px;
     padding: 10px 20px;
     background-color: #4CAF50;
@@ -26,43 +26,41 @@ body{
     cursor: pointer;
 }
 
-.myButton:hover{
+.myButton:hover {
     background-color: #45a049;
     color: white;
-} */
+}
 
-
-
-html, body, #root {
+*/ html, body, #root {
     height: 100%;
     width: 100%;
     padding: 0px;
     margin: 0px;
 }
 
-:root{
-    --color-white:#ffffff;
-    --color-black:#1b1e23;
-    --color-green:#6db33f;
+:root {
+    --color-white: #ffffff;
+    --color-black: #1b1e23;
+    --color-green: #6db33f;
 
-    --color-first:var(--color-black);
-    --color-second:var(--color-green);
-    --color-background:var(--color-white);
+    --color-first: var(--color-black);
+    --color-second: var(--color-green);
+    --color-background: var(--color-white);
 }
 
-.dark{
-    --color-first:var(--color-white);
-    --color-second:var(--color-green);
-    --color-background:var(--color-black);
+.dark {
+    --color-first: var(--color-white);
+    --color-second: var(--color-green);
+    --color-background: var(--color-black);
 }
 
-.light{
-    --color-first:var(--color-black);
-    --color-second:var(--color-green);
-    --color-background:var(--color-white);
+.light {
+    --color-first: var(--color-black);
+    --color-second: var(--color-green);
+    --color-background: var(--color-white);
 }
 
-html,body,#root{
+html, body, #root {
     height: 100%;
     width: 100%;
     margin: 0;
