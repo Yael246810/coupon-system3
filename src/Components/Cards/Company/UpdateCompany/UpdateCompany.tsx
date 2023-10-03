@@ -76,7 +76,7 @@ function UpdateCompany(company: CompanyReq): JSX.Element {
   };
   return (
     <div className="UpdateCompany">
-      <h1>Updated Company</h1>
+      <h1>Update Company</h1>
       <form onSubmit={(...args) => void handleSubmit(onSubmit)(...args)}>
         {obj && (
           <div>
@@ -85,30 +85,30 @@ function UpdateCompany(company: CompanyReq): JSX.Element {
           </div>
         )}
 
-        {errors?.name ? (
-          <span>{errors.name.message}</span>
-        ) : (
-          <label htmlFor="name">Name</label>
-        )}
-        <input {...register("name")} type="text" placeholder="name" />
+<div className="input-container">
+  <label htmlFor="name">Name</label>
+  <input {...register("name")} type="text" placeholder="name" />
+  {errors?.name && (
+    <div className="error-message">{errors.name.message}</div>
+  )}
+</div>
 
-        {errors?.email ? (
-          <span>{errors.email.message}</span>
-        ) : (
-          <label htmlFor="email">Email</label>
-        )}
-        <input {...register("email")} type="text" placeholder="Email" />
+<div className="input-container">
+  <label htmlFor="email">Email</label>
+  <input {...register("email")} type="text" placeholder="Email" />
+  {errors?.email && (
+    <div className="error-message">{errors.email.message}</div>
+  )}
+</div>
 
-        {errors?.password ? (
-          <span>{errors.password.message}</span>
-        ) : (
-          <label htmlFor="password">Password</label>
-        )}
-        <input
-          {...register("password")}
-          type="password"
-          placeholder="Password"
-        />
+<div className="input-container">
+  <label htmlFor="password">Password</label>
+  <input {...register("password")} type="password" placeholder="Password" />
+  {errors?.password && (
+    <div className="error-message">{errors.password.message}</div>
+  )}
+</div>
+
 
         <button disabled={!isValid || isSubmitting}>Update</button>
       </form>

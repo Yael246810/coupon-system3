@@ -51,30 +51,36 @@ function AddCompany(): JSX.Element {
       <h1>Add a new company</h1>
 
       <form onSubmit={(...args) => void handleSubmit(onSubmit)(...args)}>
-        {errors?.name ? (
-          <span>{errors.name.message}</span>
-        ) : (
-          <label htmlFor="name">Name</label>
-        )}
-        <input {...register("name")} type="text" placeholder="name" />
+        <div className="input-container">
+          {errors?.name ? (
+            <div className="error-message">{errors.name.message}</div>
+          ) : (
+            <label htmlFor="name">Name</label>
+          )}
+          <input {...register("name")} type="text" placeholder="name" />
+        </div>
 
-        {errors?.email ? (
-          <span>{errors.email.message}</span>
-        ) : (
-          <label htmlFor="email">Email</label>
-        )}
-        <input {...register("email")} type="text" placeholder="Email" />
+        <div className="input-container">
+          {errors?.email ? (
+            <div className="error-message">{errors.email.message}</div>
+          ) : (
+            <label htmlFor="email">Email</label>
+          )}
+          <input {...register("email")} type="text" placeholder="Email" />
+        </div>
 
-        {errors?.password ? (
-          <span>{errors.password.message}</span>
-        ) : (
-          <label htmlFor="password">Password</label>
-        )}
-        <input
-          {...register("password")}
-          type="password"
-          placeholder="Password"
-        />
+        <div className="input-container">
+          {errors?.password ? (
+            <div className="error-message">{errors.password.message}</div>
+          ) : (
+            <label htmlFor="password">Password</label>
+          )}
+          <input
+            {...register("password")}
+            type="password"
+            placeholder="Password"
+          />
+        </div>
 
         <button>ADD</button>
       </form>

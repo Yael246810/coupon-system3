@@ -25,7 +25,7 @@ function Login() {
       .string()
       .min(4, "password must be at least 4 characters")
       .nonempty("you must enter a password"),
-    type: zod.enum(["ADMIN", "COMPANY", "CUSTOMER"]), // Adjust enum values as needed
+    type: zod.enum(["ADMIN", "COMPANY", "CUSTOMER"]),
   });
 
   const {
@@ -79,7 +79,7 @@ function Login() {
         <div>
           <label>Email:</label>
           {errors?.email ? (
-            <span>{errors.email.message}</span>
+            <span className="error-message">{errors.email.message}</span>
           ) : (
             <label htmlFor="email"></label>
           )}
@@ -88,7 +88,7 @@ function Login() {
         <div>
           <label>Password:</label>
           {errors?.password ? (
-            <span>{errors.password.message}</span>
+            <span className="error-message">{errors.password.message}</span>
           ) : (
             <label htmlFor="password"></label>
           )}
@@ -98,6 +98,7 @@ function Login() {
             placeholder="Password"
           />
         </div>
+
         <div className="type-select">
           <label>Type:</label>
           <select {...register("type")}>

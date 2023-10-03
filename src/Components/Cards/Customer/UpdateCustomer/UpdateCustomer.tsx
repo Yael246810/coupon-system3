@@ -69,43 +69,57 @@ function UpdateCustomer(customer: CustomerModel): JSX.Element {
 
   return (
     <div className="UpdateCustomer">
-      <h1>Updated Customer</h1>
+      <h1>Update Customer</h1>
 
       <form onSubmit={(...args) => void handleSubmit(onSubmit)(...args)}>
-        <label htmlFor="id">Id</label>
-        <input name="id" type="text" value={obj.id} disabled={true} />
+        <div className="input-container">
+          <label htmlFor="id">Id</label>
+          <input name="id" type="text" value={obj.id} disabled={true} />
+        </div>
 
-        {errors?.firstName ? (
-          <span>{errors.firstName.message}</span>
-        ) : (
-          <label htmlFor="firstName">First Name</label>
-        )}
-        <input {...register("firstName")} type="text" placeholder="FirstName" />
+        <div className="input-container">
+          {errors?.firstName ? (
+            <div className="error-message">{errors.firstName.message}</div>
+          ) : (
+            <label htmlFor="firstName">First Name</label>
+          )}
+          <input
+            {...register("firstName")}
+            type="text"
+            placeholder="FirstName"
+          />
+        </div>
 
-        {errors?.lastName ? (
-          <span>{errors.lastName.message}</span>
-        ) : (
-          <label htmlFor="lastName">Last Name</label>
-        )}
-        <input {...register("lastName")} type="text" placeholder="LastName" />
+        <div className="input-container">
+          {errors?.lastName ? (
+            <div className="error-message">{errors.lastName.message}</div>
+          ) : (
+            <label htmlFor="lastName">Last Name</label>
+          )}
+          <input {...register("lastName")} type="text" placeholder="LastName" />
+        </div>
 
-        {errors?.email ? (
-          <span>{errors.email.message}</span>
-        ) : (
-          <label htmlFor="email">Email</label>
-        )}
-        <input {...register("email")} type="text" placeholder="Email" />
+        <div className="input-container">
+          {errors?.email ? (
+            <div className="error-message">{errors.email.message}</div>
+          ) : (
+            <label htmlFor="email">Email</label>
+          )}
+          <input {...register("email")} type="text" placeholder="Email" />
+        </div>
 
-        {errors?.password ? (
-          <span>{errors.password.message}</span>
-        ) : (
-          <label htmlFor="password">Password</label>
-        )}
-        <input
-          {...register("password")}
-          type="password"
-          placeholder="Password"
-        />
+        <div className="input-container">
+          {errors?.password ? (
+            <div className="error-message">{errors.password.message}</div>
+          ) : (
+            <label htmlFor="password">Password</label>
+          )}
+          <input
+            {...register("password")}
+            type="password"
+            placeholder="Password"
+          />
+        </div>
 
         <button disabled={!isValid || isSubmitting}>Update</button>
       </form>
