@@ -11,18 +11,19 @@ class NotificationService {
   }
 
   public msgFormatter(msg: any): string {
+    if (typeof msg === "string") {
+      return msg;
+    }
+
     const axiosError = msg as AxiosError;
 
     if (axiosError && axiosError.response && axiosError.response.data) {
       if (typeof axiosError.response.data === "string") {
         return axiosError.response.data;
-      } else {
-        return JSON.stringify(axiosError.response.data);
+      } else if (axiosError.response.data.description) {
+        return axiosError.response.data.description;
       }
-    } else if (typeof msg === "string") {
-      return msg;
     }
-
     return "Something went wrong";
   }
 }

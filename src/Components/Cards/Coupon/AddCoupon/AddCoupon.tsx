@@ -115,104 +115,81 @@ function AddCoupon(): JSX.Element {
           <option value={Category.VACATION}>Vacation</option>
         </select>
 
-        {errors?.coupon?.title ? (
-          <span>{errors.coupon.title.message}</span>
-        ) : (
-          <label htmlFor="title">Title</label>
-        )}
-        <input {...register("coupon.title")} type="text" placeholder="Title" />
+        <label htmlFor="title">Title</label>
+<input {...register("coupon.title")} type="text" placeholder="Title" />
+{errors?.coupon?.title && (
+  <span className="error-message">{errors.coupon.title.message}</span>
+)}
 
-        {errors?.coupon?.description ? (
-          <span>{errors.coupon.description.message}</span>
-        ) : (
-          <label htmlFor="description">Description</label>
-        )}
-        <input
-          {...register("coupon.description")}
-          type="text"
-          placeholder="Description"
-        />
+<label htmlFor="description">Description</label>
+<input
+  {...register("coupon.description")}
+  type="text"
+  placeholder="Description"
+/>
+{errors?.coupon?.description && (
+  <span className="error-message">{errors.coupon.description.message}</span>
+)}
 
-        {errors?.coupon?.startDate ? (
-          <span>{errors.coupon.startDate.message}</span>
-        ) : (
-          <label htmlFor="startDate">Start Date</label>
-        )}
-        <input {...register("coupon.startDate")} type="datetime-local" />
+<label htmlFor="startDate">Start Date</label>
+<input {...register("coupon.startDate")} type="datetime-local" />
+{errors?.coupon?.startDate && (
+  <span className="error-message">{errors.coupon.startDate.message}</span>
+)}
 
-        {errors?.coupon?.endDate ? (
-          <span>{errors.coupon.endDate.message}</span>
-        ) : (
-          <label htmlFor="endDate">End Date</label>
-        )}
-        <input {...register("coupon.endDate")} type="datetime-local" />
+<label htmlFor="endDate">End Date</label>
+<input {...register("coupon.endDate")} type="datetime-local" />
+{errors?.coupon?.endDate && (
+  <span className="error-message">{errors.coupon.endDate.message}</span>
+)}
 
-        {errors?.coupon?.amount ? (
-          <span>{errors.coupon.amount.message}</span>
-        ) : (
-          <label htmlFor="amount">Amount</label>
-        )}
-        <input
-          {...register("coupon.amount")}
-          type="number"
-          placeholder="Amount"
-        />
+<label htmlFor="amount">Amount</label>
+<input {...register("coupon.amount")} type="number" placeholder="Amount" />
+{errors?.coupon?.amount && (
+  <span className="error-message">{errors.coupon.amount.message}</span>
+)}
 
-        {errors?.coupon?.price ? (
-          <span>{errors.coupon.price.message}</span>
-        ) : (
-          <label htmlFor="price">Price</label>
-        )}
-        <input
-          {...register("coupon.price")}
-          type="number"
-          placeholder="Price"
-        />
+<label htmlFor="price">Price</label>
+<input {...register("coupon.price")} type="number" placeholder="Price" />
+{errors?.coupon?.price && (
+  <span className="error-message">{errors.coupon.price.message}</span>
+)}
 
-        {errors?.coupon?.image ? (
-          <span>{errors.coupon?.image.message}</span>
-        ) : (
-          <label htmlFor="image">Image</label>
-        )}
-        <input
-          {...register("coupon.image")}
-          type="text"
-          placeholder="Image URL"
-        />
+<label htmlFor="image">Image</label>
+<input {...register("coupon.image")} type="text" placeholder="Image URL" />
+{errors?.coupon?.image && (
+  <span className="error-message">{errors.coupon.image.message}</span>
+)}
 
-        {errors?.company?.id ? (
-          <span>{errors.company?.id.message}</span>
-        ) : (
-          <label htmlFor="id">Id</label>
-        )}
-        <input {...register("company.id")} type="number" placeholder="Id" />
+<label htmlFor="id">Id</label>
+<input {...register("company.id")} type="number" placeholder="Id" />
+{errors?.company?.id && (
+  <span className="error-message">{errors.company.id.message}</span>
+)}
 
-        {errors?.company?.name ? (
-          <span>{errors.company?.name.message}</span>
-        ) : (
-          <label htmlFor="name">Name</label>
-        )}
-        <input {...register("company.name")} type="text" placeholder="Name" />
+<label htmlFor="name">Name</label>
+<input {...register("company.name")} type="text" placeholder="Name" />
+{errors?.company?.name && (
+  <span className="error-message">{errors.company.name.message}</span>
+)}
 
-        {errors?.company?.email ? (
-          <span>{errors.company?.email.message}</span>
-        ) : (
-          <label htmlFor="email">Email</label>
-        )}
-        <input {...register("company.email")} type="text" placeholder="Email" />
+<label htmlFor="email">Email</label>
+<input {...register("company.email")} type="text" placeholder="Email" />
+{errors?.company?.email && (
+  <span className="error-message">{errors.company.email.message}</span>
+)}
 
-        {errors?.company?.password ? (
-          <span>{errors.company?.password.message}</span>
-        ) : (
-          <label htmlFor="password">Password</label>
-        )}
-        <input
-          {...register("company.password")}
-          type="text"
-          placeholder="Password"
-        />
+<label htmlFor="password">Password</label>
+<input
+  {...register("company.password")}
+  type="text"
+  placeholder="Password"
+/>
+{errors?.company?.password && (
+  <span className="error-message">{errors.company.password.message}</span>
+)}
 
-        <button type="submit">ADD</button>
+<button type="submit">ADD</button>
       </form>
     </div>
   );

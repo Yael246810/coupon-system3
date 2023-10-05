@@ -19,9 +19,24 @@ function PurchaseCoupon(props: PurchaseCouponProps): JSX.Element {
   const dispatch = useDispatch();
 
   const purchaseCouponModelSchema = Zod.object({
-    couponId: Zod.string(),
-    customerId: Zod.string(),
+    couponId: Zod.string()
+      .refine((id) => id.trim() !== '', {
+        message: "Coupon ID is required.",
+      })
+      .transform((id) => parseInt(id))
+      .refine((value) => Number.isInteger(value) && value > 0, {
+        message: "Coupon ID must be a positive integer.",
+      }),
+    customerId: Zod.string()
+      .refine((id) => id.trim() !== '', {
+        message: "Customer ID is required.",
+      })
+      .transform((id) => parseInt(id))
+      .refine((value) => Number.isInteger(value) && value > 0, {
+        message: "Customer ID must be a positive integer.",
+      }),
   });
+  
 
   const {
     register,

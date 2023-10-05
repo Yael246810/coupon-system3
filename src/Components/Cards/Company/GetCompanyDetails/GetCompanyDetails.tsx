@@ -61,7 +61,7 @@ function CompanyDetails() {
     </ul>
   </div>
 ) : (
-  <p>No customer data available</p>
+  <p></p> //No company data available
 )}
 
 

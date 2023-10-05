@@ -65,7 +65,7 @@ function GetCustomerDetails(): JSX.Element {
           </ul>
         </div>
       ) : (
-        <p>No customer data available</p>
+        <p></p> //No customer data available
       )}
 
       <form onSubmit={handleSubmit(onSubmit)}>

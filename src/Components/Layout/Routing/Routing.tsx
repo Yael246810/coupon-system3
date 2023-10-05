@@ -31,7 +31,7 @@ import GetCompanyCouponsByMaxPrice from "../../Cards/Company/GetCompanyCouponsBy
 import PurchaseCoupon from "../../Cards/Coupon/PurchaseCoupon/PurchaseCoupon";
 import DeleteCouponPurchased from "../../Cards/Coupon/DeleteCouponPurchased/DeleteCouponPurchased";
 import GetCustomerCouponsByCategory from "../../Cards/Coupon/GetCustomerCouponsByCategory/GetCustomerCouponsByCategory";
-import GetCustomerDetails from "../../Cards/Coupon/GetCustomerDetails/GetCustomerDetails";
+import GetCustomerDetails from "../../Cards/Customer/GetCustomerDetails/GetCustomerDetails";
 import GetCompanyDetails from "../../Cards/Company/GetCompanyDetails/GetCompanyDetails";
 import GetCustomerCoupons from "../../Cards/Coupon/GetCustomerCoupons/GetCustomerCoupons";
 
