@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import "./AddCoupon.css";
 import { useDispatch } from "react-redux";
 import Zod from "zod";
@@ -12,6 +12,8 @@ import {
   couponsReducer,
 } from "../../../Redux/CouponAppState";
 import { CouponCompany } from "../../../../Models/CouponCompany";
+import { useState } from "react";
+import store from "../../../Redux/store";
 
 interface AddCouponProps {
   couponCompany: CouponCompany;
@@ -20,6 +22,7 @@ interface AddCouponProps {
 function AddCoupon(): JSX.Element {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const companyId = store.getState().user.id;
 
   const couponCompanyModelSchema = Zod.object({
     coupon: Zod.object({
@@ -61,20 +64,7 @@ function AddCoupon(): JSX.Element {
     }),
 
     company: Zod.object({
-      name: Zod.string().nonempty("Please enter a valid name"),
-      email: Zod.string()
-        .email()
-        .nonempty("Please enter a correct email address"),
-      password: Zod.string().min(
-        4,
-        "Password must contain at least 4 characters"
-      ),
-      id: Zod.string()
-        .nonempty("must enter an id")
-        .transform((id) => parseInt(id))
-        .refine((value) => Number.isInteger(value) && value > 0, {
-          message: "id must be positive",
-        }),
+      id: Zod.string(),
     }),
   });
 
@@ -116,80 +106,70 @@ function AddCoupon(): JSX.Element {
         </select>
 
         <label htmlFor="title">Title</label>
-<input {...register("coupon.title")} type="text" placeholder="Title" />
-{errors?.coupon?.title && (
-  <span className="error-message">{errors.coupon.title.message}</span>
-)}
+        <input {...register("coupon.title")} type="text" placeholder="Title" />
+        {errors?.coupon?.title && (
+          <span className="error-message">{errors.coupon.title.message}</span>
+        )}
 
-<label htmlFor="description">Description</label>
-<input
-  {...register("coupon.description")}
-  type="text"
-  placeholder="Description"
-/>
-{errors?.coupon?.description && (
-  <span className="error-message">{errors.coupon.description.message}</span>
-)}
+        <label htmlFor="description">Description</label>
+        <input
+          {...register("coupon.description")}
+          type="text"
+          placeholder="Description"
+        />
+        {errors?.coupon?.description && (
+          <span className="error-message">
+            {errors.coupon.description.message}
+          </span>
+        )}
 
-<label htmlFor="startDate">Start Date</label>
-<input {...register("coupon.startDate")} type="datetime-local" />
-{errors?.coupon?.startDate && (
-  <span className="error-message">{errors.coupon.startDate.message}</span>
-)}
+        <label htmlFor="startDate">Start Date</label>
+        <input {...register("coupon.startDate")} type="datetime-local" />
+        {errors?.coupon?.startDate && (
+          <span className="error-message">
+            {errors.coupon.startDate.message}
+          </span>
+        )}
 
-<label htmlFor="endDate">End Date</label>
-<input {...register("coupon.endDate")} type="datetime-local" />
-{errors?.coupon?.endDate && (
-  <span className="error-message">{errors.coupon.endDate.message}</span>
-)}
+        <label htmlFor="endDate">End Date</label>
+        <input {...register("coupon.endDate")} type="datetime-local" />
+        {errors?.coupon?.endDate && (
+          <span className="error-message">{errors.coupon.endDate.message}</span>
+        )}
 
-<label htmlFor="amount">Amount</label>
-<input {...register("coupon.amount")} type="number" placeholder="Amount" />
-{errors?.coupon?.amount && (
-  <span className="error-message">{errors.coupon.amount.message}</span>
-)}
+        <label htmlFor="amount">Amount</label>
+        <input
+          {...register("coupon.amount")}
+          type="number"
+          placeholder="Amount"
+        />
+        {errors?.coupon?.amount && (
+          <span className="error-message">{errors.coupon.amount.message}</span>
+        )}
 
-<label htmlFor="price">Price</label>
-<input {...register("coupon.price")} type="number" placeholder="Price" />
-{errors?.coupon?.price && (
-  <span className="error-message">{errors.coupon.price.message}</span>
-)}
+        <label htmlFor="price">Price</label>
+        <input
+          {...register("coupon.price")}
+          type="number"
+          placeholder="Price"
+        />
+        {errors?.coupon?.price && (
+          <span className="error-message">{errors.coupon.price.message}</span>
+        )}
 
-<label htmlFor="image">Image</label>
-<input {...register("coupon.image")} type="text" placeholder="Image URL" />
-{errors?.coupon?.image && (
-  <span className="error-message">{errors.coupon.image.message}</span>
-)}
+        <label htmlFor="image">Image</label>
+        <input
+          {...register("coupon.image")}
+          type="text"
+          placeholder="Image URL"
+        />
+        {errors?.coupon?.image && (
+          <span className="error-message">{errors.coupon.image.message}</span>
+        )}
 
-<label htmlFor="id">Id</label>
-<input {...register("company.id")} type="number" placeholder="Id" />
-{errors?.company?.id && (
-  <span className="error-message">{errors.company.id.message}</span>
-)}
+        <input type="hidden" {...register("company.id")} value={companyId} />
 
-<label htmlFor="name">Name</label>
-<input {...register("company.name")} type="text" placeholder="Name" />
-{errors?.company?.name && (
-  <span className="error-message">{errors.company.name.message}</span>
-)}
-
-<label htmlFor="email">Email</label>
-<input {...register("company.email")} type="text" placeholder="Email" />
-{errors?.company?.email && (
-  <span className="error-message">{errors.company.email.message}</span>
-)}
-
-<label htmlFor="password">Password</label>
-<input
-  {...register("company.password")}
-  type="text"
-  placeholder="Password"
-/>
-{errors?.company?.password && (
-  <span className="error-message">{errors.company.password.message}</span>
-)}
-
-<button type="submit">ADD</button>
+        <button type="submit">ADD</button>
       </form>
     </div>
   );

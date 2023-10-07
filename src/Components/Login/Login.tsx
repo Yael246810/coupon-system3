@@ -18,6 +18,7 @@ import {
 function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  let isButtonPressed = false;
 
   const schema = zod.object({
     email: zod.string().nonempty("you must enter an email"),
@@ -35,6 +36,8 @@ function Login() {
   } = useForm<LoginReqModel>({ mode: "all", resolver: zodResolver(schema) });
 
   const onSubmit: SubmitHandler<LoginReqModel> = (data: LoginReqModel) => {
+    isButtonPressed = true;
+
     return webApiService
       .login(data)
       .then((res) => {
@@ -46,6 +49,8 @@ function Login() {
             " email: " +
             data.email
         );
+
+          console.log("login with id: " + res.data.id);
 
         const newState = {
           id: res.data.id,
@@ -69,7 +74,10 @@ function Login() {
           dispatch(loggedInAsCustomer());
         }
       })
-      .catch((err) => notifyService.error(err));
+      .catch((err) => {
+        notifyService.error(err);
+        isButtonPressed = false;
+      });
   };
 
   return (
@@ -107,8 +115,7 @@ function Login() {
             <option value="CUSTOMER">CUSTOMER</option>
           </select>
         </div>
-        <button type="submit">
-        {/* <button type="submit" disabled={!isValid || isSubmitted}> */}
+        <button type="submit" disabled={isButtonPressed}>
           Login
         </button>
       </form>
