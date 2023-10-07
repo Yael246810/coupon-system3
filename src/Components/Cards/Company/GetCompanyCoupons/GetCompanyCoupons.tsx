@@ -8,54 +8,36 @@ import { CouponModel } from "../../../../Models/Admin";
 import { useState } from "react";
 import CouponCard from "../../Coupon/CouponCard/CouponCard";
 import EmptyView from "../../../Pages/EmptyView/EmptyView";
+import store from "../../../Redux/store";
 
 function GetCompanyCoupons(): JSX.Element {
   const dispatch = useDispatch();
+  const companyId = store.getState().user.id;
 
   const {
-    handleSubmit,
-    register,
     formState: { errors },
   } = useForm();
 
   const [fetchedCoupons, setFetchedCoupons] = useState<CouponModel[] | null>(
     null
   );
-  const [numericId, setNumericId] = useState<number | null>(null);
 
-  const onSubmit = (data: { id: string }) => {
-    const parsedId = parseInt(data.id);
-
-    if (!isNaN(parsedId)) {
-      setNumericId(parsedId);
-      companyWebApiService
-        .getCompanyCoupons(parsedId)
-        .then((res) => {
-          notifyService.success(`Fetched company #${parsedId}`);
-          dispatch(getCompanyCouponsAction(res.data));
-          setFetchedCoupons(res.data);
-        })
-        .catch((err) => notifyService.error(err));
-    } else {
-      notifyService.error("Please enter a valid company ID");
-    }
-  };
+if(!fetchedCoupons) {
+  companyWebApiService
+  .getCompanyCoupons(companyId)
+  .then((res) => {
+    notifyService.success(`Fetched company #${companyId}`);
+    dispatch(getCompanyCouponsAction(res.data));
+    setFetchedCoupons(res.data);
+  })
+  .catch((err) => {
+    notifyService.error(err);
+  });
+}
 
   return (
     <div className="GetCompanyCoupons">
       <h2>Get Company Coupons</h2>
-      <form className="CompanyForm" onSubmit={handleSubmit(onSubmit)}>
-        {errors?.id ? (
-          <span>{errors.id.message}</span>
-        ) : (
-          <>
-            <label htmlFor="id">Id</label>
-            <input {...register("id")} type="number" placeholder="Id" />
-          </>
-        )}
-        <button>Get</button>
-      </form>
-
       {fetchedCoupons && (
         <div className="CouponList">
           <h2>Coupons</h2>
@@ -64,9 +46,9 @@ function GetCompanyCoupons(): JSX.Element {
               <CouponCard
                 key={coupon.id}
                 coupon={coupon}
-                customerId={numericId}
+                customerId={companyId}
                 isCompanyConnected={true}
-                companyId={numericId}
+                companyId={companyId}
               />
             ))
           ) : (

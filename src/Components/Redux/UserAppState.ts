@@ -44,7 +44,6 @@ const UserSlice = createSlice({
       state.id = initialState.id;
       state.token = initialState.token;
       state.type = initialState.type;
-      console.log("2: " + state.token);
     },
   },
 });

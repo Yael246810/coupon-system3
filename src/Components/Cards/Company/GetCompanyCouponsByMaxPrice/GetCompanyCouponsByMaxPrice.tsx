@@ -6,9 +6,11 @@ import { useForm } from "react-hook-form";
 import { CouponModel } from "../../../../Models/Admin"; 
 import { useState } from "react";
 import { getCompanyCouponsByMaxPriceAction } from "../../../Redux/CompanyAppState";
+import store from "../../../Redux/store";
 
 function GetCompanyCouponsByMaxPrice(): JSX.Element {
     const dispatch = useDispatch();
+    const companyId = store.getState().user.id;
 
     const {
         handleSubmit,
@@ -18,14 +20,13 @@ function GetCompanyCouponsByMaxPrice(): JSX.Element {
     const [fetchedCoupons, setFetchedCoupons] = useState<CouponModel[] | null>(null);
 
     const onSubmit = (data: { id: string; maxPrice: string }) => {
-        const numericId = parseInt(data.id);
         const numericMaxPrice = parseFloat(data.maxPrice);
 
-        if (!isNaN(numericId) && !isNaN(numericMaxPrice)) {
+        if (!isNaN(numericMaxPrice)) {
             companyWebApiService
-                .getCompanyCouponsByMaxPrice(numericId, numericMaxPrice)
+                .getCompanyCouponsByMaxPrice(companyId, numericMaxPrice)
                 .then((res) => {
-                    notifyService.success(`Fetched coupons for company #${numericId} with max price ${numericMaxPrice}`);
+                    notifyService.success(`Fetched coupons for company #${companyId} with max price ${numericMaxPrice}`);
                     
                     dispatch(getCompanyCouponsByMaxPriceAction(res.data));
                     setFetchedCoupons(res.data);
@@ -44,9 +45,6 @@ function GetCompanyCouponsByMaxPrice(): JSX.Element {
                     <span>{errors.id.message}</span>
                 ) : (
                     <>
-                        <label htmlFor="id">Id</label>
-                        <input {...register("id")} type="number" placeholder="Id" />
-
                         <label htmlFor="maxPrice">Max Price</label>
                         <input {...register("maxPrice")} type="number" placeholder="Max Price" />
                     </>

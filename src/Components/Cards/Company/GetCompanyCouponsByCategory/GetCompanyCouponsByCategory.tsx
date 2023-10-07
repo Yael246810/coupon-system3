@@ -7,9 +7,11 @@ import companyWebApiService from "../../../../Services/CompanyWebApiService";
 import { getCompanyCouponsByCategoryAction } from "../../../Redux/CompanyAppState";
 import notifyService from "../../../../Services/NotificationService";
 import { Category } from "../../../../Models/Admin";
+import store from "../../../Redux/store";
 
 function GetCompanyCouponsByCategory(): JSX.Element {
   const dispatch = useDispatch();
+  const companyId = store.getState().user.id;
 
   const {
     handleSubmit,
@@ -22,31 +24,22 @@ function GetCompanyCouponsByCategory(): JSX.Element {
   );
 
   const onSubmit = (data: { id: string; category: Category }) => {
-    const numericId = parseInt(data.id);
-
-    if (!isNaN(numericId)) {
-      companyWebApiService
-        .getCompanyCouponsByCategory(numericId, data.category)
-        .then((res) => {
-          notifyService.success(
-            `Fetched company #${numericId} coupons by category`
-          );
-          dispatch(getCompanyCouponsByCategoryAction(res.data));
-          setFetchedCoupons(res.data);
-        })
-        .catch((err) => notifyService.error(err));
-    } else {
-      notifyService.error("Please enter a valid company ID");
-    }
+    companyWebApiService
+    .getCompanyCouponsByCategory(companyId, data.category)
+    .then((res) => {
+      notifyService.success(
+        `Fetched company #${companyId} coupons by category`
+      );
+      dispatch(getCompanyCouponsByCategoryAction(res.data));
+      setFetchedCoupons(res.data);
+    })
+    .catch((err) => notifyService.error(err));
   };
 
   return (
     <div className="GetCompanyCouponsByCategory">
       <h1>Company Coupons by Category</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <label htmlFor="id">Company ID</label>
-        <input {...register("id")} type="number" placeholder="Company ID" />
-
         <label htmlFor="category">Category</label>
         <select {...register("category")}>
           <option value={Category.FOOD}>Food</option>

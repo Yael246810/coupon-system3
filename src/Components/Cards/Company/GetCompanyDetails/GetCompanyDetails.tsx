@@ -5,35 +5,29 @@ import { useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { CompaniesModel } from '../../../../Models/CompaniesModel';
 import { getCompanyDetailsAction } from '../../../Redux/CompanyAppState';
-
+import store from '../../../Redux/store';
 
 function CompanyDetails() {
   const dispatch = useDispatch();
+  const companyId = store.getState().user.id;
 
   const {
-    handleSubmit,
-    register,
     formState: { errors },
   } = useForm();
 
   const [fetchedCompany, setFetchedCompany] = useState<CompaniesModel | null>(null);
 
-  const onSubmit = (data: { id: string }) => {
-    const numericId = parseInt(data.id);
+if(!fetchedCompany) {
+  companyWebApiService
+      .getCompanyDetails(companyId)
+      .then((res) => {
+        notifyService.success(`Details about company #${companyId}`);
+        dispatch(getCompanyDetailsAction(res.data));
+        setFetchedCompany(res.data);
+      })
+      .catch((err) => notifyService.error(err));
+}
 
-    if (!isNaN(numericId)) {
-      companyWebApiService
-        .getCompanyDetails(numericId)
-        .then((res) => {
-          notifyService.success(`Details about customer #${numericId}`);
-          dispatch(getCompanyDetailsAction(res.data));
-          setFetchedCompany(res.data);
-        })
-        .catch((err) => notifyService.error(err));
-    } else {
-      notifyService.error("Please enter a valid customer ID");
-    }
-  };
   return (
     <div className="CompanyDetails">
       <h2>Company Details:</h2>
@@ -61,20 +55,12 @@ function CompanyDetails() {
     </ul>
   </div>
 ) : (
-  <p></p> //No company data available
+  <p></p>
 )}
 
-
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <label htmlFor="id">Enter Company ID:</label>
-        <input {...register("id")} type="number" placeholder="Customer ID" />
-        <button type="submit">Get Details</button>
-        {errors?.id && <span>{errors.id.message}</span>}
-      </form>
     </div>
   );
 }
-
 
 export default CompanyDetails;
 
