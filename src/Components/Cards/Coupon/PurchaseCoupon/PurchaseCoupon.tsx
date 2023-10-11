@@ -76,11 +76,11 @@ function PurchaseCoupon(props: PurchaseCouponProps): JSX.Element {
       <h1>Purchase Coupon</h1>
 
       <form onSubmit={handleSubmit(onSubmit)}>
-        <input {...register("couponId")} type="text" placeholder="couponId" />
+        <input {...register("customerId")} type="text" placeholder="customerId" />
         <input
-          {...register("customerId")}
+          {...register("couponId")}
           type="text"
-          placeholder="customerId"
+          placeholder="couponId"
         />
         <button>Purchase</button>
       </form>
