@@ -10,6 +10,7 @@ import store from "../../../Redux/store";
 
 function GetCustomerCoupons(): JSX.Element {
   const dispatch = useDispatch();
+  const customerId = store.getState().user.id;
   const navigate = useNavigate();
 
   const deleteCoupon = (customerId: number, couponId: number) => {

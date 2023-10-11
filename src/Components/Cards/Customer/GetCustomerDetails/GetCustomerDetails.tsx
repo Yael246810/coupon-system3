@@ -6,36 +6,28 @@ import { CustomersModel } from "../../../../Models/Customers";
 import customerWebApiService from "../../../../Services/CustomerWebApiService";
 import notifyService from "../../../../Services/NotificationService";
 import { getCustomerDetails } from "../../../Redux/CustomerWithCouponsAppState";
+import store from "../../../Redux/store";
 
 function GetCustomerDetails(): JSX.Element {
   const dispatch = useDispatch();
+  const customerId = store.getState().user.id;
 
   const {
-    handleSubmit,
-    register,
     formState: { errors },
   } = useForm();
 
-  const [fetchedCustomer, setFetchedCustomer] = useState<CustomersModel | null>(
-    null
-  );
+  const [fetchedCustomer, setFetchedCustomer] = useState<CustomersModel | null>(null);
 
-  const onSubmit = (data: { id: string }) => {
-    const numericId = parseInt(data.id);
-
-    if (!isNaN(numericId)) {
-      customerWebApiService
-        .getCustomerDetails(numericId)
+  if(!fetchedCustomer) {
+    customerWebApiService
+        .getCustomerDetails(customerId)
         .then((res) => {
-          notifyService.success(`Details about customer #${numericId}`);
+          notifyService.success(`Details about customer #${customerId}`);
           dispatch(getCustomerDetails(res.data));
           setFetchedCustomer(res.data);
         })
         .catch((err) => notifyService.error(err));
-    } else {
-      notifyService.error("Please enter a valid customer ID");
-    }
-  };
+  }
 
   return (
     <div className="GetCustomerDetails">
@@ -65,15 +57,9 @@ function GetCustomerDetails(): JSX.Element {
           </ul>
         </div>
       ) : (
-        <p></p> //No customer data available
+        <p></p> 
       )}
 
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <label htmlFor="id">Enter Customer ID:</label>
-        <input {...register("id")} type="number" placeholder="Customer ID" />
-        <button type="submit">Get Details</button>
-        {errors?.id && <span>{errors.id.message}</span>}
-      </form>
     </div>
   );
 }

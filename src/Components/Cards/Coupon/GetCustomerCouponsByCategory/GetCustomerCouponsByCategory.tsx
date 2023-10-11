@@ -6,9 +6,11 @@ import { Category, CouponModel } from "../../../../Models/Admin";
 import customerWebApiService from "../../../../Services/CustomerWebApiService";
 import notifyService from "../../../../Services/NotificationService";
 import { getCustomerCouponsByCategoryAction } from "../../../Redux/CustomerWithCouponsAppState";
+import store from "../../../Redux/store";
 
 function GetCustomerCouponsByCategory(): JSX.Element {
   const dispatch = useDispatch();
+  const customerId = store.getState().user.id;
 
   const {
     handleSubmit,
@@ -21,31 +23,22 @@ function GetCustomerCouponsByCategory(): JSX.Element {
   );
 
   const onSubmit = (data: { id: string; category: Category }) => {
-    const numericId = parseInt(data.id);
-
-    if (!isNaN(numericId)) {
-      customerWebApiService
-        .getCustomerCouponsByCategory(numericId, data.category)
-        .then((res) => {
-          notifyService.success(
-            `Fetched customer #${numericId} coupons by category`
-          );
-          dispatch(getCustomerCouponsByCategoryAction(res.data));
-          setFetchedCoupons(res.data);
-        })
-        .catch((err) => notifyService.error(err));
-    } else {
-      notifyService.error("Please enter a valid company ID");
-    }
+    customerWebApiService
+    .getCustomerCouponsByCategory(customerId, data.category)
+    .then((res) => {
+      notifyService.success(
+        `Fetched customer #${customerId} coupons by category`
+      );
+      dispatch(getCustomerCouponsByCategoryAction(res.data));
+      setFetchedCoupons(res.data);
+    })
+    .catch((err) => notifyService.error(err));
   };
 
   return (
     <div className="GetCustomerCouponsByCategory">
       <h1>Customer Coupons by Category</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <label htmlFor="id">Customer ID</label>
-        <input {...register("id")} type="number" placeholder="Company ID" />
-
         <label htmlFor="category">Category</label>
         <select {...register("category")}>
           <option value={Category.FOOD}>Food</option>

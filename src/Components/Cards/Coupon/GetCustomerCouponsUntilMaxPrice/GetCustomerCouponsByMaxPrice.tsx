@@ -6,9 +6,11 @@ import { CouponModel } from "../../../../Models/Admin";
 import notifyService from "../../../../Services/NotificationService";
 import customerWebApiService from "../../../../Services/CustomerWebApiService";
 import { getCustomerCouponsByMaxPriceAction } from "../../../Redux/CustomerWithCouponsAppState";
+import store from "../../../Redux/store";
 
 function GetCustomerCouponsByMaxPrice(): JSX.Element {
   const dispatch = useDispatch();
+  const customerId = store.getState().user.id;
 
   const {
     handleSubmit,
@@ -20,15 +22,14 @@ function GetCustomerCouponsByMaxPrice(): JSX.Element {
   );
 
   const onSubmit = (data: { id: string; maxPrice: string }) => {
-    const numericId = parseInt(data.id);
     const numericMaxPrice = parseFloat(data.maxPrice);
 
-    if (!isNaN(numericId) && !isNaN(numericMaxPrice)) {
+    if (!isNaN(numericMaxPrice)) {
       customerWebApiService
-        .getCustomerCouponsByMaxPrice(numericId, numericMaxPrice)
+        .getCustomerCouponsByMaxPrice(customerId, numericMaxPrice)
         .then((res) => {
           notifyService.success(
-            `Fetched coupons for customer #${numericId} with max price ${numericMaxPrice}`
+            `Fetched coupons for customer #${customerId} with max price ${numericMaxPrice}`
           );
 
           dispatch(getCustomerCouponsByMaxPriceAction(numericMaxPrice));
@@ -48,15 +49,8 @@ function GetCustomerCouponsByMaxPrice(): JSX.Element {
           <span>{errors.id.message}</span>
         ) : (
           <>
-            <label htmlFor="id">Id</label>
-            <input {...register("id")} type="number" placeholder="Id" />
-
             <label htmlFor="maxPrice">Max Price</label>
-            <input
-              {...register("maxPrice")}
-              type="number"
-              placeholder="Max Price"
-            />
+            <input {...register("maxPrice")} type="number" placeholder="Max Price"/>
           </>
         )}
         <button>Get</button>
