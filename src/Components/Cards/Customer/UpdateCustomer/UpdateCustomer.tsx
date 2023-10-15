@@ -11,7 +11,7 @@ import Zod from "zod";
 import webApiService from "../../../../Services/CustomerWebApiService";
 import { updatedCustomerAction } from "../../../Redux/CustomerAppState";
 
-function UpdateCustomer(customer: CustomerModel): JSX.Element {
+function UpdateCustomer(): JSX.Element {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const params = useParams();
@@ -33,15 +33,6 @@ function UpdateCustomer(customer: CustomerModel): JSX.Element {
       "Password must contain at least 4 characters"
     ),
   });
-
-  const updateAndValidateId = (newId: number) => {
-    if (newId === id) {
-      return newId;
-    } else {
-      console.log("error with the id");
-      return id;
-    }
-  };
 
   const {
     register,

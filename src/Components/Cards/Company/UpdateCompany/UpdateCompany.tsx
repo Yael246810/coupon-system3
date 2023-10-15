@@ -11,14 +11,15 @@ import companyWebApiService from "../../../../Services/CompanyWebApiService";
 import { updatedCompanyAction } from "../../../Redux/CompanyNoCouponsAppState";
 import { CompanyReq } from "../../../../Models/CompanyReq";
 import { CompanyModel } from "../../../../Models/Admin";
+import { CompaniesModel } from "../../../../Models/CompaniesModel";
 
-function UpdateCompany(company: CompanyReq): JSX.Element {
+function UpdateCompany(): JSX.Element {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const params = useParams();
   const id = +(params.id || 0);
-  const [obj] = useState<CompanyReq>(
-    store.getState().companiesNoCoupons.companies.filter((c) => c.id === id)[0]
+  const [obj] = useState<CompaniesModel>(
+    store.getState().companies.companies.filter((c) => c.id === id)[0]
   );
 
   const defaultValuesObj = { ...obj };
