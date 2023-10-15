@@ -8,6 +8,7 @@ import { PurchaseCouponReq } from "../../../../Models/PurchaseCouponReq";
 import customerWebApiService from "../../../../Services/CustomerWebApiService";
 import notifyService from "../../../../Services/NotificationService";
 import { purchaseCouponAction } from "../../../Redux/CustomerWithCouponsAppState";
+import store from "../../../Redux/store";
 
 interface PurchaseCouponProps {
   couponId: string;
@@ -17,6 +18,7 @@ interface PurchaseCouponProps {
 function PurchaseCoupon(props: PurchaseCouponProps): JSX.Element {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const customerId = store.getState().user.id;
 
   const purchaseCouponModelSchema = Zod.object({
     couponId: Zod.string()
@@ -26,15 +28,7 @@ function PurchaseCoupon(props: PurchaseCouponProps): JSX.Element {
       .transform((id) => parseInt(id))
       .refine((value) => Number.isInteger(value) && value > 0, {
         message: "Coupon ID must be a positive integer.",
-      }),
-    customerId: Zod.string()
-      .refine((id) => id.trim() !== '', {
-        message: "Customer ID is required.",
       })
-      .transform((id) => parseInt(id))
-      .refine((value) => Number.isInteger(value) && value > 0, {
-        message: "Customer ID must be a positive integer.",
-      }),
   });
   
 
@@ -51,15 +45,13 @@ function PurchaseCoupon(props: PurchaseCouponProps): JSX.Element {
     data: PurchaseCouponReq
   ) => {
     const couponId = Number(data.couponId);
-    const customerId = Number(data.customerId);
 
     if (isNaN(couponId)) {
       notifyService.error("Invalid coupon ID. Please enter a valid number.");
-    } else if (isNaN(customerId))
-      notifyService.error("Invalid customer ID. Please enter a valid number.");
+    }
     else {
       customerWebApiService
-        .PurchaseCoupon(couponId, customerId)
+        .PurchaseCoupon(customerId, couponId)
         .then((res) => {
           notifyService.success("The coupon is added for the customer");
           dispatch(purchaseCouponAction(res.data));
@@ -76,7 +68,6 @@ function PurchaseCoupon(props: PurchaseCouponProps): JSX.Element {
       <h1>Purchase Coupon</h1>
 
       <form onSubmit={handleSubmit(onSubmit)}>
-        <input {...register("customerId")} type="text" placeholder="customerId" />
         <input
           {...register("couponId")}
           type="text"

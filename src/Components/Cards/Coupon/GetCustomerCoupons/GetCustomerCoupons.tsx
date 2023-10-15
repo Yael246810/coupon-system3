@@ -1,5 +1,4 @@
 import React, { useRef, useState } from "react";
-import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { CouponModel } from "../../../../Models/Admin";
 import customerWebApiService from "../../../../Services/CustomerWebApiService";
@@ -9,7 +8,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 import store from "../../../Redux/store";
 
 function GetCustomerCoupons(): JSX.Element {
-  const dispatch = useDispatch();
   const customerId = store.getState().user.id;
   const navigate = useNavigate();
 
@@ -18,8 +16,6 @@ function GetCustomerCoupons(): JSX.Element {
   };
 
   const {
-    handleSubmit,
-    register,
     formState: { errors },
   } = useForm();
 
@@ -30,43 +26,23 @@ function GetCustomerCoupons(): JSX.Element {
   const location = useLocation();
   const wasCouponsDataUpdated = useRef(location.state?.wasCouponsDataUpdated);
 
-  const onSubmit = (data: { id: string }) => {
-    const numericId = parseInt(data.id);
-
-    if (fetchedCoupons.length === 0 || wasCouponsDataUpdated.current) {
-      if (!isNaN(numericId)) {
-        wasCouponsDataUpdated.current = false;
-        customerWebApiService
-          .getCustomerCoupons(numericId)
-          .then((res) => {
-            notifyService.success(`Fetched customer #${numericId}`);
-            setFetchedCoupons(res.data);
-          })
-          .catch((err) => {
-            notifyService.error(err);
-            setFetchedCoupons([]);
-          });
-      } else {
-        notifyService.error("Please enter a valid customer ID");
+  if (fetchedCoupons.length === 0 || wasCouponsDataUpdated.current) {
+    wasCouponsDataUpdated.current = false;
+    customerWebApiService
+      .getCustomerCoupons(customerId)
+      .then((res) => {
+        notifyService.success(`Fetched customer #${customerId}`);
+        setFetchedCoupons(res.data);
+      })
+      .catch((err) => {
+        notifyService.error(err);
         setFetchedCoupons([]);
-      }
-    }
-  };
+      });
+  }
 
   return (
     <div className="GetCustomerCoupons">
       <h2>Get Customer Coupons</h2>
-      <form className="CustomerForm" onSubmit={handleSubmit(onSubmit)}>
-        {errors?.id ? (
-          <span>{errors.id.message}</span>
-        ) : (
-          <>
-            <label htmlFor="id">Id</label>
-            <input {...register("id")} type="number" placeholder="Id" />
-          </>
-        )}
-        <button>Get</button>
-      </form>
 
       {fetchedCoupons !== null && (
         <div className="CouponList">
