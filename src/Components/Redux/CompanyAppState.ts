@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { CompaniesModel } from "../../Models/CompaniesModel";
-import { CouponModel } from "../../Models/Admin";
+import { CompanyModel, CouponModel } from "../../Models/Admin";
 
 interface CompaniesState {
   companies: CompaniesModel[];
@@ -37,9 +37,11 @@ const companiesSlice = createSlice({
       );
     },
     getCompanyCouponsAction(state, action: PayloadAction<CouponModel[]>) {
-      state.companies = state.companies.filter(
-        (company) => company.coupons && company.coupons.length > 0
-      );
+      const company: CompaniesModel = {
+        coupons: action.payload
+      }
+
+      state.companies.push(company);
     },
     getCompanyCouponsByMaxPriceAction(
       state,

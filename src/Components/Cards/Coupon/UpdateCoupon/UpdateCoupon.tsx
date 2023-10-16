@@ -1,4 +1,3 @@
-import { useDispatch } from "react-redux";
 import "./UpdateCoupon.css";
 import { useNavigate, useParams } from "react-router-dom";
 import Zod from "zod";
@@ -6,15 +5,23 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import couponWebApiService from "../../../../Services/CouponsWebApiService";
 import notifyService from "../../../../Services/NotificationService";
-import { updatedCouponAction } from "../../../Redux/CouponAppState";
 import { CouponCompany } from "../../../../Models/CouponCompany";
+import store from "../../../Redux/store";
 
 function UpdateCoupon(): JSX.Element {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const params = useParams();
   const id = +(params.id || 0);
   const companyId = +(params.companyId || 0);
+  const coupon = store.getState().companies.companies[0].coupons?.find((c) => c.id ===id);
+  console.log("start date "+coupon?.startDate);
+  console.log("end date "+coupon?.endDate);
+  
+
+  const company: CouponCompany = {
+    coupon: coupon
+  }
+
 
   const couponCompanyModelSchema = Zod.object({
     coupon: Zod.object({
@@ -62,6 +69,7 @@ function UpdateCoupon(): JSX.Element {
     formState: { errors, isValid, isSubmitting },
   } = useForm<CouponCompany>({
     mode: "all",
+    defaultValues: company,
     resolver: zodResolver(couponCompanyModelSchema),
   });
 
@@ -76,7 +84,7 @@ function UpdateCoupon(): JSX.Element {
       .updateCoupon(data)
       .then((res) => {
         notifyService.success("coupon is updated!");
-        // dispatch(updatedCouponAction(res.data)); TODO do we need it?
+        // dispatch(updatedCouponAction(res.data));
         navigate("/companies/coupons");
       })
       .catch((err) => notifyService.error(err));
@@ -166,7 +174,7 @@ function UpdateCoupon(): JSX.Element {
           placeholder="Image URL"
         />
 
-        <button>Update</button>
+<button disabled={!isValid || isSubmitting}>Update</button>
       </form>
     </div>
   );

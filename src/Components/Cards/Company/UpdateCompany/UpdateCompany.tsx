@@ -35,19 +35,10 @@ function UpdateCompany(): JSX.Element {
     ),
   });
 
-  const updateAndValidateId = (newId: number) => {
-    if (newId === id) {
-      return newId;
-    } else {
-      console.log("error with the id");
-      return id;
-    }
-  };
 
   const {
     register,
     handleSubmit,
-    control,
     formState: { errors, isValid, isSubmitting },
   } = useForm<CompanyReq>({
     defaultValues: defaultValuesObj,
