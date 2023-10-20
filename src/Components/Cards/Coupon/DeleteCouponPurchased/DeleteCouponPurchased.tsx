@@ -4,21 +4,22 @@ import { useNavigate, useParams } from "react-router-dom";
 import customerWebApiService from "../../../../Services/CustomerWebApiService";
 import notifyService from "../../../../Services/NotificationService";
 import { deletedPurchasedCouponAction } from "../../../Redux/CustomerWithCouponsAppState";
+import store from "../../../Redux/store";
 
 function DeleteCouponPurchased(): JSX.Element {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { customerId, couponId } = useParams();
-  const parsedCustomerId = parseInt(customerId, 10);
+  const { couponId } = useParams();
+  const customerId = store.getState().user.id;
   const parsedCouponId = parseInt(couponId, 10);
 
   const yes = () => {
     customerWebApiService
-      .deletePurchasedCoupon(parsedCouponId, parsedCustomerId)
+      .deletePurchasedCoupon(parsedCouponId, customerId)
       .then((res) => {
         notifyService.success(
-          `Deleted purchased coupon #${parsedCouponId} from customer ${parsedCustomerId}`
+          `Deleted purchased coupon #${parsedCouponId} from customer ${customerId}`
         );
         dispatch(deletedPurchasedCouponAction(parsedCouponId));
         navigate(-1);
