@@ -8,11 +8,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import couponWebApiService from "../../../../Services/CouponsWebApiService";
 import notifyService from "../../../../Services/NotificationService";
 import {
-  addedCouponAction,
-  couponsReducer,
 } from "../../../Redux/CouponAppState";
 import { CouponCompany } from "../../../../Models/CouponCompany";
-import { useState } from "react";
 import store from "../../../Redux/store";
 
 interface AddCouponProps {
@@ -27,7 +24,7 @@ function AddCoupon(): JSX.Element {
   const couponCompanyModelSchema = Zod.object({
     coupon: Zod.object({
       title: Zod.string().nonempty("Please enter a valid title").max(40),
-      category:Zod.enum([
+      category: Zod.enum([
         "FOOD",
         "ELECTRICS",
         "CLOTHING",
@@ -37,8 +34,8 @@ function AddCoupon(): JSX.Element {
         "MOVIES",
         "SPORT",
         "TRAVEL",
-        "VACATION"
-        ,]),
+        "VACATION",
+      ]),
       description: Zod.string().nonempty("Please enter a valid description"),
       startDate: Zod.string().transform((dateString, ctx) => {
         const date = new Date(dateString);

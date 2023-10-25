@@ -7,25 +7,38 @@ import couponWebApiService from "../../../../Services/CouponsWebApiService";
 import notifyService from "../../../../Services/NotificationService";
 import { CouponCompany } from "../../../../Models/CouponCompany";
 import store from "../../../Redux/store";
+import { Category } from "../../../../Models/Admin";
 
 function UpdateCoupon(): JSX.Element {
   const navigate = useNavigate();
   const params = useParams();
   const id = +(params.id || 0);
   const companyId = +(params.companyId || 0);
-  const coupon = store.getState().companies.companies[0].coupons?.find((c) => c.id ===id);
-  console.log("start date "+coupon?.startDate);
-  console.log("end date "+coupon?.endDate);
-  
+  const coupon = store
+    .getState()
+    .companies.companies[0].coupons?.find((c) => c.id === id);
+  console.log("start date " + coupon?.startDate);
+  console.log("end date " + coupon?.endDate);
 
   const company: CouponCompany = {
-    coupon: coupon
-  }
-
+    coupon: coupon,
+  };
 
   const couponCompanyModelSchema = Zod.object({
     coupon: Zod.object({
       title: Zod.string().nonempty("Please enter a valid title").max(40),
+      category: Zod.enum([
+        "FOOD",
+        "ELECTRICS",
+        "CLOTHING",
+        "GAMES",
+        "HEALTH",
+        "HOME",
+        "MOVIES",
+        "SPORT",
+        "TRAVEL",
+        "VACATION",
+      ]),
       description: Zod.string().nonempty("Please enter a valid description"),
       startDate: Zod.string().transform((dateString, ctx) => {
         const date = new Date(dateString);
@@ -97,16 +110,16 @@ function UpdateCoupon(): JSX.Element {
       <form onSubmit={handleSubmit(onSubmit)}>
         <label htmlFor="category">Category</label>
         <select {...register("coupon.category")}>
-          <option value="FOOD">Food</option>
-          <option value="ELECTRONICS">Electronics</option>
-          <option value="CLOTHING">Clothing</option>
-          <option value="GAMES">Games</option>
-          <option value="HEALTH">Health</option>
-          <option value="HOME">Home</option>
-          <option value="MOVIES">Movies</option>
-          <option value="SPORT">Sport</option>
-          <option value="TRAVEL">Travel</option>
-          <option value="VACATION">Vacation</option>
+          <option value={Category.FOOD}>Food</option>
+          <option value={Category.ELECTRICS}>Electronics</option>
+          <option value={Category.CLOTHING}>Clothing</option>
+          <option value={Category.GAMES}>Games</option>
+          <option value={Category.HEALTH}>Health</option>
+          <option value={Category.HOME}>Home</option>
+          <option value={Category.MOVIES}>Movies</option>
+          <option value={Category.SPORT}>Sport</option>
+          <option value={Category.TRAVEL}>Travel</option>
+          <option value={Category.VACATION}>Vacation</option>
         </select>
 
         {errors?.coupon?.title ? (
@@ -174,7 +187,8 @@ function UpdateCoupon(): JSX.Element {
           placeholder="Image URL"
         />
 
-<button disabled={!isValid || isSubmitting}>Update</button>
+        <button>Update</button>
+        {/* <button disabled={!isValid || isSubmitting}>Update</button> */}
       </form>
     </div>
   );
