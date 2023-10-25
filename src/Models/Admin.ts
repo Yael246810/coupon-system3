@@ -28,16 +28,16 @@ export interface CustomerModel {
 }
 
 export enum Category {
-  FOOD,
-  HEALTH,
-  SPORT,
-  ELECTRONICS,
-  CLOTHING,
-  HOME,
-  MOVIES,
-  TRAVEL,
-  GAMES,
-  VACATION,
+  FOOD = "FOOD",
+  ELECTRICS = "ELECTRICS",
+  CLOTHING = "CLOTHING",
+  GAMES = "GAMES",
+  HEALTH = "HEALTH",
+  HOME = "HOME",
+  MOVIES = "MOVIES",
+  SPORT = "SPORT",
+  TRAVEL = "TRAVEL",
+  VACATION = "VACATION"
 }
 
 export interface CouponNoCompanyOrCustomerModel {

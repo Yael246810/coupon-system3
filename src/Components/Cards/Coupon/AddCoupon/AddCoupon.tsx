@@ -27,6 +27,18 @@ function AddCoupon(): JSX.Element {
   const couponCompanyModelSchema = Zod.object({
     coupon: Zod.object({
       title: Zod.string().nonempty("Please enter a valid title").max(40),
+      category:Zod.enum([
+        "FOOD",
+        "ELECTRICS",
+        "CLOTHING",
+        "GAMES",
+        "HEALTH",
+        "HOME",
+        "MOVIES",
+        "SPORT",
+        "TRAVEL",
+        "VACATION"
+        ,]),
       description: Zod.string().nonempty("Please enter a valid description"),
       startDate: Zod.string().transform((dateString, ctx) => {
         const date = new Date(dateString);
@@ -94,7 +106,7 @@ function AddCoupon(): JSX.Element {
         <label htmlFor="category">Category</label>
         <select {...register("coupon.category")}>
           <option value={Category.FOOD}>Food</option>
-          <option value={Category.ELECTRONICS}>Electronics</option>
+          <option value={Category.ELECTRICS}>Electronics</option>
           <option value={Category.CLOTHING}>Clothing</option>
           <option value={Category.GAMES}>Games</option>
           <option value={Category.HEALTH}>Health</option>
