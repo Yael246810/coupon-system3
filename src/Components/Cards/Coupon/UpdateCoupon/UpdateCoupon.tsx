@@ -58,19 +58,34 @@ function UpdateCoupon(): JSX.Element {
         }
         return date;
       }),
-      amount: Zod.string()
-        .nonempty("must enter an amount")
-        .transform((amount) => parseInt(amount))
-        .refine((value) => Number.isInteger(value) && value > 0, {
-          message: "amount must be positive",
-        }),
+     
+      
 
-      price: Zod.string()
-        .nonempty("this field is required")
-        .transform((price) => parseFloat(price))
-        .refine((value) => value > 0, {
-          message: "price must be positive",
-        }),
+      amount: Zod.union([
+        Zod.string()
+          .nonempty("must enter an amount")
+          .transform((amount) => parseInt(amount, 10))
+          .refine((value) => !isNaN(value) && value > 0, {
+            message: "amount must be a positive number",
+          }),
+        Zod.number()
+          .refine((value) => value > 0, {
+            message: "amount must be a positive number",
+          }),
+      ]),
+
+      price: Zod.union([
+        Zod.string()
+          .nonempty("this field is required")
+          .transform((price) => parseFloat(price))
+          .refine((value) => !isNaN(value) && value > 0, {
+            message: "price must be a positive number",
+          }),
+        Zod.number()
+          .refine((value) => value > 0, {
+            message: "price must be a positive number",
+          }),
+      ]),
 
       image: Zod.string().nonempty("this field is required"),
     }),
