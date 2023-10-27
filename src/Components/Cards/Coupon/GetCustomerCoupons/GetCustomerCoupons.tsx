@@ -25,10 +25,11 @@ function GetCustomerCoupons(): JSX.Element {
   );
 
   const location = useLocation();
-  const wasCouponsDataUpdated = useRef(location.state?.wasCouponsDataUpdated);
+  const fetchedData = useRef(location.state?.fetchedData);
 
-  if (fetchedCoupons.length === 0 || wasCouponsDataUpdated.current) {
-    wasCouponsDataUpdated.current = false;
+  if (!fetchedData.current) {
+    console.log("%%% get cust")
+    fetchedData.current = true;
     customerWebApiService
       .getCustomerCoupons(customerId)
       .then((res) => {
