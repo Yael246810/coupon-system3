@@ -29,7 +29,7 @@ function UpdateCoupon(): JSX.Element {
       title: Zod.string().nonempty("Please enter a valid title").max(40),
       category: Zod.enum([
         "FOOD",
-        "ELECTRICS",
+        "ELECTRONICS",
         "CLOTHING",
         "GAMES",
         "HEALTH",
@@ -111,7 +111,7 @@ function UpdateCoupon(): JSX.Element {
         <label htmlFor="category">Category</label>
         <select {...register("coupon.category")}>
           <option value={Category.FOOD}>Food</option>
-          <option value={Category.ELECTRICS}>Electronics</option>
+          <option value={Category.ELECTRONICS}>Electronics</option>
           <option value={Category.CLOTHING}>Clothing</option>
           <option value={Category.GAMES}>Games</option>
           <option value={Category.HEALTH}>Health</option>
@@ -183,7 +183,6 @@ function UpdateCoupon(): JSX.Element {
         {errors?.coupon?.image && (
           <span className="error-message">{errors.coupon.image.message}</span>
         )}
-
 
         <button>Update</button>
         {/* <button disabled={!isValid || isSubmitting}>Update</button> */}
