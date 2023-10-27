@@ -122,70 +122,68 @@ function UpdateCoupon(): JSX.Element {
           <option value={Category.VACATION}>Vacation</option>
         </select>
 
-        {errors?.coupon?.title ? (
-          <span>{errors?.coupon.title.message}</span>
-        ) : (
-          <label htmlFor="title">Title</label>
-        )}
+        <label htmlFor="title">Title</label>
         <input {...register("coupon.title")} type="text" placeholder="Title" />
-
-        {errors?.coupon?.description ? (
-          <span>{errors.coupon.description.message}</span>
-        ) : (
-          <label htmlFor="description">Description</label>
+        {errors?.coupon?.title && (
+          <span className="error-message">{errors.coupon.title.message}</span>
         )}
+
+        <label htmlFor="description">Description</label>
         <input
           {...register("coupon.description")}
           type="text"
           placeholder="Description"
         />
-
-        {errors?.coupon?.startDate ? (
-          <span>{errors.coupon.startDate.message}</span>
-        ) : (
-          <label htmlFor="startDate">Start Date</label>
+        {errors?.coupon?.description && (
+          <span className="error-message">
+            {errors.coupon.description.message}
+          </span>
         )}
+
+        <label htmlFor="startDate">Start Date</label>
         <input {...register("coupon.startDate")} type="datetime-local" />
-
-        {errors?.coupon?.endDate ? (
-          <span>{errors.coupon.endDate.message}</span>
-        ) : (
-          <label htmlFor="endDate">End Date</label>
+        {errors?.coupon?.startDate && (
+          <span className="error-message">
+            {errors.coupon.startDate.message}
+          </span>
         )}
+
+        <label htmlFor="endDate">End Date</label>
         <input {...register("coupon.endDate")} type="datetime-local" />
-
-        {errors?.coupon?.amount ? (
-          <span>{errors.coupon.amount.message}</span>
-        ) : (
-          <label htmlFor="amount">Amount</label>
+        {errors?.coupon?.endDate && (
+          <span className="error-message">{errors.coupon.endDate.message}</span>
         )}
+
+        <label htmlFor="amount">Amount</label>
         <input
           {...register("coupon.amount")}
           type="number"
           placeholder="Amount"
         />
-
-        {errors?.coupon?.price ? (
-          <span>{errors.coupon.price.message}</span>
-        ) : (
-          <label htmlFor="price">Price</label>
+        {errors?.coupon?.amount && (
+          <span className="error-message">{errors.coupon.amount.message}</span>
         )}
+
+        <label htmlFor="price">Price</label>
         <input
           {...register("coupon.price")}
           type="number"
           placeholder="Price"
         />
-
-        {errors?.coupon?.image ? (
-          <span>{errors.coupon.image.message}</span>
-        ) : (
-          <label htmlFor="image">Image</label>
+        {errors?.coupon?.price && (
+          <span className="error-message">{errors.coupon.price.message}</span>
         )}
+
+        <label htmlFor="image">Image</label>
         <input
           {...register("coupon.image")}
           type="text"
           placeholder="Image URL"
         />
+        {errors?.coupon?.image && (
+          <span className="error-message">{errors.coupon.image.message}</span>
+        )}
+
 
         <button>Update</button>
         {/* <button disabled={!isValid || isSubmitting}>Update</button> */}
