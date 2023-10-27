@@ -7,6 +7,7 @@ import customerWebApiService from "../../../../Services/CustomerWebApiService";
 import notifyService from "../../../../Services/NotificationService";
 import { getCustomerCouponsByCategoryAction } from "../../../Redux/CustomerWithCouponsAppState";
 import store from "../../../Redux/store";
+import CouponCard from "../CouponCard/CouponCard";
 
 function GetCustomerCouponsByCategory(): JSX.Element {
   const dispatch = useDispatch();
@@ -61,9 +62,13 @@ function GetCustomerCouponsByCategory(): JSX.Element {
           <h2>Coupons</h2>
           <ul>
             {fetchedCoupons.map((coupon) => (
-              <li key={coupon.id}>
-                {coupon.title} - Category: {coupon.category}
-              </li>
+              <CouponCard
+              key={coupon.id}
+              coupon={coupon}
+              customerId={customerId}
+              isCompanyConnected={false}
+              companyId={customerId}
+            />
             ))}
           </ul>
         </div>

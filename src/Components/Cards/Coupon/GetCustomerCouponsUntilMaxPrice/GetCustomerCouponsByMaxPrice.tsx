@@ -7,6 +7,7 @@ import notifyService from "../../../../Services/NotificationService";
 import customerWebApiService from "../../../../Services/CustomerWebApiService";
 import { getCustomerCouponsByMaxPriceAction } from "../../../Redux/CustomerWithCouponsAppState";
 import store from "../../../Redux/store";
+import CouponCard from "../CouponCard/CouponCard";
 
 function GetCustomerCouponsByMaxPrice(): JSX.Element {
   const dispatch = useDispatch();
@@ -61,9 +62,13 @@ function GetCustomerCouponsByMaxPrice(): JSX.Element {
           <h2>Coupons</h2>
           <ul>
             {fetchedCoupons.map((coupon) => (
-              <li className="CouponItem" key={coupon.id}>
-                {coupon.title} - Price: ${coupon.price}
-              </li>
+              <CouponCard
+              key={coupon.id}
+              coupon={coupon}
+              customerId={customerId}
+              isCompanyConnected={false}
+              companyId={customerId}
+            />
             ))}
           </ul>
         </div>
