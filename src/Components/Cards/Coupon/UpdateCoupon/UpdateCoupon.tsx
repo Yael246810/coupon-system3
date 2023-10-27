@@ -40,8 +40,8 @@ function UpdateCoupon(): JSX.Element {
         "VACATION",
       ]),
       description: Zod.string().nonempty("Please enter a valid description"),
-      startDate: Zod.string().transform((dateString, ctx) => {
-        const date = new Date(dateString);
+      startDate: Zod.string().transform((startDateString, ctx) => {
+        const date = new Date(startDateString);
         if (!Zod.date().safeParse(date).success) {
           ctx.addIssue({
             code: Zod.ZodIssueCode.invalid_date,
@@ -59,8 +59,6 @@ function UpdateCoupon(): JSX.Element {
         return date;
       }),
      
-      
-
       amount: Zod.union([
         Zod.string()
           .nonempty("must enter an amount")
