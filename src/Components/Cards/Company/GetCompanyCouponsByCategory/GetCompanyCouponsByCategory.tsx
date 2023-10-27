@@ -8,6 +8,7 @@ import { getCompanyCouponsByCategoryAction } from "../../../Redux/CompanyAppStat
 import notifyService from "../../../../Services/NotificationService";
 import { Category } from "../../../../Models/Admin";
 import store from "../../../Redux/store";
+import CouponCard from "../../Coupon/CouponCard/CouponCard";
 
 function GetCompanyCouponsByCategory(): JSX.Element {
   const dispatch = useDispatch();
@@ -40,7 +41,7 @@ function GetCompanyCouponsByCategory(): JSX.Element {
     <div className="GetCompanyCouponsByCategory">
       <h1>Company Coupons by Category</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <label htmlFor="category">Category</label>
+        <label htmlFor="category">Category </label>
         <select {...register("category")}>
           <option value={Category.FOOD}>Food</option>
           <option value={Category.ELECTRONICS}>Electronics</option>
@@ -62,9 +63,13 @@ function GetCompanyCouponsByCategory(): JSX.Element {
           <h2>Coupons</h2>
           <ul>
             {fetchedCoupons.map((coupon) => (
-              <li key={coupon.id}>
-                {coupon.title} - Category: {coupon.category}
-              </li>
+              <CouponCard
+              key={coupon.id}
+              coupon={coupon}
+              customerId={companyId}
+              isCompanyConnected={true}
+              companyId={companyId}
+            />
             ))}
           </ul>
         </div>

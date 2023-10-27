@@ -39,7 +39,7 @@ function GetCustomerCouponsByCategory(): JSX.Element {
     <div className="GetCustomerCouponsByCategory">
       <h1>Customer Coupons by Category</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <label htmlFor="category">Category</label>
+        <label htmlFor="category">Category </label>
         <select {...register("category")}>
           <option value={Category.FOOD}>Food</option>
           <option value={Category.ELECTRONICS}>Electronics</option>

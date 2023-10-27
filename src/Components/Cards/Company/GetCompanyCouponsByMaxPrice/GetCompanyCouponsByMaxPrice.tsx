@@ -7,6 +7,7 @@ import { CouponModel } from "../../../../Models/Admin";
 import { useState } from "react";
 import { getCompanyCouponsByMaxPriceAction } from "../../../Redux/CompanyAppState";
 import store from "../../../Redux/store";
+import CouponCard from "../../Coupon/CouponCard/CouponCard";
 
 function GetCompanyCouponsByMaxPrice(): JSX.Element {
     const dispatch = useDispatch();
@@ -57,9 +58,13 @@ function GetCompanyCouponsByMaxPrice(): JSX.Element {
                     <h2>Coupons</h2>
                     <ul>
                         {fetchedCoupons.map((coupon) => (
-                            <li className="CouponItem" key={coupon.id}>
-                                {coupon.title} - Price: ${coupon.price}
-                            </li>
+                            <CouponCard
+                            key={coupon.id}
+                            coupon={coupon}
+                            customerId={companyId}
+                            isCompanyConnected={true}
+                            companyId={companyId}
+                          />
                         ))}
                     </ul>
                 </div>

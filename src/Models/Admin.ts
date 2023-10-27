@@ -29,7 +29,7 @@ export interface CustomerModel {
 
 export enum Category {
   FOOD = "FOOD",
-  ELECTRICS = "ELECTRICS",
+  ELECTRONICS = "ELECTRONICS",
   CLOTHING = "CLOTHING",
   GAMES = "GAMES",
   HEALTH = "HEALTH",
