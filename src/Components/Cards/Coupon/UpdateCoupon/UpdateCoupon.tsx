@@ -29,7 +29,7 @@ function UpdateCoupon(): JSX.Element {
       title: Zod.string().nonempty("Please enter a valid title").max(60),
       category: Zod.enum([
         "FOOD",
-        "ELECTRICS",
+        "ELECTRONICS",
         "CLOTHING",
         "GAMES",
         "HEALTH",
