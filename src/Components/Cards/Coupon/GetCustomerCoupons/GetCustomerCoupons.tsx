@@ -28,7 +28,6 @@ function GetCustomerCoupons(): JSX.Element {
   const fetchedData = useRef(location.state?.fetchedData);
 
   if (!fetchedData.current) {
-    console.log("%%% get cust")
     fetchedData.current = true;
     customerWebApiService
       .getCustomerCoupons(customerId)
