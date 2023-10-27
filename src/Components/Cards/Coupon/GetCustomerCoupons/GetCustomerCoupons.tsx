@@ -6,14 +6,15 @@ import notifyService from "../../../../Services/NotificationService";
 import EmptyView from "../../../Pages/EmptyView/EmptyView";
 import { useLocation, useNavigate } from "react-router-dom";
 import store from "../../../Redux/store";
+import CouponCard from "../CouponCard/CouponCard";
 
 function GetCustomerCoupons(): JSX.Element {
   const customerId = store.getState().user.id;
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
-  const deleteCoupon = (customerId: number, couponId: number) => {
-    navigate(`/customers/${customerId}/coupons/${couponId}/delete`);
-  };
+  // const deleteCoupon = (customerId: number, couponId: number) => {
+  //   navigate(`/customers/${customerId}/coupons/${couponId}/delete`);
+  // };
 
   const {
     formState: { errors },
@@ -49,23 +50,13 @@ function GetCustomerCoupons(): JSX.Element {
           <h2>Coupons</h2>
           {fetchedCoupons.length !== 0 ? (
             fetchedCoupons.map((coupon) => (
-              <div key={coupon.id} className="CouponCard">
-                <p>Coupon ID: {coupon.id}</p>
-                <p>Coupon Category: {coupon.category}</p>
-                <p>Coupon Title: {coupon.title}</p>
-                <p>Coupon Description: {coupon.description}</p>
-                <p>Coupon Start Date: {coupon.startDate}</p>
-                <p>Coupon End Date: {coupon.endDate}</p>
-                <p>Coupon Amount: {coupon.amount}</p>
-                <p>Coupon Price: {coupon.price}</p>
-                <p>Coupon Image: {coupon.image}</p>
-                <button
-                  onClick={() => deleteCoupon(2, coupon.id)}
-                  className="delete-button"
-                >
-                  Delete
-                </button>
-              </div>
+              <CouponCard
+                key={coupon.id}
+                coupon={coupon}
+                customerId={customerId}
+                isCompanyConnected={false}
+                companyId={customerId}
+              />
             ))
           ) : (
             <EmptyView msg="There are no coupons available at the moment" />
