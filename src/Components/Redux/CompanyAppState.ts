@@ -26,6 +26,7 @@ const companiesSlice = createSlice({
   initialState,
   reducers: {
     gotAllCompaniesAction(state, action: PayloadAction<CompaniesModel[]>) {
+      console.log("gotAllCompaniesAction : " + action.payload.length);
       state.companies = action.payload;
     },
     gotSingleCompanyAction(state, action: PayloadAction<CompaniesModel>) {
