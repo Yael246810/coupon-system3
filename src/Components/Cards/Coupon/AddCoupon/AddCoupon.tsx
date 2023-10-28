@@ -133,7 +133,7 @@ function AddCoupon(): JSX.Element {
         )}
 
         <label htmlFor="startDate">Start Date</label>
-        <input {...register("coupon.startDate")} type="datetime-local" />
+        <input {...register("coupon.startDate")} type="date" />
         {errors?.coupon?.startDate && (
           <span className="error-message">
             {errors.coupon.startDate.message}
@@ -141,7 +141,7 @@ function AddCoupon(): JSX.Element {
         )}
 
         <label htmlFor="endDate">End Date</label>
-        <input {...register("coupon.endDate")} type="datetime-local" />
+        <input {...register("coupon.endDate")} type="date" />
         {errors?.coupon?.endDate && (
           <span className="error-message">{errors.coupon.endDate.message}</span>
         )}
