@@ -45,23 +45,14 @@ const companiesSlice = createSlice({
 
       state.companies.push(company);
     },
-    getCompanyCouponsByMaxPriceAction(
-      state,
-      action: PayloadAction<CouponModel[]>
-    ) {
-      state.companies = state.companies.filter(
-        (company) => company.coupons.price && company.coupons.length > 0
-      );
+    getCompanyCouponsByMaxPriceAction(state,action: PayloadAction<CouponModel[]>) {
+      state.companies[0].coupons = action.payload;
     },
-    getCompanyCouponsByCategoryAction(
-      state,
-      action: PayloadAction<CouponModel[]>
-    ) {
-      state.companies = state.companies.filter(
-        (company) => company.coupons.category && company.coupons.length > 0
-      );
+    getCompanyCouponsByCategoryAction(state,action: PayloadAction<CouponModel[]>) {
+      state.companies[0].coupons = action.payload;
     },
     getCompanyDetailsAction(state, action: PayloadAction<CompaniesModel>) {
+      state.companies = [];
       state.companies.push(action.payload);
     },
     removeCompanies(state) {
