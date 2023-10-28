@@ -17,8 +17,6 @@ function UpdateCoupon(): JSX.Element {
   const coupon = store
     .getState()
     .companies.companies[0].coupons?.find((c) => c.id === id);
-  console.log("start date " + coupon?.startDate);
-  console.log("end date " + coupon?.endDate);
 
   const company: CouponCompany = {
     coupon: coupon,
@@ -158,14 +156,14 @@ function UpdateCoupon(): JSX.Element {
         ) : (
           <label htmlFor="startDate">Start Date</label>
         )}
-        <input {...register("coupon.startDate")} type="datetime-local" />
+        <input {...register("coupon.startDate")} type="date" />
 
         {errors?.coupon?.endDate ? (
           <span>{errors.coupon.endDate.message}</span>
         ) : (
           <label htmlFor="endDate">End Date</label>
         )}
-        <input {...register("coupon.endDate")} type="datetime-local" />
+        <input {...register("coupon.endDate")} type="date" />
 
         {errors?.coupon?.amount ? (
           <span>{errors.coupon.amount.message}</span>

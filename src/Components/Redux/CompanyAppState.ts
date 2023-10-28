@@ -37,6 +37,8 @@ const companiesSlice = createSlice({
       );
     },
     getCompanyCouponsAction(state, action: PayloadAction<CouponModel[]>) {
+      state.companies = [];
+
       const company: CompaniesModel = {
         coupons: action.payload
       }
