@@ -28,7 +28,6 @@ function GetCompanyCouponsByMaxPrice(): JSX.Element {
                 .getCompanyCouponsByMaxPrice(companyId, numericMaxPrice)
                 .then((res) => {
                     notifyService.success(`Fetched coupons for company #${companyId} with max price ${numericMaxPrice}`);
-                    console.log("$$$$ " + res.data);
                     dispatch(getCompanyCouponsByMaxPriceAction(res.data));
                     setFetchedCoupons(res.data);
                 })
