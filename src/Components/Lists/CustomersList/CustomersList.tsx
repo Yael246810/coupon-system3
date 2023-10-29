@@ -42,8 +42,8 @@ function CustomersList(): JSX.Element {
 
   return (
     <div className="CustomersList">
-      <TotalCustomers2 />
       <h1>Customers List</h1>
+      <TotalCustomers2 />
       {customers.length !== 0 ? (
         customers.map((c, idx) => (
           <CustomerCard key={`customer-card-${idx}`} customer={c} />

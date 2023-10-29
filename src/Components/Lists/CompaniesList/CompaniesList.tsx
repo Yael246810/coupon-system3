@@ -41,8 +41,8 @@ function CompaniesList(): JSX.Element {
 
   return (
     <div className="CompaniesList">
-      <TotalCompanies />
       <h1>Companies list</h1>
+      <TotalCompanies />
       {companies.length !== 0 ? (
         companies.map((c, idx) => (
           <CompanyCard key={`customer-card-${idx}`} company={c} />

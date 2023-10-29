@@ -1,18 +1,24 @@
 import { Link } from "react-router-dom";
-import { customerModel } from "../../../../Models/Admin";
+import { CustomerModel } from "../../../../Models/Admin";
 import "./CustomerCard.css";
 
 interface CustomerCardProps {
-  customer: customerModel;
+  customer: CustomerModel;
 }
 function CustomerCard(props: CustomerCardProps): JSX.Element {
+  const couponListLength = props.customer.coupons?.length || 0;
   return (
     <div className="CustomerCard">
-      <h3>{props.customer.id}</h3>
-      <p>
-        {props.customer.firstName} {props.customer.lastName},
-        {props.customer.email},{props.customer.password}
-      </p>
+      <p className="company-info-item">
+            Id: {props.customer.id}
+          </p>
+          <p className="company-info-item">First Name: {props.customer.firstName}</p>
+          <p className="company-info-item">Last Name: {props.customer.lastName}</p>
+          <p className="company-info-item">Email: {props.customer.email}</p>
+          <p className="company-info-item">
+            Coupons: {couponListLength}
+          </p>
+    
       <div className="row">
         <Link to={`/admin/update/${props.customer.id}`}>
           <button>Update Customer</button>

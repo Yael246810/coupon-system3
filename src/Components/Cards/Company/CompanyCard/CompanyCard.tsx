@@ -6,13 +6,19 @@ interface CompanyCardProps {
   company: CompaniesModel;
 }
 function CompanyCard(props: CompanyCardProps): JSX.Element {
+  const couponListLength = props.company.coupons?.length || 0;
+
   return (
     <div className="CompanyCard">
-      <h3>{props.company.id}</h3>
-      <p>
-        {props.company.name},{props.company.email},{props.company.password}
-      </p>
-      <div className="row2">
+        <div className="company-info">
+          <p className="company-info-item">
+            Id: {props.company.id}
+          </p>
+          <p className="company-info-item">Name: {props.company.name}</p>
+          <p className="company-info-item">Email: {props.company.email}</p>
+          <p className="company-info-item">
+            Coupons: {couponListLength}
+          </p>
         <Link to={`/admin/companies/update/${props.company.id}`}>
           <button>Update Company</button>
         </Link>
