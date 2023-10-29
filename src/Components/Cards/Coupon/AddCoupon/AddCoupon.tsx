@@ -23,7 +23,7 @@ function AddCoupon(): JSX.Element {
 
   const couponCompanyModelSchema = Zod.object({
     coupon: Zod.object({
-      title: Zod.string().nonempty("Please enter a valid title").max(40),
+      title: Zod.string().nonempty("Please enter a valid title").max(20),
       category: Zod.enum([
         "FOOD",
         "ELECTRONICS",
@@ -36,7 +36,7 @@ function AddCoupon(): JSX.Element {
         "TRAVEL",
         "VACATION",
       ]),
-      description: Zod.string().nonempty("Please enter a valid description"),
+      description: Zod.string().nonempty("Please enter a valid description").max(40),
       startDate: Zod.string().transform((dateString, ctx) => {
         const date = new Date(dateString);
         if (!Zod.date().safeParse(date).success) {

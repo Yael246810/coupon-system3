@@ -24,7 +24,7 @@ function UpdateCoupon(): JSX.Element {
 
   const couponCompanyModelSchema = Zod.object({
     coupon: Zod.object({
-      title: Zod.string().nonempty("Please enter a valid title").max(60),
+      title: Zod.string().nonempty("Please enter a valid title").max(20),
       category: Zod.enum([
         "FOOD",
         "ELECTRONICS",
@@ -37,7 +37,7 @@ function UpdateCoupon(): JSX.Element {
         "TRAVEL",
         "VACATION",
       ]),
-      description: Zod.string().nonempty("Please enter a valid description"),
+      description: Zod.string().nonempty("Please enter a valid description").max(40),
       startDate: Zod.string().transform((startDateString, ctx) => {
         const date = new Date(startDateString);
         if (!Zod.date().safeParse(date).success) {
