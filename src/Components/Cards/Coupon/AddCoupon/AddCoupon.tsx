@@ -127,9 +127,7 @@ function AddCoupon(): JSX.Element {
           placeholder="Description"
         />
         {errors?.coupon?.description && (
-          <span className="error-message">
-            {errors.coupon.description.message}
-          </span>
+          <span className="error-message">{errors.coupon.description.message}</span>
         )}
 
         <label htmlFor="startDate">Start Date</label>

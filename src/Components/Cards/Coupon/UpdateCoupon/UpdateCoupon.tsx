@@ -134,14 +134,14 @@ function UpdateCoupon(): JSX.Element {
         </select>
 
         {errors?.coupon?.title ? (
-          <span>{errors?.coupon.title.message}</span>
+          <span className="error-message">{errors.coupon.title.message}</span>
         ) : (
           <label htmlFor="title">Title</label>
         )}
         <input {...register("coupon.title")} type="text" placeholder="Title" />
 
         {errors?.coupon?.description ? (
-          <span>{errors.coupon.description.message}</span>
+          <span className="error-message">{errors.coupon.description.message}</span>
         ) : (
           <label htmlFor="description">Description</label>
         )}
@@ -152,21 +152,21 @@ function UpdateCoupon(): JSX.Element {
         />
 
         {errors?.coupon?.startDate ? (
-          <span>{errors.coupon.startDate.message}</span>
+          <span className="error-message">{errors.coupon.startDate.message}</span>
         ) : (
           <label htmlFor="startDate">Start Date</label>
         )}
         <input {...register("coupon.startDate")} type="date" />
 
         {errors?.coupon?.endDate ? (
-          <span>{errors.coupon.endDate.message}</span>
+          <span className="error-message">{errors.coupon.endDate.message}</span>
         ) : (
           <label htmlFor="endDate">End Date</label>
         )}
         <input {...register("coupon.endDate")} type="date" />
 
         {errors?.coupon?.amount ? (
-          <span>{errors.coupon.amount.message}</span>
+          <span className="error-message">{errors.coupon.amount.message}</span>
         ) : (
           <label htmlFor="amount">Amount</label>
         )}
@@ -177,7 +177,7 @@ function UpdateCoupon(): JSX.Element {
         />
 
         {errors?.coupon?.price ? (
-          <span>{errors.coupon.price.message}</span>
+          <span className="error-message">{errors.coupon.price.message}</span>
         ) : (
           <label htmlFor="price">Price</label>
         )}
@@ -188,7 +188,7 @@ function UpdateCoupon(): JSX.Element {
         />
 
         {errors?.coupon?.image ? (
-          <span>{errors.coupon.image.message}</span>
+          <span className="error-message">{errors.coupon.image.message}</span>
         ) : (
           <label htmlFor="image">Image</label>
         )}
