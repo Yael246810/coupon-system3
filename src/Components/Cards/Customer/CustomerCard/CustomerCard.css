@@ -1,43 +1,22 @@
-
-.CustomerCard {
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 20px;
+.CustomerCard .coupon-details {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    margin-bottom: 20px;
-    background-color: #f9f9f9;
-    max-width: 300px;
+    align-items: flex-start; 
 }
-
-.customer-image-container {
-    max-width: 150px;
-    max-height: 150px;
-    overflow: hidden;
-}
-
-.customer-image {
-    width: 100%;
-    height: auto;
-    object-fit: cover;
-}
-
 
 .CustomerCard .coupon-details h3 {
     margin: 0;
+    width: 100px; 
 }
 
 .CustomerCard .coupon-details p {
-    margin-top: 5px;
+    margin: 0;
 }
 
 .CustomerCard .row2 {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 10px;
-    width: 100%;
+    flex-direction: column; 
+    align-items: flex-start;
 }
 
 .CustomerCard .row2 button {
