@@ -22,9 +22,14 @@ function CompaniesList(): JSX.Element {
     location.state?.wasCompaniesDataUpdated
   );
 
+  const fetchedInitialData = useRef(
+    location.state?.fetchedInitialData
+  );
+
   useEffect(() => {
-    if (companies.length === 0 || wasCompaniesDataUpdated.current) {
+    if (!fetchedInitialData.current || wasCompaniesDataUpdated.current) {
       wasCompaniesDataUpdated.current = false;
+      fetchedInitialData.current = true;
       companyWebApiService
         .getAllCompanies()
         .then((res) => {

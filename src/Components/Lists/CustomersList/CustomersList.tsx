@@ -22,10 +22,14 @@ function CustomersList(): JSX.Element {
     location.state?.wasCustomersDataUpdated
   );
 
-  useEffect(() => {
-    if (customers.length === 0 || wasCustomersDataUpdated.current) {
-      wasCustomersDataUpdated.current = false;
+  const fetchedInitialData = useRef(
+    location.state?.fetchedInitialData
+  );
 
+  useEffect(() => {
+    if (!fetchedInitialData.current || wasCustomersDataUpdated.current) {
+      wasCustomersDataUpdated.current = false;
+      fetchedInitialData.current = true;
       webApiService
         .getAllCustomers()
         .then((res) => {
