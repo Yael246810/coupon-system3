@@ -20,9 +20,9 @@ function Menu(): JSX.Element {
       <Link to="/about">
         <button>About</button>
       </Link>
-      <Link to="/contactUs">
+      {/* <Link to="/contactUs">
         <button>Contact Us</button>
-      </Link>
+      </Link> */}
       {/* <Link to="/coupons"><button>Our Coupons</button></Link> */}
       {isAdmin && (
         <Link to="/admin/companies">
