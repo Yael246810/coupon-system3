@@ -9,7 +9,7 @@ function TotalCustomers(): JSX.Element {
 
   return (
     <div className="totalCustomers2">
-      <p>Total Customers: {total}</p> :<p> No Customers</p>
+      {total ? <p>Total : {total}</p> : <p>No Customers</p>}
     </div>
   );
 }
