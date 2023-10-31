@@ -72,7 +72,10 @@ function GetSingleCustomer2(): JSX.Element {
                 <p>End Date: {coupon.endDate}</p>
                 <p>Amount: {coupon.amount}</p>
                 <p>Price: {coupon.price}</p>
-                <p>Image: {coupon.image}</p>
+                <img
+                  src={coupon.image}
+                  alt={`Coupon Image for ${coupon.title}`}
+                />
               </li>
             ))}
           </ul>
