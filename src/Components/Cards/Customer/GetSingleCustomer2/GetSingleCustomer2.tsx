@@ -63,8 +63,9 @@ function GetSingleCustomer2(): JSX.Element {
 
           <h2>Coupons:</h2>
           <ul className="CouponList">
-            {fetchedCustomer.coupons?.map((coupon: CouponModel) => (
+            {fetchedCustomer.coupons.map((coupon: CouponModel) => (
               <li key={coupon.id} className="CouponItem">
+              <div>
                 <p>Category: {coupon.category}</p>
                 <p>Title: {coupon.title}</p>
                 <p>Description: {coupon.description}</p>
@@ -72,13 +73,11 @@ function GetSingleCustomer2(): JSX.Element {
                 <p>End Date: {coupon.endDate}</p>
                 <p>Amount: {coupon.amount}</p>
                 <p>Price: {coupon.price}</p>
-                <img
-                  src={coupon.image}
-                  alt={`Coupon Image for ${coupon.title}`}
-                />
-              </li>
-            ))}
-          </ul>
+                <img src={coupon.image} alt={`Coupon Image for ${coupon.title}`} />
+              </div>
+            </li>
+          ))}
+        </ul>
         </div>
       )}
     </div>

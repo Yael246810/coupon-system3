@@ -40,5 +40,5 @@
 }
 .CompanyCard .CouponItem img {
   width: 100px; 
-  height: auto; /* Maintain aspect ratio */
+  height: auto; 
 }
