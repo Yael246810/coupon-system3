@@ -9,15 +9,10 @@ function CustomerCard(props: CustomerCardProps): JSX.Element {
   const couponListLength = props.customer.coupons?.length || 0;
   return (
     <div className="CustomerCard">
-      <p className="company-info-item">
-            Id: {props.customer.id}
-          </p>
-          <p className="company-info-item">First Name: {props.customer.firstName}</p>
-          <p className="company-info-item">Last Name: {props.customer.lastName}</p>
+      <p className="company-info-item">Id: {props.customer.id}</p>
+          <p className="company-info-item">Name: {props.customer.firstName} {props.customer.lastName}</p>
           <p className="company-info-item">Email: {props.customer.email}</p>
-          <p className="company-info-item">
-            Coupons: {couponListLength}
-          </p>
+          <p className="company-info-item">Coupons: {couponListLength}</p>
     
       <div className="row">
         <Link to={`/admin/update/${props.customer.id}`}>
