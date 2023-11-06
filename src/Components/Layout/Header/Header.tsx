@@ -9,7 +9,6 @@ function Header(): JSX.Element {
             <h1>Coupon System</h1>
             <AuthMenu/>
             <Link to="/login">
-        {/* <button className="LoginButton">Login</button> */}
       </Link>
         </div>
     );

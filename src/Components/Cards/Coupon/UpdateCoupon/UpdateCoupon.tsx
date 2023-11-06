@@ -108,7 +108,6 @@ function UpdateCoupon(): JSX.Element {
       .updateCoupon(data)
       .then((res) => {
         notifyService.success("coupon is updated!");
-        // dispatch(updatedCouponAction(res.data));
         navigate("/companies/coupons");
       })
       .catch((err) => notifyService.error(err));

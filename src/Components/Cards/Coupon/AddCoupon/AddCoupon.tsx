@@ -18,7 +18,6 @@ interface AddCouponProps {
 
 function AddCoupon(): JSX.Element {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const companyId = store.getState().user.id;
 
   const couponCompanyModelSchema = Zod.object({
@@ -91,7 +90,6 @@ function AddCoupon(): JSX.Element {
       .addCoupon(data)
       .then((res) => {
         notifyService.success("the coupon is added");
-        // dispatch(addedCouponAction(res.data));
         navigate(`/companies/coupons`);
       })
       .catch((err) => notifyService.error(err));

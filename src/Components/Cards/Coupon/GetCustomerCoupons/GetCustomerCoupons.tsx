@@ -10,11 +10,6 @@ import CouponCard from "../CouponCard/CouponCard";
 
 function GetCustomerCoupons(): JSX.Element {
   const customerId = store.getState().user.id;
-  // const navigate = useNavigate();
-
-  // const deleteCoupon = (customerId: number, couponId: number) => {
-  //   navigate(`/customers/${customerId}/coupons/${couponId}/delete`);
-  // };
 
   const {
     formState: { errors },
@@ -25,7 +20,7 @@ function GetCustomerCoupons(): JSX.Element {
   );
 
   const location = useLocation();
-  const fetchedData = useRef(location.state?.fetchedData);
+  const fetchedData = useRef(location.state?.fetchedData); // to repeat the hooks
 
   if (!fetchedData.current) {
     fetchedData.current = true;
